@@ -1,34 +1,22 @@
 package com.projeto.sistema;
 
 import javax.sql.DataSource;
-
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.jpa.JpaVendorAdapter;
-import org.springframework.orm.jpa.vendor.Database;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
+@EnableJpaRepositories(basePackages = "com.projeto.sistema.repositorios")
 public class configuracaoBancoDeDados {
-	@Bean
-	public DataSource dataSource() {
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName("org.postgresql.Driver"); //declara as configurações de acesso
-		dataSource.setUrl("jdbc:postgresql://localhost:5432/WinHorse");
-		dataSource.setUsername("postgres");//usuario
-		dataSource.setPassword("postgres");//senha
-		return dataSource;
-	}
-	
-	@Bean
-	public JpaVendorAdapter jpaVendorAdapter() {
-		HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
-		adapter.setDatabase(Database.POSTGRESQL); //driver do banco
-		adapter.setShowSql(true); //mostrar no console o sql, é interessante
-		adapter.setGenerateDdl(true);
-		adapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
-		adapter.setPrepareConnection(true);
-		return adapter;
-	}
+
+    @Bean
+    public DataSource dataSource() {
+        return DataSourceBuilder.create()
+                .driverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver")
+                .url("jdbc:sqlserver://localhost:1433;databaseName=WinHorse;encrypt=true;trustServerCertificate=true;")
+                .username("sa")
+                .password("0421")
+                .build();
+    }
 }
