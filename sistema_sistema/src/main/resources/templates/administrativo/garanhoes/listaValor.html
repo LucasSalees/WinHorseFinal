@@ -21,7 +21,7 @@
     <!-- Font Awesome: Biblioteca de ícones para utilização em botões e elementos visuais -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <title>Lista de Usuários</title>
+    <title>Lista de Garanhões</title>
 
     <!--icone rosamystica-->
     <link rel="icon"
@@ -390,7 +390,6 @@
             background-size: 400% 400%;
             animation: gradientFooterAnimation 8s ease infinite;
         }
-        
     </style>
 
 </head>
@@ -404,6 +403,8 @@
                 <img src="https://www.harasrosamystica.com.br/wp-content/uploads/2024/07/logo-header-novo.webp"
                     alt="Logo Haras Rosa Mystica">
             </a>
+
+
 
             <!-- Botão do menu responsivo -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
@@ -525,7 +526,7 @@
                 <a href="/home" class="custom-link">
                     <i class="fa-solid fa-circle-left"></i>
                 </a>
-                <h1 class="m-0 text-center flex-grow-1">Lista de Usuários</h1>
+                <h1 class="m-0 text-center flex-grow-1">Lista de valores</h1>
                 <div style="width: 100px;"></div>
             </div>
             <div class="custom-divider"></div>
@@ -533,41 +534,50 @@
                 <table class="table table-striped" id="tabela">
                     <thead>
                         <tr>
-                            <th class="text-center">Nome do usuario</th>
-                            <th class="text-center">Email</th>
-                            <th class="text-center">Senha</th>
-                            <th class="text-center">Tipo</th>
-                            <th class="text-center">Função</th>
-
+                            <th class="text-center">ID</th>
+                            <th class="text-center">Nome</th>
+                            <th class="text-center">Valor</th>
+                            <th class="text-center">Moeda</th>
+                            <th class="text-center">Modalidade</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="usuario : ${listaUsuarios}">
+                        <tr th:each="garanhao : ${listaGaranhoes}">
 
                             <td class="text-center">
-                                <a th:href="@{/administrativo/usuarios/eventoUsuario/editarUsuario/{id_usuario}(id_usuario=${usuario.id_usuario})}"
-                                    th:text="${usuario.nome_usuario}" class="row-link"></a>
-                            </td>
-                            <td class="text-center">
-                                <a th:href="@{/administrativo/usuarios/eventoUsuario/editarUsuario/{id_usuario}(id_usuario=${usuario.id_usuario})}"
-                                    th:text="${usuario.email}" class="row-link"></a>
-                            </td>
-                            <td class="text-center">
-                                <a th:href="@{/administrativo/usuarios/eventoUsuario/editarUsuario/{id_usuario}(id_usuario=${usuario.id_usuario})}"
-                                    th:text="${usuario.senha}" class="row-link"></a>
-                            </td>
-                            <td class="text-center">
-                                <a th:href="@{/administrativo/usuarios/eventoUsuario/editarUsuario/{id_usuario}(id_usuario=${usuario.id_usuario})}"
-                                    th:text="${usuario.tipo}" class="row-link"></a>
-                            </td>
-                            <td class="text-center">
-                                <a th:href="@{/administrativo/usuarios/eventoUsuario/editarUsuario/{id_usuario}(id_usuario=${usuario.id_usuario})}"
-                                    th:text="${usuario.funcao}" class="row-link"></a>
+                                <a th:href="@{/administrativo/garanhoes/eventoValor/editarValor/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
+                                    th:text="${garanhao.id_garanhao}" class="row-link"></a>
                             </td>
 
+                            <td class="text-center">
+                                <a th:href="@{/administrativo/garanhoes/eventoValor/editarValor/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
+                                    th:text="${garanhao.nome_garanhao}" class="row-link"></a>
+                            </td>
+                            <td class="text-center">
+                                <a th:href="@{/administrativo/garanhoes/eventoValor/editarValor/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
+                                    th:text="${garanhao.valor}" class="row-link"></a>
+                            </td>
+                            <td class="text-center">
+                                <a th:href="@{/administrativo/garanhoes/eventoValor/editarValor/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
+                                    th:text="${garanhao.moeda}" class="row-link"></a>
+                            </td>
+                            <td class="text-center">
+                                <a th:href="@{/administrativo/garanhoes/eventoValor/editarValor/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
+                                    th:text="${garanhao.modalidade}" class="row-link"></a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+                <div class="custom-divider"></div>
+
+                <!-- Linha para exibir os totais -->
+                <div class="text-center mt-3">
+                    <strong>Total:</strong>
+                    <span id="total-brl">R$ 0,00</span> |
+                    <span id="total-usd">$ 0.00</span> |
+                    <span id="total-eur">€ 0.00</span>
+                </div>
+
                 <div class="custom-divider"></div>
             </div>
             <div class="row mt-3">
@@ -577,9 +587,19 @@
                     </a>
                 </div>
                 <div class="col text-right">
-                    <a href="/administrativo/usuarios/cadastro">
-                        <button type="button" class="btn btn-dark btn-sm"><i class="fa-solid fa-plus"></i> <i
-                                class="fa-solid fa-users"></i> Cadastrar</button>
+
+                    <a th:if="${usuario.tipo == 'ADMIN'}" href="/administrativo/garanhoes/cadastro">
+                        <button type="button" class="btn btn-dark btn-sm">
+                            <i class="fa-solid fa-plus"></i> <i class="fa-solid fa-horse-head"></i> Cadastrar
+                        </button>
+                    </a>
+
+                    <a th:if="${usuario.tipo != 'ADMIN'}" style="pointer-events: none; text-decoration: none;">
+                        <button type="button" class="btn btn-dark btn-sm"
+                            style="pointer-events: none; color: #ffffff; cursor: not-allowed; background-color: #C0C0C0;">
+                            <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+                            <i class="fa-solid fa-horse-head" style="color: #ffffff;"></i> Cadastrar
+                        </button>
                     </a>
                 </div>
             </div>
@@ -601,43 +621,48 @@
 
     <script>
 
+        // Inicializa o DataTable com configuração de idioma para português
         $(document).ready(function () {
             $('#tabela').DataTable({
-                language: { url: 'https://cdn.datatables.net/plug-ins/2.1.8/i18n/pt-BR.json' }
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/2.1.8/i18n/pt-BR.json'
+                }
             });
         });
+
+        // Configura o botão "Imprimir"
         document.getElementById('btnImprimir').addEventListener('click', function (e) {
             e.preventDefault(); // Evita o comportamento padrão do link
 
-            // Clona a tabela original
+            // Obtém a tabela original
             const tabela = document.getElementById('tabela');
-            const linhas = Array.from(tabela.querySelectorAll('tbody tr')); // Todas as linhas da tabela
+            const linhas = Array.from(tabela.querySelectorAll('tbody tr')); // Obtém todas as linhas da tabela
 
             // Configuração de itens por página
-            const maxItensPorPagina = 14; // Número máximo de itens por página
+            const maxItensPorPagina = 16; // Define o número máximo de itens por página
             const paginas = []; // Array para armazenar as tabelas divididas
 
-            // Divide as linhas em lotes de no máximo `maxItensPorPagina`
+            // Divide as linhas em lotes com até `maxItensPorPagina`
             for (let i = 0; i < linhas.length; i += maxItensPorPagina) {
-                const novaTabela = document.createElement('table');
+                const novaTabela = document.createElement('table'); // Cria uma nova tabela
                 novaTabela.innerHTML = `
-	            <thead>${tabela.querySelector('thead').innerHTML}</thead>
-	            <tbody></tbody>
-	        `;
+		            <thead>${tabela.querySelector('thead').innerHTML}</thead>
+		            <tbody></tbody>
+		        `;
                 const tbody = novaTabela.querySelector('tbody');
 
-                // Clona as linhas e processa os links para transformá-los em texto
+                // Processa cada linha e substitui links por texto puro
                 linhas.slice(i, i + maxItensPorPagina).forEach(linha => {
-                    const linhaClonada = linha.cloneNode(true);
-                    const links = linhaClonada.querySelectorAll('a'); // Seleciona todos os links dentro da linha clonada
+                    const linhaClonada = linha.cloneNode(true); // Clona a linha
+                    const links = linhaClonada.querySelectorAll('a'); // Seleciona links na linha clonada
                     links.forEach(link => {
                         const texto = document.createTextNode(link.textContent); // Obtém o texto do link
-                        link.parentNode.replaceChild(texto, link); // Substitui o link pelo texto puro
+                        link.parentNode.replaceChild(texto, link); // Substitui o link pelo texto
                     });
-                    tbody.appendChild(linhaClonada);
+                    tbody.appendChild(linhaClonada); // Adiciona a linha clonada na nova tabela
                 });
 
-                paginas.push(novaTabela); // Adiciona a tabela dividida no array de páginas
+                paginas.push(novaTabela); // Armazena a nova tabela no array de páginas
             }
 
             // Cria a janela para impressão
@@ -753,15 +778,16 @@
 	                <div class="header-img">
 	                	<img src="https://www.harasrosamystica.com.br/wp-content/uploads/2024/07/logo-header-novo.webp" alt="Logo Haras Rosa Mystica">
 	                </div>
-	                <h2 class="header-title">Lista de Usuários - Página ${index + 1}</h2>
+	                <h2 class="header-title">Lista de Valores - Página ${index + 1}</h2>
 	            </div>
 	            <div class="content">${tabela.outerHTML}</div>
 				<div class="footer">
 				    <div class="signature">
+				       
 				        
 				    </div>
 				    <div class="footer-text">
-				        © 2024 Haras Rosa Mystica - Todos os direitos reservados.
+				        © 2025 Haras Rosa Mystica - Todos os direitos reservados.
 				    </div>
 				</div>
 	        `);
@@ -803,6 +829,35 @@
         // Aplicando aos campos
         togglePassword("senhaAtual", "toggleSenhaAtual");
         togglePassword("novaSenha", "toggleNovaSenha");
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let totais = {
+                BRL: 0,
+                USD: 0,
+                EUR: 0
+            };
+
+            // Aguardar a tabela ser carregada e percorrer as linhas para somar os valores
+            document.querySelectorAll("tbody tr").forEach(tr => {
+                let valorText = tr.querySelector(".valor")?.textContent.trim() || "0";
+                let valor = parseFloat(valorText.replace(",", ".")) || 0; // Garante que está pegando o número corretamente
+                let moeda = tr.querySelector(".moeda")?.textContent.trim() || "";
+
+                // Adiciona o valor à moeda correspondente
+                if (moeda === "BRL") {
+                    totais.BRL += valor;
+                } else if (moeda === "USD") {
+                    totais.USD += valor;
+                } else if (moeda === "EUR") {
+                    totais.EUR += valor;
+                }
+            });
+
+            // Atualiza os totais no HTML
+            document.getElementById("total-brl").textContent = `R$ ${totais.BRL.toFixed(2)}`;
+            document.getElementById("total-usd").textContent = `$ ${totais.USD.toFixed(2)}`;
+            document.getElementById("total-eur").textContent = `€ ${totais.EUR.toFixed(2)}`;
+        });
 
     </script>
 

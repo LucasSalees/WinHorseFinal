@@ -1,6 +1,7 @@
 package com.projeto.sistema.modelos;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -34,6 +35,18 @@ public class Garanhao implements Serializable {
     private LocalDateTime data_cadastro = LocalDateTime.now(); // Data e hora
     private int saldo_inicial_palhetas;
     private int saldo_atual_palhetas; // Saldo atual de palhetas
+    private BigDecimal valor;
+    private String modalidade;
+    private String moeda;
+
+    public String getMoeda() {
+        return moeda;
+    }
+
+    public void setMoeda(String moeda) {
+        this.moeda = moeda;
+    }
+
 
     @Column(nullable = false)
     private int quantidade = 0; // Valor padrão para quantidade
@@ -51,7 +64,23 @@ public class Garanhao implements Serializable {
         this.data_contagem_inicial = LocalDate.now(); // Data da contagem inicial
     }
 
-    // Construtor padrão (caso precise)
+    public BigDecimal getValor() {
+		return valor;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
+
+	public String getModalidade() {
+		return modalidade;
+	}
+
+	public void setModalidade(String modalidade) {
+		this.modalidade = modalidade;
+	}
+
+	// Construtor padrão (caso precise)
     public Garanhao() {
     }
 
