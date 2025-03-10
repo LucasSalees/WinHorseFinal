@@ -396,6 +396,7 @@
 
 <body>
 
+    <!-- Navegação -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-background">
         <div class="container">
             <!-- Logo à esquerda -->
@@ -403,6 +404,8 @@
                 <img src="https://www.harasrosamystica.com.br/wp-content/uploads/2024/07/logo-header-novo.webp"
                     alt="Logo Haras Rosa Mystica">
             </a>
+
+
 
             <!-- Botão do menu responsivo -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
@@ -843,8 +846,22 @@
             }
 
             // Aplicando aos campos
-            togglePassword("senhaAtual", "toggleSenhaAtual");
             togglePassword("novaSenha", "toggleNovaSenha");
+            togglePassword("confirmarSenha", "toggleConfirmarSenha");
+
+            // Validação de senha
+            document.getElementById("movimentacaoForm").addEventListener("submit", function (event) {
+                const senha = document.getElementById("novaSenha").value;
+                const confirmarSenha = document.getElementById("confirmarSenha").value;
+                const mensagemErro = document.getElementById("mensagemErro");
+
+                if (senha !== confirmarSenha) {
+                    event.preventDefault(); // Impede o envio do formulário
+                    mensagemErro.style.display = "block"; // Exibe a mensagem de erro
+                } else {
+                    mensagemErro.style.display = "none"; // Oculta a mensagem se estiver correta
+                }
+            });
         </script>
 
 </body>

@@ -464,8 +464,6 @@
                     alt="Logo Haras Rosa Mystica">
             </a>
 
-
-
             <!-- Botão do menu responsivo -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
                 aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
@@ -531,27 +529,26 @@
                     <div class="dropdown-menu dropdown-menu-left"
                         style="width: 250px; background-color: #363636; padding: 10px;">
 
-                        <!-- Campo para exibir a senha atual -->
-                        <div class="dropdown-item" style="display: flex; flex-direction: column; align-items: center;">
-                            <div style="position: relative; width: 100%;">
-                                <input type="password" id="senhaAtual" th:value="${usuario.senha}" readonly
-                                    style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; background: transparent; color: #ffffff; width: 100%; padding-right: 30px;">
-                                <i class="fa-solid fa-eye" id="toggleSenhaAtual"
-                                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #ffffff; font-size: 14px;"></i>
-                            </div>
-                        </div>
-
-                        <!-- Campo para alterar a senha -->
+                        <!-- Formulário para alteração de senha -->
                         <form action="/administrativo/usuarios/editarUsuario" th:object="${usuario}" method="POST"
                             id="movimentacaoForm" class="dropdown-item"
                             style="display: flex; flex-direction: column; align-items: center;">
 
+                            <!-- Nova senha -->
                             <div style="position: relative; width: 100%; margin-top: 5px;">
                                 <input type="password" th:field="*{senha}" id="novaSenha" placeholder="Nova Senha"
                                     required
-                                    style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; background: transparent; color: #ffffff; width: 100%; padding-right: 30px;">
+                                    style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; background: transparent; color: #ffffff; width: 100%; padding-right: 40px; margin-bottom: 12px; margin-top: -18px;">
                                 <i class="fa-solid fa-eye" id="toggleNovaSenha"
-                                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #ffffff; font-size: 14px;"></i>
+                                    style="position: absolute; right: 11px; top: 11px; transform: translateY(-50%); cursor: pointer; color: #ffffff; font-size: 16px;"></i>
+                            </div>
+
+                            <!-- Confirmação da senha -->
+                            <div style="position: relative; width: 100%; margin-top: 5px;">
+                                <input type="password" id="confirmarSenha" placeholder="Confirme a Senha" required
+                                    style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; background: transparent; color: #ffffff; width: 100%; padding-right: 40px; margin-bottom: 12px; margin-top: -1px;">
+                                <i class="fa-solid fa-eye" id="toggleConfirmarSenha"
+                                    style="position: absolute; right: 11px; top: 16px; transform: translateY(-50%); cursor: pointer; color: #ffffff; font-size: 16px;"></i>
                             </div>
 
                             <input type="hidden" th:field="*{id_usuario}" />
@@ -563,10 +560,14 @@
                             <input type="hidden" th:field="*{tipo}" />
                             <input type="hidden" th:field="*{funcao}" />
 
-                            <button type="submit"
+                            <button type="submit" id="botaoAlterar"
                                 style="margin-top: 10px; background-color: #cf8311; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
                                 Alterar
                             </button>
+
+                            <p id="mensagemErro" style="color: red; font-size: 12px; display: none; margin-top: 5px;">As
+                                senhas não coincidem.</p>
+
                         </form>
 
                     </div>
@@ -935,8 +936,22 @@
         }
 
         // Aplicando aos campos
-        togglePassword("senhaAtual", "toggleSenhaAtual");
         togglePassword("novaSenha", "toggleNovaSenha");
+        togglePassword("confirmarSenha", "toggleConfirmarSenha");
+
+        // Validação de senha
+        document.getElementById("movimentacaoForm").addEventListener("submit", function (event) {
+            const senha = document.getElementById("novaSenha").value;
+            const confirmarSenha = document.getElementById("confirmarSenha").value;
+            const mensagemErro = document.getElementById("mensagemErro");
+
+            if (senha !== confirmarSenha) {
+                event.preventDefault(); // Impede o envio do formulário
+                mensagemErro.style.display = "block"; // Exibe a mensagem de erro
+            } else {
+                mensagemErro.style.display = "none"; // Oculta a mensagem se estiver correta
+            }
+        });
 
     </script>
 

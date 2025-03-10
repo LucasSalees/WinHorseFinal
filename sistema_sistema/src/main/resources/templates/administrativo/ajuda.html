@@ -2,277 +2,278 @@
 <html lang="pt-br">
 
 <head>
-	
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Manual do Usuário</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<!-- Ícone -->
-	<link rel="icon"
-		href="https://imgs.search.brave.com/zy0sfkgKeppdWAXGyYDnopeaDcBoxZyy_1tEfu-gL8c/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvN2Q5NDZhNTVl/NmM5YzdiNDc3ZDMw/NGVmYzExZmMxNjY4/NDQzZmVhYWVkODQ2/NTVhMmYyNTJjMGE5/MTcwNTYwMS93d3cu/aGFyYXNyb3NhbXlz/dGljYS5jb20uYnIv"
-		type="image/x-icon">
+    <title>Manual do Usuário</title>
 
-	<!-- CSS externo -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Ícone -->
+    <link rel="icon"
+        href="https://imgs.search.brave.com/zy0sfkgKeppdWAXGyYDnopeaDcBoxZyy_1tEfu-gL8c/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvN2Q5NDZhNTVl/NmM5YzdiNDc3ZDMw/NGVmYzExZmMxNjY4/NDQzZmVhYWVkODQ2/NTVhMmYyNTJjMGE5/MTcwNTYwMS93d3cu/aGFyYXNyb3NhbXlz/dGljYS5jb20uYnIv"
+        type="image/x-icon">
 
-	<!-- Google Fonts -->
-	<link href="https://fonts.googleapis.com/css2?family=Asar&display=swap" rel="stylesheet">
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-	<style>
-		
-		/*marca d'agua*/
-		.watermark {
-			position: fixed;
-			bottom: 10px;
-			right: 10px;
-			font-size: 14px;
-			color: rgba(0, 0, 0, 0.5);
-			pointer-events: none;
-			font-family: 'Arial, sans-serif';
-		}
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Asar&display=swap" rel="stylesheet">
 
-		/* Estilo para o título */
-		h1 {
-			font-size: 32px;
-			color: #cf8311;
-			font-weight: bold;
-			margin-bottom: 75px;
-			text-align: center;
-			font-family: "Asar", Sans-serif;
-		}
-		h2 {
-		    font-size: 25px;
-		    color: #cf8311;
-		    font-weight: bold;
-		    margin-bottom: 33px;
-		    text-align: center;
-		    font-family: "Asar", Sans-serif;
-		}
+    <style>
+        /*marca d'agua*/
+        .watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            font-family: 'Arial, sans-serif';
+        }
 
-		/* Estilo para o fundo secundário do formulário */
-		.form-container {
-			background: #fff;
-			padding: 30px;
-			border-radius: 8px;
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-			margin-top: 10px;
-			margin-bottom: 10px;
-			max-width: 900px;
-			width: 100%;
-			border-top: 4px solid #808080;
-			border-bottom: 4px solid #808080;
-		}
+        /* Estilo para o título */
+        h1 {
+            font-size: 32px;
+            color: #cf8311;
+            font-weight: bold;
+            margin-bottom: 75px;
+            text-align: center;
+            font-family: "Asar", Sans-serif;
+        }
 
-		.form-control {
-			border-radius: 8px;
-		}
+        h2 {
+            font-size: 25px;
+            color: #cf8311;
+            font-weight: bold;
+            margin-bottom: 33px;
+            text-align: center;
+            font-family: "Asar", Sans-serif;
+        }
 
-		/* Estilo para o divisor */
-		.custom-divider {
-			margin: 10px 0;
-			border-top: 1px solid #e1e1e1;
-		}
+        /* Estilo para o fundo secundário do formulário */
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+            margin-bottom: 10px;
+            max-width: 900px;
+            width: 100%;
+            border-top: 4px solid #808080;
+            border-bottom: 4px solid #808080;
+        }
 
-		/* Estilo geral para o corpo */
-		body {
-			font-family: "Asar", Sans-serif;
-			background-color: #C0C0C0;
-		}
+        .form-control {
+            border-radius: 8px;
+        }
 
-		/* Customizações */
-		h5 {
-			text-align: justify;
-			margin-top: 35px;
-			margin-bottom: 10px;
-			font-size: 22px;
-			color: #495057;
-		}
+        /* Estilo para o divisor */
+        .custom-divider {
+            margin: 10px 0;
+            border-top: 1px solid #e1e1e1;
+        }
 
-		/*dropdown*/
-		.dropdown-item:hover {
-			background-color: transparent;
-			color: #ffffff;
-			text-decoration: none;
-		}
+        /* Estilo geral para o corpo */
+        body {
+            font-family: "Asar", Sans-serif;
+            background-color: #C0C0C0;
+        }
 
-		.dropdown {
-			font-family: "Asar", Sans-serif;
-		}
+        /* Customizações */
+        h5 {
+            text-align: justify;
+            margin-top: 35px;
+            margin-bottom: 10px;
+            font-size: 22px;
+            color: #495057;
+        }
 
-		/*espaçamento entre os icones*/
-		.dropdown-item i {
-			margin-right: 8px;
-			font-size: 1.6rem;
-		}
+        /*dropdown*/
+        .dropdown-item:hover {
+            background-color: transparent;
+            color: #ffffff;
+            text-decoration: none;
+        }
 
-		.dropdown-item i {
-			font-size: 2rem;
-			transition: transform 0.3s ease, color 0.3s ease;
-		}
+        .dropdown {
+            font-family: "Asar", Sans-serif;
+        }
 
-		/*icone de sair*/
-		.dropdown-item i.fa-right-from-bracket:hover {
-			color: #0000ff;
-			transform: rotate(15deg);
-		}
+        /*espaçamento entre os icones*/
+        .dropdown-item i {
+            margin-right: 8px;
+            font-size: 1.6rem;
+        }
 
-		/*nav bar**/
-		.navbar {
-			font-size: 1rem;
-			width: 100%;
-			height: 138.86px;
-			background-color: #000000C4;
-			border-style: solid;
-			border-width: 0 0 4px;
-			border-color: #fc0;
-		}
+        .dropdown-item i {
+            font-size: 2rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
 
-		.navbar-brand img {
-			width: 300px;
-			height: 100px;
-		}
+        /*icone de sair*/
+        .dropdown-item i.fa-right-from-bracket:hover {
+            color: #0000ff;
+            transform: rotate(15deg);
+        }
 
-		.navbar-background {
-			background: linear-gradient(45deg, #363636, #000000);
-			background-size: 400% 400%;
-			animation: gradientAnimation 8s ease infinite;
-			height: 138.86px;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 0 20px;
-			box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-			font-family: 'Roboto', sans-serif;
-			position: relative;
-		}
+        /*nav bar**/
+        .navbar {
+            font-size: 1rem;
+            width: 100%;
+            height: 138.86px;
+            background-color: #000000C4;
+            border-style: solid;
+            border-width: 0 0 4px;
+            border-color: #fc0;
+        }
 
-		/* Animação do navbar e dos cards */
-		@keyframes gradientAnimation {
-			0% {
-				background-position: 0% 50%;
-			}
+        .navbar-brand img {
+            width: 300px;
+            height: 100px;
+        }
 
-			50% {
-				background-position: 100% 50%;
-			}
+        .navbar-background {
+            background: linear-gradient(45deg, #363636, #000000);
+            background-size: 400% 400%;
+            animation: gradientAnimation 8s ease infinite;
+            height: 138.86px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            font-family: 'Roboto', sans-serif;
+            position: relative;
+        }
 
-			100% {
-				background-position: 0% 50%;
-			}
-		}
+        /* Animação do navbar e dos cards */
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
 
-		/* submenu com o nome de usuário e administrador */
-		.dropdown-menu {
-			display: none;
-			position: absolute;
-			background-color: #333;
-			padding: 0.5rem 0.5rem;
-			border-radius: 0.5rem;
-			box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-			z-index: 10;
-			width: 100%;
-		}
+            50% {
+                background-position: 100% 50%;
+            }
 
-		.dropdown:hover .dropdown-menu {
-			display: block;
-		}
+            100% {
+                background-position: 0% 50%;
+            }
+        }
 
-		.dropdown-menu .dropdown-item {
-			margin-bottom: 0.5rem;
-			font-size: 14px;
-			color: #ffffff;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			width: 100%;
-		}
+        /* submenu com o nome de usuário e administrador */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            padding: 0.5rem 0.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            width: 100%;
+        }
 
-		/*dropdown mais esquerda */
-		.dropdown-menu-left {
-			left: -60px;
-			right: auto;
-		}
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
 
-		.dropdown-item i {
-			margin-left: 8px;
-		}
+        .dropdown-menu .dropdown-item {
+            margin-bottom: 0.5rem;
+            font-size: 14px;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
 
-		/* hover dentro do submenu */
-		.dropdown-item span:hover {
-			background-color: #cf8311;
-			color: #fff;
-			border-color: #cf8311;
-		}
+        /*dropdown mais esquerda */
+        .dropdown-menu-left {
+            left: -60px;
+            right: auto;
+        }
 
-		/* Para o item de 'Administrador', centraliza o conteúdo e a bolinha verde */
-		.dropdown-item span {
-			width: 100%;
-			text-align: center;
-		}
+        .dropdown-item i {
+            margin-left: 8px;
+        }
 
-		/*botão*/
-		.btn {
-			border-radius: 50px;
-			font-size: 14px;
-		}
+        /* hover dentro do submenu */
+        .dropdown-item span:hover {
+            background-color: #cf8311;
+            color: #fff;
+            border-color: #cf8311;
+        }
 
-		.btn-light {
-			background-color: #1b1e21;
-			color: white;
-			border: none;
-		}
+        /* Para o item de 'Administrador', centraliza o conteúdo e a bolinha verde */
+        .dropdown-item span {
+            width: 100%;
+            text-align: center;
+        }
 
-		.btn-light:hover {
-			background-color: #cf8311;
+        /*botão*/
+        .btn {
+            border-radius: 50px;
+            font-size: 14px;
+        }
 
-		}
+        .btn-light {
+            background-color: #1b1e21;
+            color: white;
+            border: none;
+        }
 
-		.btn-sm {
-			font-size: 14px;
-			padding: 10px 20px;
-		}
+        .btn-light:hover {
+            background-color: #cf8311;
 
-		.btn i {
-			margin-right: 8px;
-		}
-		
-		.link-ajuda {
-		    text-decoration: none;
-		    color: #495057;
-		    font-size: 1.2rem;
-		    font-weight: bold;
-			display: block;
-			margin-top: 10px;
-			margin-bottom: 10px;
-		}
+        }
 
-		.link-ajuda:hover {
-		    text-decoration: underline;
-		    color: #cf8311;
-		}
-		
-		/*voltar*/
-		.custom-link {
-			color: rgb(15, 15, 15);
-			font-size: 32px;
-			text-decoration: none;
-		}
+        .btn-sm {
+            font-size: 14px;
+            padding: 10px 20px;
+        }
 
-		.custom-link:hover {
-			color: #cf8311;
-		}
-		
-		.titulo-ajuda {
-			margin-left: 5rem !important;
-		}
-		
-		.mb-3, .my-3 {
-    	margin-bottom: 3rem !important;
-		}
-		
-		/*ICONES*/
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .link-ajuda {
+            text-decoration: none;
+            color: #495057;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .link-ajuda:hover {
+            text-decoration: underline;
+            color: #cf8311;
+        }
+
+        /*voltar*/
+        .custom-link {
+            color: rgb(15, 15, 15);
+            font-size: 32px;
+            text-decoration: none;
+        }
+
+        .custom-link:hover {
+            color: #cf8311;
+        }
+
+        .titulo-ajuda {
+            margin-left: 5rem !important;
+        }
+
+        .mb-3,
+        .my-3 {
+            margin-bottom: 3rem !important;
+        }
+
+        /*ICONES*/
         .user-icon {
             font-size: 28px;
             color: #ffffff;
@@ -358,14 +359,13 @@
             background-size: 400% 400%;
             animation: gradientFooterAnimation 8s ease infinite;
         }
-
-	</style>
+    </style>
 
 </head>
 
 <body>
 
-	<!-- Navegação -->
+    <!-- Navegação -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-background">
         <div class="container">
             <!-- Logo à esquerda -->
@@ -439,27 +439,26 @@
                     <div class="dropdown-menu dropdown-menu-left"
                         style="width: 250px; background-color: #363636; padding: 10px;">
 
-                        <!-- Campo para exibir a senha atual -->
-                        <div class="dropdown-item" style="display: flex; flex-direction: column; align-items: center;">
-                            <div style="position: relative; width: 100%;">
-                                <input type="password" id="senhaAtual" th:value="${usuario.senha}" readonly
-                                    style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; background: transparent; color: #ffffff; width: 100%; padding-right: 30px;">
-                                <i class="fa-solid fa-eye" id="toggleSenhaAtual"
-                                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #ffffff; font-size: 14px;"></i>
-                            </div>
-                        </div>
-
-                        <!-- Campo para alterar a senha -->
+                        <!-- Formulário para alteração de senha -->
                         <form action="/administrativo/usuarios/editarUsuario" th:object="${usuario}" method="POST"
                             id="movimentacaoForm" class="dropdown-item"
                             style="display: flex; flex-direction: column; align-items: center;">
 
+                            <!-- Nova senha -->
                             <div style="position: relative; width: 100%; margin-top: 5px;">
                                 <input type="password" th:field="*{senha}" id="novaSenha" placeholder="Nova Senha"
                                     required
-                                    style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; background: transparent; color: #ffffff; width: 100%; padding-right: 30px;">
+                                    style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; background: transparent; color: #ffffff; width: 100%; padding-right: 40px; margin-bottom: 12px; margin-top: -18px;">
                                 <i class="fa-solid fa-eye" id="toggleNovaSenha"
-                                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #ffffff; font-size: 14px;"></i>
+                                    style="position: absolute; right: 11px; top: 11px; transform: translateY(-50%); cursor: pointer; color: #ffffff; font-size: 16px;"></i>
+                            </div>
+
+                            <!-- Confirmação da senha -->
+                            <div style="position: relative; width: 100%; margin-top: 5px;">
+                                <input type="password" id="confirmarSenha" placeholder="Confirme a Senha" required
+                                    style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; background: transparent; color: #ffffff; width: 100%; padding-right: 40px; margin-bottom: 12px; margin-top: -1px;">
+                                <i class="fa-solid fa-eye" id="toggleConfirmarSenha"
+                                    style="position: absolute; right: 11px; top: 16px; transform: translateY(-50%); cursor: pointer; color: #ffffff; font-size: 16px;"></i>
                             </div>
 
                             <input type="hidden" th:field="*{id_usuario}" />
@@ -471,10 +470,14 @@
                             <input type="hidden" th:field="*{tipo}" />
                             <input type="hidden" th:field="*{funcao}" />
 
-                            <button type="submit"
+                            <button type="submit" id="botaoAlterar"
                                 style="margin-top: 10px; background-color: #cf8311; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
                                 Alterar
                             </button>
+
+                            <p id="mensagemErro" style="color: red; font-size: 12px; display: none; margin-top: 5px;">As
+                                senhas não coincidem.</p>
+
                         </form>
 
                     </div>
@@ -487,53 +490,55 @@
         </div>
     </nav>
 
-	<!-- Conteúdo principal com centralização -->
-	<div class="container d-flex justify-content-center align-items-center">
-	    <div class="form-container text-center" style="width: 900px">
-	        <div class="d-flex align-items-center justify-content-between mb-3">
-	            <!-- Botão de voltar -->
-	            <a href="/home" class="custom-link">
-	                <i class="fa-solid fa-circle-left"></i>
-	            </a>
+    <!-- Conteúdo principal com centralização -->
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="form-container text-center" style="width: 900px">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <!-- Botão de voltar -->
+                <a href="/home" class="custom-link">
+                    <i class="fa-solid fa-circle-left"></i>
+                </a>
 
-	            <!-- Título centralizado com ajuste para a esquerda -->
-	            <h1 class="m-0 text-center flex-grow-1 titulo-ajuda">
-	                Manual do Sistema
-	            </h1>
+                <!-- Título centralizado com ajuste para a esquerda -->
+                <h1 class="m-0 text-center flex-grow-1 titulo-ajuda">
+                    Manual do Sistema
+                </h1>
 
-	            <!-- Espaço vazio para manter o layout balanceado -->
-	            <div style="width: 100px;"></div>
-	        </div>
+                <!-- Espaço vazio para manter o layout balanceado -->
+                <div style="width: 100px;"></div>
+            </div>
 
-				<h2>Objetivo do Sistema</h2>
-				
-				<div>
-					 <h5>Este sistema tem como objetivo realizar o cadastro e controle de sêmen de garanhões,
-						facilitando a gestão das informações e oferecendo controle automatizado sobre as movimentações 
-						realizadas. Através dele, é possível registrar dados detalhados sobre os garanhões, controlar 
-						as quantidades de sêmen disponíveis e monitorar o estoque de forma eficiente. Além disso, o sistema 
-						permite a impressão de relatórios, proporcionando um acompanhamento preciso e contínuo das movimentações, 
-						ajudando na tomada de decisões e no planejamento das operações.
-					</h5>
-				</div>
+            <h2>Objetivo do Sistema</h2>
 
-			
-	        <h2>Abaixo, temos os links para usuários e administradores, com informações e ajuda sobre as funcionalidades do sistema:</h2>
+            <div>
+                <h5>Este sistema tem como objetivo realizar o cadastro e controle de sêmen de garanhões,
+                    facilitando a gestão das informações e oferecendo controle automatizado sobre as movimentações
+                    realizadas. Através dele, é possível registrar dados detalhados sobre os garanhões, controlar
+                    as quantidades de sêmen disponíveis e monitorar o estoque de forma eficiente. Além disso, o sistema
+                    permite a impressão de relatórios, proporcionando um acompanhamento preciso e contínuo das
+                    movimentações,
+                    ajudando na tomada de decisões e no planejamento das operações.
+                </h5>
+            </div>
 
-				<a th:if="${usuario.tipo == 'ADMIN'}" href="/ajudaAdmin" class="link-ajuda">
-				   Acessar o manual de Administradores
-				</a>
 
-				<a th:if="${usuario.tipo != 'ADMIN'}" class="link-ajuda" 
-				   style="pointer-events: none; color: #ccc; cursor: not-allowed; background-color: transparent;">
-				   Acessar o manual de Administradores
-				</a>
-				
-				<a href="/ajudaUser" class="link-ajuda">Acessar manual de Usuários</a>
+            <h2>Abaixo, temos os links para usuários e administradores, com informações e ajuda sobre as funcionalidades
+                do sistema:</h2>
 
-	    </div>
-	</div>
-	
+            <a th:if="${usuario.tipo == 'ADMIN'}" href="/ajudaAdmin" class="link-ajuda">
+                Acessar o manual de Administradores
+            </a>
+
+            <a th:if="${usuario.tipo != 'ADMIN'}" class="link-ajuda"
+                style="pointer-events: none; color: #ccc; cursor: not-allowed; background-color: transparent;">
+                Acessar o manual de Administradores
+            </a>
+
+            <a href="/ajudaUser" class="link-ajuda">Acessar manual de Usuários</a>
+
+        </div>
+    </div>
+
     <!-- Início do Footer -->
     <footer class="footer">
         <div class="container">
@@ -544,10 +549,50 @@
     </footer>
     <!-- Fim do Footer -->
 
-	<!-- JS externo -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
-	
+    <!-- JS externo -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+        // Função para alternar a visibilidade da senha
+        function togglePassword(inputId, toggleId) {
+            const input = document.getElementById(inputId);
+            const toggle = document.getElementById(toggleId);
+
+            toggle.addEventListener("click", function () {
+                if (input.type === "password") {
+                    input.type = "text";
+                    toggle.classList.remove("fa-eye");
+                    toggle.classList.add("fa-eye-slash");
+                } else {
+                    input.type = "password";
+                    toggle.classList.remove("fa-eye-slash");
+                    toggle.classList.add("fa-eye");
+                }
+            });
+        }
+
+        // Aplicando aos campos
+        togglePassword("novaSenha", "toggleNovaSenha");
+        togglePassword("confirmarSenha", "toggleConfirmarSenha");
+
+        // Validação de senha
+        document.getElementById("movimentacaoForm").addEventListener("submit", function (event) {
+            const senha = document.getElementById("novaSenha").value;
+            const confirmarSenha = document.getElementById("confirmarSenha").value;
+            const mensagemErro = document.getElementById("mensagemErro");
+
+            if (senha !== confirmarSenha) {
+                event.preventDefault(); // Impede o envio do formulário
+                mensagemErro.style.display = "block"; // Exibe a mensagem de erro
+            } else {
+                mensagemErro.style.display = "none"; // Oculta a mensagem se estiver correta
+            }
+        });
+
+    </script>
+
 </body>
 
 </html>

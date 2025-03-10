@@ -360,6 +360,7 @@
 
 <body>
 
+    <!-- Navegação -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-background">
         <div class="container">
             <!-- Logo à esquerda -->
@@ -367,6 +368,8 @@
                 <img src="https://www.harasrosamystica.com.br/wp-content/uploads/2024/07/logo-header-novo.webp"
                     alt="Logo Haras Rosa Mystica">
             </a>
+
+
 
             <!-- Botão do menu responsivo -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
@@ -385,14 +388,13 @@
                 </a>
 
                 <div class="dropdown">
-                    
 
                     <div class="dropdown-menu dropdown-menu-left" style="width: 250px; background-color: #363636;">
 
                         <a class="dropdown-item" href="/administrativo/usuarios/perfil"
                             style="display: flex; align-items: center; justify-content: space-between;">
 
-                            <span th:field="${usuario.nome_usuario}" style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; cursor: pointer; 
+                            <span th:text="${usuario.nome_usuario}" style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; cursor: pointer; 
 	                         transition: all 0.3s ease; display: inline-block;">
                             </span>
 
@@ -668,8 +670,22 @@
         }
 
         // Aplicando aos campos
-        togglePassword("senhaAtual", "toggleSenhaAtual");
         togglePassword("novaSenha", "toggleNovaSenha");
+        togglePassword("confirmarSenha", "toggleConfirmarSenha");
+
+        // Validação de senha
+        document.getElementById("movimentacaoForm").addEventListener("submit", function (event) {
+            const senha = document.getElementById("novaSenha").value;
+            const confirmarSenha = document.getElementById("confirmarSenha").value;
+            const mensagemErro = document.getElementById("mensagemErro");
+
+            if (senha !== confirmarSenha) {
+                event.preventDefault(); // Impede o envio do formulário
+                mensagemErro.style.display = "block"; // Exibe a mensagem de erro
+            } else {
+                mensagemErro.style.display = "none"; // Oculta a mensagem se estiver correta
+            }
+        });
 
     </script>
 

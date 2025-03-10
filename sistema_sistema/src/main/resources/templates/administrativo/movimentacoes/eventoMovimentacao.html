@@ -465,6 +465,8 @@
                     alt="Logo Haras Rosa Mystica">
             </a>
 
+
+
             <!-- Botão do menu responsivo -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
                 aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
@@ -1276,8 +1278,22 @@
         }
 
         // Aplicando aos campos
-        togglePassword("senhaAtual", "toggleSenhaAtual");
         togglePassword("novaSenha", "toggleNovaSenha");
+        togglePassword("confirmarSenha", "toggleConfirmarSenha");
+
+        // Validação de senha
+        document.getElementById("movimentacaoForm").addEventListener("submit", function (event) {
+            const senha = document.getElementById("novaSenha").value;
+            const confirmarSenha = document.getElementById("confirmarSenha").value;
+            const mensagemErro = document.getElementById("mensagemErro");
+
+            if (senha !== confirmarSenha) {
+                event.preventDefault(); // Impede o envio do formulário
+                mensagemErro.style.display = "block"; // Exibe a mensagem de erro
+            } else {
+                mensagemErro.style.display = "none"; // Oculta a mensagem se estiver correta
+            }
+        });
 
     </script>
 
