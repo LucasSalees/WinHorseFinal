@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.projeto.sistema.modelos.Usuario;
 import com.projeto.sistema.repositorios.UsuarioRepositorio;
+
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -163,9 +165,6 @@ public class UsuarioControle {
             usuarioExistente.setSenha(usuario.getSenha());
             usuarioExistente.setTipo(usuario.getTipo());
             usuarioExistente.setData_cadastro(usuario.getData_cadastro());
-            usuarioExistente.setCelular(usuario.getCelular());
-            usuarioExistente.setCpf(usuario.getCpf());
-            usuarioExistente.setEndereco(usuario.getEndereco());
             usuarioExistente.setFuncao(usuario.getFuncao());
 
             // Salvar as atualizações no banco de dados
@@ -180,6 +179,38 @@ public class UsuarioControle {
             return "redirect:/administrativo/usuarios/listar";
         }
     }
+
+    @PostMapping("/administrativo/usuarios/editarUsuarioSenha")
+    public String salvarEdicaoUsuarioSenha(
+            @ModelAttribute("usuario") Usuario usuario,
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes) {
+        
+        Optional<Usuario> usuarioExistenteOpt = usuarioRepositorio.findById(usuario.getId_usuario());
+
+        if (usuarioExistenteOpt.isPresent()) {
+            Usuario usuarioExistente = usuarioExistenteOpt.get();
+            usuarioExistente.setSenha(usuario.getSenha());
+            usuarioRepositorio.save(usuarioExistente);
+
+            // Mensagem de sucesso
+            redirectAttributes.addFlashAttribute("mensagemSucesso", "Senha alterada com sucesso!");
+        } else {
+            redirectAttributes.addFlashAttribute("mensagemErro", "Usuário não encontrado.");
+        }
+
+        // Obtém a URL da página anterior
+        String referer = request.getHeader("Referer");
+        
+        // Se não houver referer, redireciona para uma página padrão
+        if (referer == null || referer.isEmpty()) {
+            referer = "/administrativo/usuarios";
+        }
+
+        return "redirect:" + referer;
+    }
+
+
     
     @GetMapping("/administrativo/usuarios/perfil")
     public String perfilUsuario(Model model, HttpSession session) {

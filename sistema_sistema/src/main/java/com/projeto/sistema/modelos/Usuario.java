@@ -21,9 +21,6 @@ public class Usuario implements Serializable {
     private String email;
     private String senha;
     private String tipo;
-    private String cpf;
-    private String celular;
-    private String endereco; 
     private String funcao;
 
 	private LocalDateTime data_cadastro = LocalDateTime.now(); // Data e hora do cadastro
@@ -97,29 +94,6 @@ public class Usuario implements Serializable {
 	public static Object get() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getCelular() {
-		return celular;
-	}
-
-	public void setCelular(String celular) {
-		this.celular = celular;
-	}
-
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
 	}
 
 	public String getFuncao() {

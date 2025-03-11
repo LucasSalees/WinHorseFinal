@@ -359,13 +359,79 @@
             background-size: 400% 400%;
             animation: gradientFooterAnimation 8s ease infinite;
         }
+        
+        /* Animação para o modal descer de cima */
+		@keyframes slideDown {
+		    0% {
+		        transform: translateY(-100%);
+		        opacity: 0;
+		    }
+		    100% {
+		        transform: translateY(0);
+		        opacity: 1;
+		    }
+		}
+		
+		/* Animação para o modal fechar com slide up */
+		@keyframes slideUp {
+		    0% {
+		        transform: translateY(0);
+		        opacity: 1;
+		    }
+		    100% {
+		        transform: translateY(-100%);
+		        opacity: 0;
+		    }
+		}
+		
+		/* Estilos para o botão de fechar */
+		.fechar-modal {
+		    background: none;
+		    border: none;
+		    box-shadow: none;
+		    padding: 0;
+		    cursor: pointer;
+		}
+		
+		.fechar-modal i {
+		    font-size: 2rem;
+		    color: #ff0000; /* Cor vermelha */
+		    transition: 0.3s;
+		}
+		
+		/* Efeito ao passar o mouse no botão de fechar */
+		.fechar-modal i:hover {
+		    color: #B22222; /* Vermelho mais escuro */
+		    transform: scale(1.2);
+		}
+		
+		/* Corpo do modal estilizado */
+		.modal-content {
+		    background: rgba(255, 255, 255, 0.95);
+		    border-radius: 10px;
+		    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+		    animation: slideDown 0.5s ease; /* Aplica a animação de entrada */
+		}
+		
+		/* Estilização do título */
+		.modal-title {
+		    font-weight: bold;
+		    color: #ff0000; /* Vermelho */
+		}
+		
+		/* Corpo do modal */
+		.modal-body {
+		    text-align: center;
+		    font-size: 1.2rem;
+		    font-weight: 500;
+		}
+		
     </style>
 
 </head>
 
 <body>
 
-    <!-- Navegação -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-background">
         <div class="container">
             <!-- Logo à esquerda -->
@@ -440,7 +506,7 @@
                         style="width: 250px; background-color: #363636; padding: 10px;">
 
                         <!-- Formulário para alteração de senha -->
-                        <form action="/administrativo/usuarios/editarUsuario" th:object="${usuario}" method="POST"
+                        <form action="/administrativo/usuarios/editarUsuarioSenha" th:object="${usuario}" method="POST"
                             id="movimentacaoForm" class="dropdown-item"
                             style="display: flex; flex-direction: column; align-items: center;">
 
@@ -463,10 +529,7 @@
 
                             <input type="hidden" th:field="*{id_usuario}" />
                             <input type="hidden" th:field="*{nome_usuario}" />
-                            <input type="hidden" th:field="*{celular}" />
                             <input type="hidden" th:field="*{email}" />
-                            <input type="hidden" th:field="*{cpf}" />
-                            <input type="hidden" th:field="*{endereco}" />
                             <input type="hidden" th:field="*{tipo}" />
                             <input type="hidden" th:field="*{funcao}" />
 
@@ -476,12 +539,28 @@
                             </button>
 
                             <p id="mensagemErro" style="color: red; font-size: 12px; display: none; margin-top: 5px;">As
-                                senhas não coincidem.</p>
+                                senhas não conferem.</p>
 
                         </form>
 
                     </div>
                 </div>
+                
+                <!-- Modal de sucesso -->
+				<div id="modalSucesso" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+				    <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center; animation: slideDown 0.5s ease;">
+				        
+				        <p>Senha alterada com sucesso!</p>
+				        <button onclick="fecharModal()" 
+					        style="background-color: #28a745; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;" 
+					        onmouseover="this.style.backgroundColor='#218838'" onmouseout="this.style.backgroundColor='#28a745'" 
+					        data-bs-dismiss="modal">
+						    OK
+						</button>
+
+				    </div>
+				</div>
+   
 
                 <a class="dropdown-item" href="/sair">
                     <i class="fa-solid fa-right-from-bracket" style="color: #ff0000;"></i>
@@ -555,41 +634,53 @@
 
     <script>
 
-        // Função para alternar a visibilidade da senha
-        function togglePassword(inputId, toggleId) {
-            const input = document.getElementById(inputId);
-            const toggle = document.getElementById(toggleId);
+    document.getElementById("movimentacaoForm").addEventListener("submit", function (event) {
+        const senha = document.getElementById("novaSenha").value;
+        const confirmarSenha = document.getElementById("confirmarSenha").value;
+        const mensagemErro = document.getElementById("mensagemErro");
 
-            toggle.addEventListener("click", function () {
-                if (input.type === "password") {
-                    input.type = "text";
-                    toggle.classList.remove("fa-eye");
-                    toggle.classList.add("fa-eye-slash");
-                } else {
-                    input.type = "password";
-                    toggle.classList.remove("fa-eye-slash");
-                    toggle.classList.add("fa-eye");
-                }
-            });
+        if (senha !== confirmarSenha) {
+            event.preventDefault(); // Impede o envio do formulário
+            mensagemErro.style.display = "block"; // Exibe a mensagem de erro
+        } else {
+            mensagemErro.style.display = "none"; // Oculta a mensagem se estiver correta
+            event.preventDefault(); // Impede o envio real para simular o modal
+            abrirModal(); // Exibe o modal de sucesso
         }
+    });
 
-        // Aplicando aos campos
-        togglePassword("novaSenha", "toggleNovaSenha");
-        togglePassword("confirmarSenha", "toggleConfirmarSenha");
+    // Função para exibir o modal
+    function abrirModal() {
+        document.getElementById("modalSucesso").style.display = "block";
+    }
 
-        // Validação de senha
-        document.getElementById("movimentacaoForm").addEventListener("submit", function (event) {
-            const senha = document.getElementById("novaSenha").value;
-            const confirmarSenha = document.getElementById("confirmarSenha").value;
-            const mensagemErro = document.getElementById("mensagemErro");
+    // Função para fechar o modal
+    function fecharModal() {
+        document.getElementById("modalSucesso").style.display = "none";
+        document.getElementById("movimentacaoForm").submit(); // Envia o formulário após fechar o modal
+    }
 
-            if (senha !== confirmarSenha) {
-                event.preventDefault(); // Impede o envio do formulário
-                mensagemErro.style.display = "block"; // Exibe a mensagem de erro
+    // Função para alternar a visibilidade da senha
+    function togglePassword(inputId, toggleId) {
+        const input = document.getElementById(inputId);
+        const toggle = document.getElementById(toggleId);
+
+        toggle.addEventListener("click", function () {
+            if (input.type === "password") {
+                input.type = "text"; // Torna a senha visível
+                toggle.classList.remove("fa-eye"); // Remove o ícone de olho fechado
+                toggle.classList.add("fa-eye-slash"); // Adiciona o ícone de olho aberto
             } else {
-                mensagemErro.style.display = "none"; // Oculta a mensagem se estiver correta
+                input.type = "password"; // Torna a senha invisível
+                toggle.classList.remove("fa-eye-slash"); // Remove o ícone de olho aberto
+                toggle.classList.add("fa-eye"); // Adiciona o ícone de olho fechado
             }
         });
+    }
+
+    // Inicializando a função para os campos de senha
+    togglePassword("novaSenha", "toggleNovaSenha");
+    togglePassword("confirmarSenha", "toggleConfirmarSenha");
 
     </script>
 

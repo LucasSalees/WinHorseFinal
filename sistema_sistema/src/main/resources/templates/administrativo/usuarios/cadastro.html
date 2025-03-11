@@ -439,35 +439,6 @@
                                     style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #ffffff; font-size: 14px;"></i>
                             </div>
                         </div>
-
-                        <!-- Campo para alterar a senha -->
-                        <form action="/administrativo/usuarios/editarUsuario" th:object="${usuario}" method="POST"
-                            id="movimentacaoForm" class="dropdown-item"
-                            style="display: flex; flex-direction: column; align-items: center;">
-
-                            <div style="position: relative; width: 100%; margin-top: 5px;">
-                                <input type="password" th:field="*{senha}" id="novaSenha" placeholder="Nova Senha"
-                                    required
-                                    style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; background: transparent; color: #ffffff; width: 100%; padding-right: 30px;">
-                                <i class="fa-solid fa-eye" id="toggleNovaSenha"
-                                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #ffffff; font-size: 14px;"></i>
-                            </div>
-
-                            <input type="hidden" th:field="*{id_usuario}" />
-                            <input type="hidden" th:field="*{nome_usuario}" />
-                            <input type="hidden" th:field="*{celular}" />
-                            <input type="hidden" th:field="*{email}" />
-                            <input type="hidden" th:field="*{cpf}" />
-                            <input type="hidden" th:field="*{endereco}" />
-                            <input type="hidden" th:field="*{tipo}" />
-                            <input type="hidden" th:field="*{funcao}" />
-
-                            <button type="submit"
-                                style="margin-top: 10px; background-color: #cf8311; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
-                                Alterar
-                            </button>
-                        </form>
-
                     </div>
                 </div>
 
@@ -498,51 +469,6 @@
                             required maxlength="30" />
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="celular">Número de celular</label>
-                        <input type="text" id="celular" th:field="*{celular}" placeholder="00 00000-0000"
-                            class="form-control" required oninput="mascaraCelular(this)" />
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                        <label>E-mail</label>
-                        <div class="input-group">
-                            <input type="text" th:field="*{email}" id="email" class="form-control" required
-                                placeholder="E-mail, sem @haras.com" maxlength="30" oninput="atualizarEmail()" />
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="cpf">CPF do usuário</label>
-                        <div class="input-group">
-                            <input type="text" th:field="*{cpf}" id="cpf" class="form-control" required
-                                placeholder="000.000.000-00" oninput="mascaraCPF(this)" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                        <label>Senha</label>
-                        <input type="text" th:field="*{senha}" placeholder="Senha do Usuário" class="form-control"
-                            required maxlength="15" />
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label>Endereço</label>
-                        <input type="text" th:field="*{endereco}" id="endereco" placeholder="Endereço do Usuário"
-                            class="form-control" required />
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                        <label>Tipo de usuário</label>
-                        <select th:field="*{tipo}" class="form-control" required>
-                            <option value="ADMIN">Administrador</option>
-                            <option value="USER">Usuário</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
                         <label>Função do usuário</label>
                         <select th:field="*{funcao}" class="form-control" required>
                             <option value="Veterinaria">Veterinaria</option>
@@ -552,6 +478,35 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">      
+                    <label>E-mail</label>
+                        <div class="input-group">
+                            <input type="text" th:field="*{email}" id="email" class="form-control" required
+                                placeholder="E-mail, sem @haras.com" maxlength="30" oninput="atualizarEmail()" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Senha</label>
+                        <input type="text" th:field="*{senha}" placeholder="Senha do Usuário" class="form-control"
+                            required maxlength="15" />
+                    </div>
+                </div>
+
+                <div class="form-row justify-content-center">
+			    <div class="col-12 col-md-6 text-center">
+                         <label>Tipo de usuário</label>
+                        <select th:field="*{tipo}" class="form-control" required>
+                            <option value="ADMIN">Administrador</option>
+                            <option value="USER">Usuário</option>
+                        </select>
+                    </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                   
+                </div>
+
                 <div class="custom-divider"></div>
 
                 <input type="hidden" th:field="*{id_usuario}" />

@@ -225,6 +225,7 @@ public class MovimentacaoControle {
             movimentacaoExistente.setEndereco(movimentacao.getEndereco());
             movimentacaoExistente.setIdentificador_profissional(movimentacao.getIdentificador_profissional());
             movimentacaoExistente.setNome_profissional(movimentacao.getNome_profissional());
+            movimentacaoExistente.setPrenhez(movimentacao.getPrenhez());
             // Salvar as atualizações no banco de dados
             movimentacaoRepositorio.save(movimentacaoExistente);
             garanhaoRepositorio.save(garanhao);

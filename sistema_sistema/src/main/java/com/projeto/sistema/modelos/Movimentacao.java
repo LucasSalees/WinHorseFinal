@@ -28,11 +28,12 @@ public class Movimentacao implements Serializable {
     private String destino; // Ex: "entrada" ou "saida"
     private int quantidade;
     private String profissional;
-	private String nome_profissional;
+    private String nome_profissional;
     private String identificador_profissional;
     private String nome_usuario;
+    private String prenhez; // Nova coluna adicionada
 
-	@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "garanhao_id_garanhao", referencedColumnName = "id_garanhao")
     private Garanhao garanhao;
 
@@ -121,33 +122,44 @@ public class Movimentacao implements Serializable {
     public void setNome_garanhao(String nome_garanhao) {
         this.nome_garanhao = nome_garanhao;
     }
+
     public String getNome_profissional() {
-		return nome_profissional;
-	}
+        return nome_profissional;
+    }
 
-	public void setNome_profissional(String nome_profissional) {
-		this.nome_profissional = nome_profissional;
-	}
+    public void setNome_profissional(String nome_profissional) {
+        this.nome_profissional = nome_profissional;
+    }
 
-	public String getIdentificador_profissional() {
-		return identificador_profissional;
-	}
+    public String getIdentificador_profissional() {
+        return identificador_profissional;
+    }
 
-	public void setIdentificador_profissional(String identificador_profissional) {
-		this.identificador_profissional = identificador_profissional;
-	}
-	public String getProfissional() {
-		return profissional;
-	}
+    public void setIdentificador_profissional(String identificador_profissional) {
+        this.identificador_profissional = identificador_profissional;
+    }
 
-	public void setProfissional(String profissional) {
-		this.profissional = profissional;
-	}
-	public String getNome_usuario() {
-		return nome_usuario;
-	}
+    public String getProfissional() {
+        return profissional;
+    }
 
-	public void setNome_usuario(String nome_usuario) {
-		this.nome_usuario = nome_usuario;
-	}
+    public void setProfissional(String profissional) {
+        this.profissional = profissional;
+    }
+
+    public String getNome_usuario() {
+        return nome_usuario;
+    }
+
+    public void setNome_usuario(String nome_usuario) {
+        this.nome_usuario = nome_usuario;
+    }
+
+    public String getPrenhez() {
+        return prenhez;
+    }
+
+    public void setPrenhez(String prenhez) {
+        this.prenhez = prenhez;
+    }
 }
