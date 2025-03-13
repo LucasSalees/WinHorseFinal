@@ -807,45 +807,43 @@
                     
                     <label for="data_cadastro" class="label-info">Data do cadastro</label>
                         <input type="text" th:field="*{data_cadastro}"
-       th:value="${#dates.format(data_cadastro, 'dd/MM/yyyy HH:mm:ss')}" 
-       class="form-control" 
-       readonly 
-       style="text-align: center;" />
+					       th:value="${#dates.format(data_cadastro, 'dd/MM/yyyy HH:mm:ss')}" 
+					       class="form-control" 
+					       readonly 
+					       style="text-align: center;" />
 
-
-                        
                     </div>
                 </div>
 
                 <div class="form-row">
-                    <!-- Exibir os campos apenas para ADMIN -->
-                    <div class="col-12 col-md-6" th:if="${usuario.tipo == 'ADMIN'}">
-                        <label for="valor" class="label-info">Valor</label>
-                        <div class="input-group">
-                            <input type="number" id="valor" th:field="*{valor}" class="form-control" min="1"
-                                step="0.01" />
-                            <select id="moeda" th:field="*{moeda}" class="form-control">
-                                <option value="BRL">R$ Real</option>
-                                <option value="USD">$ Dólar</option>
-                                <option value="EUR">€ Euro</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Modalidade -->
-                    <div class="col-12 col-md-6" th:if="${usuario.tipo == 'ADMIN'}">
-                        <label for="modalidadeSelect">Modalidade</label>
-                        <select id="modalidadeSelect" required th:field="*{modalidade}" class="form-control select2"
-                            th:disabled="${usuario.tipo != 'ADMIN'}">
-                            <option value="">Escolha uma letra</option>
-                            <option value="palheta" th:selected="${modalidade == 'palheta'}">Palheta</option>
-                            <option value="prenhes" th:selected="${modalidade == 'prenhes'}">Prenhes</option>
-                            <option value="outros" th:selected="${modalidade == 'outros'}">Outros</option>
-                        </select>
-                    </div>
-
+                
+                <!-- Modalidade -->
+                <div class="col-12 col-md-6" th:if="${usuario.tipo == 'ADMIN'}">
+                    <label for="modalidadeSelect">Modalidade</label>
+                    <select id="modalidadeSelect" required th:field="*{modalidade}" class="form-control select2"
+                        th:disabled="${usuario.tipo != 'ADMIN'}">
+                        <option value="">Escolha uma letra</option>
+                        <option value="palheta" th:selected="${modalidade == 'palheta'}">Palheta</option>
+                        <option value="prenhes" th:selected="${modalidade == 'prenhes'}">Prenhes</option>
+                        <option value="outros" th:selected="${modalidade == 'outros'}">Outros</option>
+                    </select>
                 </div>
-
+                    
+                 <!-- Exibir os campos apenas para ADMIN -->
+                 <div class="col-12 col-md-6" th:if="${usuario.tipo == 'ADMIN'}">
+                     <label for="valor" class="label-info">Valor</label>
+                     <div class="input-group">
+                         <input type="number" id="valor" th:field="*{valor}" class="form-control" min="1"
+                             step="0.01" />
+                         <select id="moeda" th:field="*{moeda}" class="form-control">
+                             <option value="BRL">R$ Real</option>
+                             <option value="USD">$ Dólar</option>
+                             <option value="EUR">€ Euro</option>
+                         </select>
+                     </div>
+                 </div>
+                 
+                </div>
 
                 <div class="custom-divider"></div>
 
@@ -1332,7 +1330,6 @@
             // Captura os outros valores normalmente
             const caneca = document.getElementById('caneca').value;
             const dataCadastro = document.getElementById('data_cadastro').value;
-            const saldoInicialPalhetas = document.getElementById('saldo_inicial_palhetas').value;
             const saldoAtualPalhetas = document.getElementById('saldo_atual_palhetas').value;
 
             // Abre uma nova janela para impressão
@@ -1471,10 +1468,6 @@
 				                <tr>
 				                    <td>Cor da Palheta:</td>
 				                    <td>${corPalheta}</td>
-				                </tr>
-				                <tr>
-				                    <td>Saldo Inicial de Palhetas:</td>
-				                    <td>${saldoInicialPalhetas}</td>
 				                </tr>
 				                <tr>
 				                    <td>Saldo Atual de Palhetas:</td>
