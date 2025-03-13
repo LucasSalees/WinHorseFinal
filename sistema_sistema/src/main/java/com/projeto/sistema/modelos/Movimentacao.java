@@ -1,7 +1,10 @@
 package com.projeto.sistema.modelos;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +27,8 @@ public class Movimentacao implements Serializable {
     private int caneca;
     private String cor_palheta;
     private String endereco;
-    private LocalDateTime data_movimentacao = LocalDateTime.now(); // Data e hora da movimentação
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate data_movimentacao = LocalDate.now(); // Data da movimentação
     private String destino; // Ex: "entrada" ou "saida"
     private int quantidade;
     private String profissional;
@@ -80,11 +84,11 @@ public class Movimentacao implements Serializable {
         this.cor_palheta = cor_palheta;
     }
 
-    public LocalDateTime getData_movimentacao() {
+    public LocalDate getData_movimentacao() {
         return data_movimentacao;
     }
 
-    public void setData_movimentacao(LocalDateTime data_movimentacao) {
+    public void setData_movimentacao(LocalDate data_movimentacao) {
         this.data_movimentacao = data_movimentacao;
     }
 

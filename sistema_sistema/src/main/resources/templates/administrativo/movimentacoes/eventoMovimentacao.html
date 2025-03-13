@@ -725,7 +725,7 @@
                 <div class="form-row">
                     <div class="col-12 col-md-6">
                         <label for="data_movimentacao" class="label-info">Data da Movimentação</label>
-                        <input type="text" id="data_movimentacao" th:field="*{data_movimentacao}" readonly
+                        <input type="date" id="data_movimentacao" th:field="*{data_movimentacao}" th:readonly="${usuario.tipo != 'ADMIN'}"
                             class="form-control" />
                     </div>
                     <div class="col-12 col-md-6">
@@ -1046,6 +1046,11 @@
             }
         });
 
+        function formatarData(data) {
+            const partes = data.split('-'); // Divida a data no formato 'yyyy-mm-dd'
+            return `${partes[2]}/${partes[1]}/${partes[0]}`; // Retorne no formato 'dd/mm/yyyy'
+        }
+
         function imprimirFormulario() {
             // Captura os valores dos campos do formulário
             const nomeGaranhao = document.getElementById('nome_garanhao').value;
@@ -1055,7 +1060,7 @@
             const quantidade = document.getElementById('quantidade').value;
             const destino = document.querySelector('input[name="destino"]:checked').value; // Captura o valor do radio button
             const infoAdicional = document.getElementById('info-adicional').value;
-            const dataMovimentacao = document.getElementById('data_movimentacao').value;
+            const dataMovimentacao = formatarData(document.getElementById('data_movimentacao').value); // Formatar a data aqui
             const profissional = document.querySelector('input[name="profissional"]:checked').value;
             const nomeProfissional = document.getElementById('nome_profissional').value;
             const identificadorProfissional = document.getElementById('identificador_profissional').value;

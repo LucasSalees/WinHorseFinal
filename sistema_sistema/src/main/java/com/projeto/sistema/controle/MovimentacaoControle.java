@@ -1,5 +1,6 @@
 package com.projeto.sistema.controle;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -289,7 +290,7 @@ public class MovimentacaoControle {
 
         // Preencher os novos campos na movimentação
         movimentacao.setNome_garanhao(garanhao.getNome_garanhao());
-        movimentacao.setData_movimentacao(LocalDateTime.now());
+        movimentacao.setData_movimentacao(LocalDate.now());
 
         // Garantir que apenas o destino selecionado pelo usuário seja salvo
         String destinoSelecionado = movimentacao.getDestino();
