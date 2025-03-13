@@ -535,7 +535,7 @@
 
                             <td class="text-center">
                                 <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
-                                    th:text="${#temporals.format(movimentacao.data_movimentacao, 'dd/MM/yyyy HH:mm')}"></a>
+                                    th:text="${#temporals.format(movimentacao.data_movimentacao, 'dd/MM/yyyy')}"></a>
                             </td>
 
                             <td class="text-center">
