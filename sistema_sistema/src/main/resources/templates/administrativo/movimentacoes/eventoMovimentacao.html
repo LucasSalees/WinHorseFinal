@@ -730,7 +730,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label for="nome_usuario" class="label-info">Movimentação feita por:</label>
-                        <input type="text" id="nome_usuario" th:value="${nome_usuario_responsavel}" readonly
+                        <input type="text" id="nome_usuario" th:value="${nome_usuario_responsavel}" th:readonly="${usuario.tipo != 'ADMIN'}"
                             class="form-control" />
                     </div>
                 </div>
