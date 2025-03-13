@@ -384,24 +384,25 @@
         </div>
     </nav>
 
-    <!-- Conteúdo principal com centralização -->
-    <div class="container d-flex justify-content-center align-items-center">
-        <!-- Formulário com estilo personalizado -->
-        <div class="form-container" style="width: 800px; max-width: 900px;">
-            <h1>Remover - [[${remover.nome_garanhao}]]</h1>
+  <!-- Conteúdo principal com centralização -->
+	<div class="container d-flex justify-content-center align-items-center">
+	    <!-- Formulário com estilo personalizado -->
+	    <div class="form-container" style="width: 800px; max-width: 900px;">
+	        <!-- Exibe o nome do garanhão -->
+	        <h1>Remover - [[${remover.nome_garanhao}]]</h1>
+	
+	        <!-- Mensagem de sucesso ou erro -->
+	        <h1 th:text="${message}" th:classappend="${message.contains('sucesso') ? 'text-success' : (message.contains('erro') ? 'text-danger' : '')}">
+	        </h1>
+	
+	        <!-- Botão para voltar à lista de garanhões -->
+	        <div class="text-center">
+	            <a href="/administrativo/movimentacoes/listar" class="btn btn-light btn-sm text-white">Voltar para a
+	                lista de movimentações</a>
+	        </div>
+	    </div>
+	</div>
 
-            <!-- Mensagem de sucesso ou erro -->
-            <h1 th:text="${message}" th:classappend="${message.contains('sucesso') ? 'text-success' : 'text-danger'}">
-            </h1>
-
-            <!-- Botão para voltar à lista de garanhões -->
-            <div class="text-center">
-                <a href="/administrativo/movimentacoes/listar" class="btn btn-light btn-sm text-white">Voltar para a
-                    lista de
-                    movimentações</a>
-            </div>
-        </div>
-    </div>
 
     <!-- Início do Footer -->
     <footer class="footer">

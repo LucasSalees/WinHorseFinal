@@ -83,9 +83,7 @@ public class PrincipalControle {
         // Redireciona para a tela de login
         return "redirect:/login";
     }
-    
-    
-      
+     
     /////////////////////////// 
     // 		  AJUDA			 //
     ///////////////////////////

@@ -18,6 +18,9 @@
 
     <!-- Adiciona ícones do Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Asar&display=swap" rel="stylesheet">
+    
+        <!-- Importando Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
     <title>Cadastro de garanhão</title>
 
@@ -43,16 +46,6 @@
             font-family: 'Arial, sans-serif';
         }
 
-        /*titulo*/
-        h1 {
-            font-size: 32px;
-            color: #cf8311;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-            font-family: "Asar", Sans-serif;
-        }
-
         /*fundo secundario*/
         .form-container {
             background: #fff;
@@ -67,16 +60,12 @@
             border-bottom: 4px solid #808080;
         }
 
-        .form-container-down {
-            background: #fff;
-            padding: 30px;
+        .form-control {
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-bottom: 10px;
-            max-width: 900px;
-            width: 100%;
-            border-top: 4px solid #808080;
-            border-bottom: 4px solid #808080;
+        }
+
+        .form-row {
+            margin-bottom: 20px;
         }
 
         .form-control {
@@ -95,6 +84,16 @@
             font-weight: 600;
         }
 
+        /*titulo*/
+        h1 {
+            font-size: 32px;
+            color: #cf8311;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: "Asar", Sans-serif;
+        }
+
         /*botões*/
         .btn {
             border-radius: 50px;
@@ -109,6 +108,8 @@
 
         .btn-light:hover {
             background-color: #cf8311;
+            color: white;
+            border: none;
         }
 
         /*botão amarelo*/
@@ -120,6 +121,17 @@
 
         .btn-dark:hover {
             background-color: #1b1e21;
+        }
+
+        /*botão vermelho*/
+        .btn-danger {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #B22222;
         }
 
         /*estilo para os botões*/
@@ -445,7 +457,7 @@
             animation: gradientFooterAnimation 8s ease infinite;
         }
         
-                        /* Animação para o modal descer de cima */
+                /* Animação para o modal descer de cima */
 		@keyframes slideDown {
 		    0% {
 		        transform: translateY(-100%);
@@ -581,71 +593,6 @@
                         </a>
                     </div>
                 </div>
-
-                <div class="dropdown">
-                    <a class="dropdown-item vault-icon" href="#" id="userMenu" role="button">
-                        <i class="fa-solid fa-key" style="color: #ffffff; margin-right: 10px;"></i>
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-left"
-                        style="width: 250px; background-color: #363636; padding: 10px;">
-
-                        <!-- Formulário para alteração de senha -->
-                        <form action="/administrativo/usuarios/editarUsuarioSenha" th:object="${usuario}" method="POST"
-                            id="movimentacaoForm" class="dropdown-item"
-                            style="display: flex; flex-direction: column; align-items: center;">
-
-                            <!-- Nova senha -->
-                            <div style="position: relative; width: 100%; margin-top: 5px;">
-                                <input type="password" th:field="*{senha}" id="novaSenha" placeholder="Nova Senha"
-                                    required
-                                    style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; background: transparent; color: #ffffff; width: 100%; padding-right: 40px; margin-bottom: 12px; margin-top: -18px;">
-                                <i class="fa-solid fa-eye" id="toggleNovaSenha"
-                                    style="position: absolute; right: 11px; top: 11px; transform: translateY(-50%); cursor: pointer; color: #ffffff; font-size: 16px;"></i>
-                            </div>
-
-                            <!-- Confirmação da senha -->
-                            <div style="position: relative; width: 100%; margin-top: 5px;">
-                                <input type="password" id="confirmarSenha" placeholder="Confirme a Senha" required
-                                    style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; background: transparent; color: #ffffff; width: 100%; padding-right: 40px; margin-bottom: 12px; margin-top: -1px;">
-                                <i class="fa-solid fa-eye" id="toggleConfirmarSenha"
-                                    style="position: absolute; right: 11px; top: 16px; transform: translateY(-50%); cursor: pointer; color: #ffffff; font-size: 16px;"></i>
-                            </div>
-
-                            <input type="hidden" th:field="*{id_usuario}" />
-                            <input type="hidden" th:field="*{nome_usuario}" />
-                            <input type="hidden" th:field="*{email}" />
-                            <input type="hidden" th:field="*{tipo}" />
-                            <input type="hidden" th:field="*{funcao}" />
-
-                            <button type="submit" id="botaoAlterar"
-                                style="margin-top: 10px; background-color: #cf8311; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
-                                Alterar
-                            </button>
-
-                            <p id="mensagemErro" style="color: red; font-size: 12px; display: none; margin-top: 5px;">As
-                                senhas não conferem.</p>
-
-                        </form>
-
-                    </div>
-                </div>
-                
-                <!-- Modal de sucesso -->
-				<div id="modalSucesso" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
-				    <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center; animation: slideDown 0.5s ease;">
-				        
-				        <p>Senha alterada com sucesso!</p>
-				        <button onclick="fecharModal()" 
-					        style="background-color: #28a745; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;" 
-					        onmouseover="this.style.backgroundColor='#218838'" onmouseout="this.style.backgroundColor='#28a745'" 
-					        data-bs-dismiss="modal">
-						    OK
-						</button>
-
-				    </div>
-				</div>
-   
 
                 <a class="dropdown-item" href="/sair">
                     <i class="fa-solid fa-right-from-bracket" style="color: #ff0000;"></i>
@@ -819,35 +766,35 @@
 
                     <!-- Campo de entrada -->
 
-                    <div class="col-md-6 mb-3">
-                        <label>Saldo Inicial de Palhetas</label>
-                        <input type="number" required th:field="*{saldo_inicial_palhetas}" class="form-control"
-                            id="saldo_inicial_palhetas" min="1" />
-                    </div>
+                        <div class="col-md-6 mb-3">
+						    <label>Saldo Atual de Palhetas</label>
+						    <input type="number" required th:field="*{saldo_atual_palhetas}" class="form-control"
+						        id="saldo_atual_palhetas" min="1" />
+						</div>
 
                     <div class="col-md-6 mb-3">
                         <label>Contagem Inicial</label>
                         <input type="date" required th:field="*{data_contagem_inicial}" class="form-control" />
                     </div>
 
-                    <!-- Modal de Aviso -->
-                    <div class="modal fade" id="saldoInicialModal" tabindex="-1"
-                        aria-labelledby="saldoInicialModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="saldoInicialModalLabel">Aviso</h5>
-                                    <button type="button" class="fechar-modal" data-bs-dismiss="modal"
-                                        aria-label="Fechar">
-                                        <i class="fa-solid fa-circle-xmark"></i>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Números negativos não são permitidos.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+					<!-- Modal de Aviso -->
+					<div class="modal fade" id="saldoAtualModal" tabindex="-1"
+					    aria-labelledby="saldoAtualModalLabel" aria-hidden="true">
+					    <div class="modal-dialog">
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <h5 class="modal-title" id="saldoAtualModalLabel">Aviso</h5>
+					                <button type="button" class="fechar-modal" data-bs-dismiss="modal"
+					                    aria-label="Fechar">
+					                    <i class="fa-solid fa-circle-xmark"></i>
+					                </button>
+					            </div>
+					            <div class="modal-body">
+					                <p>Números negativos não são permitidos.</p>
+					            </div>
+					        </div>
+					    </div>
+					</div>
 
                     <!-- Campo Modalidade com Input + Datalist -->
                     <div class="col-md-6 mb-3">
@@ -874,11 +821,6 @@
                         </div>
 
                     </div>
-
-                    <div class="col-md-6 mb-3">
-                        <input type="hidden" th:field="*{saldo_atual_palhetas}" class="form-control" />
-                    </div>
-
 
                     <div class="col-md-6 mb-3">
                         <input type="hidden" required readonly="true" th:field="*{data_cadastro}"
@@ -914,13 +856,11 @@
     </footer>
     <!-- Fim do Footer -->
 
-    <!-- Importando Select2 -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <!-- Bootstrap JS (Necessário para o modal funcionar) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 
     <script>
 
@@ -949,11 +889,11 @@
         });
 
 
-        document.getElementById("saldo_inicial_palhetas").addEventListener("input", function (event) {
+        document.getElementById("saldo_atual_palhetas").addEventListener("input", function (event) {
             const input = event.target;
             if (input.value < 0) {
                 input.value = "0"; // substitui o valor negativo para 0
-                let modal = new bootstrap.Modal(document.getElementById("saldoInicialModal")); // Instancia o modal
+                let modal = new bootstrap.Modal(document.getElementById("saldoAtualModal")); // Instancia o modal
                 modal.show(); // Exibe o modal
             }
         });
@@ -992,15 +932,14 @@
             atualizarHorario();
         }
 
-        // Função para validar o campo "Saldo Inicial de Palhetas"
-        function validarSaldoInicialPalhetas() {
-            const saldoInicialPalhetasInput = document.getElementById('saldo_inicial_palhetas');
-            saldoInicialPalhetasInput.addEventListener('input', (event) => {
+        function validarSaldoAtualPalhetas() {
+            const saldoAtualPalhetasInput = document.getElementById('saldo_atual_palhetas');
+            saldoAtualPalhetasInput.addEventListener('input', (event) => {
                 const valorDigitado = parseInt(event.target.value, 10) || 0; // Garante que o valor seja tratado como número
 
                 if (valorDigitado < 0) {
                     event.target.value = 0; // Ajusta automaticamente para 0
-                    alert('O saldo inicial de palhetas não pode ser negativo.');
+                    alert('O saldo atual de palhetas não pode ser negativo.');
                 }
             });
         }
@@ -1167,6 +1106,14 @@
             salvarGaranhao();
         });
 
+
+        function inicializar() {
+            configurarAtualizacaoHorario();
+            validarBotijao();
+            validarCaneca();
+            validarSaldoAtualPalhetas(); // Alterado para validarSaldoAtualPalhetas
+        }
+        
         // Função para exibir o modal
         function exibirModal(mensagem) {
             document.getElementById('modalMensagemTexto').innerText = mensagem;
@@ -1174,52 +1121,58 @@
             modalMensagem.show();
         }
 
-        // Função para inicializar todas as funcionalidades
-        function inicializar() {
-            configurarAtualizacaoHorario();
-            validarBotijao();
-            validarCaneca();
-            validarSaldoInicialPalhetas();
-        }
-
         // Chama a função inicial ao carregar o script
         inicializar();
         
-     // Função para alternar a visibilidade da senha
-        function togglePassword(inputId, toggleId) {
-            const input = document.getElementById(inputId);
-            const toggle = document.getElementById(toggleId);
-
-            toggle.addEventListener("click", function () {
-                if (input.type === "password") {
-                    input.type = "text";
-                    toggle.classList.remove("fa-eye");
-                    toggle.classList.add("fa-eye-slash");
-                } else {
-                    input.type = "password";
-                    toggle.classList.remove("fa-eye-slash");
-                    toggle.classList.add("fa-eye");
-                }
-            });
-        }
-
-        // Aplicando aos campos
-        togglePassword("novaSenha", "toggleNovaSenha");
-        togglePassword("confirmarSenha", "toggleConfirmarSenha");
-
-        // Validação de senha
         document.getElementById("movimentacaoForm").addEventListener("submit", function (event) {
-            const senha = document.getElementById("novaSenha").value;
-            const confirmarSenha = document.getElementById("confirmarSenha").value;
-            const mensagemErro = document.getElementById("mensagemErro");
-
-            if (senha !== confirmarSenha) {
-                event.preventDefault(); // Impede o envio do formulário
-                mensagemErro.style.display = "block"; // Exibe a mensagem de erro
-            } else {
-                mensagemErro.style.display = "none"; // Oculta a mensagem se estiver correta
-            }
-        });
+    	    const senha = document.getElementById("novaSenha").value;
+    	    const confirmarSenha = document.getElementById("confirmarSenha").value;
+    	    const mensagemErro = document.getElementById("mensagemErro");
+    	
+    	    if (senha !== confirmarSenha) {
+    	        event.preventDefault(); // Impede o envio do formulário
+    	        mensagemErro.style.display = "block"; // Exibe a mensagem de erro
+    	    } else {
+    	        mensagemErro.style.display = "none"; // Oculta a mensagem se estiver correta
+    	        event.preventDefault(); // Impede o envio real para simular o modal
+    	        abrirModal(); // Exibe o modal de sucesso
+    	    }
+    	});
+    	
+    	// Função para exibir o modal
+    	function abrirModal() {
+    	    document.getElementById("modalSucesso").style.display = "block";
+    	}
+    	
+    	// Função para fechar o modal
+    	function fecharModal() {
+    	    document.getElementById("modalSucesso").style.display = "none";
+    	    document.getElementById("movimentacaoForm").submit(); // Envia o formulário após fechar o modal
+    	}
+    	
+    	// Função para alternar a visibilidade da senha
+    	function togglePassword(inputId, toggleId) {
+    	    const input = document.getElementById(inputId);
+    	    const toggle = document.getElementById(toggleId);
+    	
+    	    toggle.addEventListener("click", function () {
+    	        if (input.type === "password") {
+    	            input.type = "text"; // Torna a senha visível
+    	            toggle.classList.remove("fa-eye"); // Remove o ícone de olho fechado
+    	            toggle.classList.add("fa-eye-slash"); // Adiciona o ícone de olho aberto
+    	        } else {
+    	            input.type = "password"; // Torna a senha invisível
+    	            toggle.classList.remove("fa-eye-slash"); // Remove o ícone de olho aberto
+    	            toggle.classList.add("fa-eye"); // Adiciona o ícone de olho fechado
+    	        }
+    	    });
+    	}
+    	
+    	// Inicializando a função para os campos de senha
+    	togglePassword("novaSenha", "toggleNovaSenha");
+    	togglePassword("confirmarSenha", "toggleConfirmarSenha");
+        
+        
 
     </script>
 

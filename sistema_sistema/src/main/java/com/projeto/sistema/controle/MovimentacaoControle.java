@@ -11,14 +11,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
 import com.projeto.sistema.modelos.Garanhao;
+import com.projeto.sistema.modelos.Lixeira;
 import com.projeto.sistema.modelos.Movimentacao;
 import com.projeto.sistema.modelos.Usuario;
 import com.projeto.sistema.repositorios.GaranhaoRepositorio;
+import com.projeto.sistema.repositorios.LixeiraRepositorio;
 import com.projeto.sistema.repositorios.MovimentacaoRepositorio;
 import jakarta.servlet.http.HttpSession;
 
@@ -30,6 +33,9 @@ public class MovimentacaoControle {
 
     @Autowired
     private GaranhaoRepositorio garanhaoRepositorio;
+    
+    @Autowired
+    private LixeiraRepositorio lixeiraRepositorio;
 
     // Página de cadastro de movimentação
     @GetMapping("/administrativo/movimentacoes/cadastro")
@@ -111,6 +117,71 @@ public class MovimentacaoControle {
         return "redirect:/administrativo/movimentacoes/listar";
     }
     
+    @PostMapping("/refazerMovimentacao/{id_movimentacao}")
+    public String refazer(@PathVariable("id_movimentacao") Long idMovimentacao,
+                          @RequestParam("motivoExclusao") String motivoExclusao, 
+                          Model model, HttpSession session) {
+
+        // Verifica se o usuário está logado na sessão
+        if (session.getAttribute("usuarioLogado") == null) {
+            return "redirect:/login";
+        }
+
+        // Obtém o usuário logado da sessão
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        model.addAttribute("usuario", usuario);
+
+        try {
+            // Busca a movimentação pelo ID
+            Optional<Movimentacao> movimentacaoOptional = movimentacaoRepositorio.findById(idMovimentacao);
+            if (movimentacaoOptional.isPresent()) {
+                Movimentacao movimentacao = movimentacaoOptional.get();
+
+                // Obtem o nome do garanhão da movimentação (via propriedade nome_garanhao)
+                String nomeGaranhao = movimentacao.getNome_garanhao();
+
+                // Obtemos a quantidade de palhetas que foi retirada
+                int quantidadePalhetasRemovidas = movimentacao.getQuantidade();
+
+                // Zera a quantidade de palhetas na movimentação
+                movimentacao.setQuantidade(0);  // Zera a quantidade de palhetas
+                movimentacaoRepositorio.save(movimentacao);  // Salva a movimentação com a quantidade zerada
+
+                // Atualiza o saldo de palhetas do garanhão associado
+                Garanhao garanhao = movimentacao.getGaranhao();  // Obtém o Garanhão associado à movimentação
+
+                // Ajusta o saldo de palhetas do garanhão (somando a quantidade de volta)
+                garanhao.ajustarSaldoAtual(quantidadePalhetasRemovidas);  // Adiciona de volta ao saldo do garanhão
+                garanhaoRepositorio.save(garanhao);  // Salva o garanhão com o saldo atualizado
+
+                // Salva a movimentação na lixeira com o nome do usuário responsável
+                Lixeira lixeira = new Lixeira(
+                    movimentacao.getId_movimentacao(), 
+                    motivoExclusao, 
+                    nomeGaranhao,
+                    usuario.getNome_usuario()  // Passa o nome do usuário logado como responsável
+                );
+                lixeiraRepositorio.save(lixeira);
+
+                // Exclui a movimentação
+                movimentacaoRepositorio.deleteById(idMovimentacao);
+
+                // Passa a movimentação para o modelo
+                model.addAttribute("remover", movimentacao);  // Adiciona a nome do garanhão à variável "remover" no modelo
+
+                // Adiciona a mensagem de sucesso
+                model.addAttribute("message", "Movimentação movida para a lixeira com sucesso e quantidade de palhetas atualizada!");
+                return "administrativo/movimentacoes/remover";
+            } else {
+                model.addAttribute("message", "Movimentação não encontrada!");
+                return "administrativo/movimentacoes/remover";
+            }
+        } catch (Exception e) {
+            model.addAttribute("message", "Erro ao remover a movimentação: " + e.getMessage());
+            return "administrativo/movimentacoes/remover";
+        }
+    }
+
     @GetMapping("/removerMovimentacao/{id_movimentacao}")
     public String remover(@PathVariable("id_movimentacao") Long id_movimentacao, Model model, HttpSession session) {
         System.out.println("ID recebido para exclusão: " + id_movimentacao); // Log para verificar o ID
@@ -148,6 +219,53 @@ public class MovimentacaoControle {
             return "administrativo/movimentacoes/remover";
         }
     }
+
+
+    @GetMapping("/administrativo/movimentacoes/lixeira")
+    public ModelAndView listarLixeira(HttpSession session) {
+        ModelAndView mv = new ModelAndView("administrativo/movimentacoes/lixeira");
+
+        // Verifica se o usuário está logado
+        if (session.getAttribute("usuarioLogado") == null) {
+            mv.setViewName("redirect:/login");
+            return mv;
+        }
+
+        // Obtém o usuário logado da sessão
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        mv.addObject("usuario", usuario);
+
+        // Lista de itens da lixeira
+        List<Lixeira> lixeiraList = lixeiraRepositorio.findAll();
+        mv.addObject("lixeiraList", lixeiraList); // Passa a lista com o nome correto
+
+        return mv;
+    }
+    
+    @PostMapping("/administrativo/movimentacoes/lixeira/remover/{id}")
+    public String removerMovimentacaoDaLixeira(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        try {
+            Optional<Lixeira> lixeira = lixeiraRepositorio.findById(id);
+            
+            if (lixeira.isPresent()) {
+                // Remove a movimentação da lixeira
+                lixeiraRepositorio.delete(lixeira.get());
+                // Adiciona mensagem de sucesso
+                redirectAttributes.addFlashAttribute("mensagem", "Movimentação removida com sucesso!");
+            } else {
+                // Caso não encontre a movimentação
+                redirectAttributes.addFlashAttribute("mensagem", "Movimentação não encontrada!");
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("mensagem", "Erro ao tentar remover a movimentação.");
+            e.printStackTrace(); // Verifique se há algum erro específico
+        }
+        // Redireciona para a lista da lixeira
+        return "redirect:/administrativo/movimentacoes/lixeira";
+    }
+
+
+
 
     @PostMapping("/salvarMovimentacao")
     public ModelAndView salvarMovimentacao(Movimentacao movimentacao) {

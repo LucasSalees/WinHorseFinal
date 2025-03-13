@@ -612,7 +612,7 @@
         </div>
     </nav>
 
-    <div class="container-fluid" style="width: 900px; height: 600px;">
+    <div class="container-fluid" style="width: 900px; height: auto;">
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8">
 
@@ -663,11 +663,6 @@
                                         <i class="fa-solid fa-list"></i> Lista de Valores
                                     </a>
 
-                                    <a th:if="${usuario.tipo != 'ADMIN'}" class="list-group-item list-group-item-action"
-                                        style="pointer-events: none; color: #ccc; cursor: not-allowed; background-color: #f8f9fa;">
-                                        <i class="fa-solid fa-list"></i> Lista de Valores
-                                    </a>
-
                                     <a href="/administrativo/garanhoes/listar"
                                         class="list-group-item list-group-item-action">
                                         <i class="fa-solid fa-list"></i> Lista de Sêmen
@@ -676,6 +671,11 @@
                                     <a href="/administrativo/movimentacoes/listar"
                                         class="list-group-item list-group-item-action">
                                         <i class="fa-solid fa-list"></i> Lista de Movimentações
+                                    </a>
+                                    
+                                    <a th:if="${usuario.tipo == 'ADMIN'}" href="/administrativo/movimentacoes/lixeira"
+                                        class="list-group-item list-group-item-action">
+                                        <i class="fa-solid fa-list"></i> Movimentações Restauradas
                                     </a>
                                 </ul>
                             </div>
