@@ -21,7 +21,7 @@
     <!-- Font Awesome: Biblioteca de ícones para utilização em botões e elementos visuais -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <title>Lista de Movimentações</title>
+    <title>Movimentações Estornadas</title>
 
     <!--icone rosamystica-->
     <link rel="icon"
@@ -495,7 +495,6 @@
 			        <tr>
 			            <th>Nº Movimentação</th>
 			            <th>Nome do Garanhão</th> 
-			            <!--  <th>Botijão</th>--> 
 			            <th>Nome do Responsável</th>
 			            <th>Motivo da Exclusão</th>
 			            <th>Data da Exclusão</th>
@@ -506,7 +505,6 @@
 			        <tr th:each="lixeira : ${lixeiraList}">
 			            <td th:text="${lixeira.idMovimentacao}"></td>
 			            <td th:text="${lixeira.nomeGaranhao}"></td>
-			            <!--<td th:text="${lixeira.botijao}"></td>-->
 			            <td th:text="${lixeira.nomeUsuarioResponsavel}"></td>
 			            <td th:text="${lixeira.motivoExclusao}"></td>
 			            <td th:text="${#temporals.format(lixeira.dataExclusao, 'dd/MM/yyyy HH:mm')}"></td>

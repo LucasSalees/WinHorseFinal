@@ -300,57 +300,6 @@ public class GaranhaoControle {
         // Após salvar com sucesso, redireciona para a listagem dos Garanhões
         return new ModelAndView("redirect:/administrativo/garanhoes/listar");  // Redireciona para a listagem após salvar
     }
-    
-    @GetMapping("/removerGaranhao/{id_garanhao}")
-    public String remover(@PathVariable("id_garanhao") Long id_garanhao, Model model, HttpSession session) {
-        System.out.println("ID recebido para exclusão: " + id_garanhao); // Log para verificar o ID
-
-        // Verifica se o usuário está logado na sessão
-        if (session.getAttribute("usuarioLogado") == null) {
-            return "redirect:/login"; // Redireciona para login se o usuário não estiver logado
-        }
-
-        // Obtém o usuário logado da sessão
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
-        model.addAttribute("usuario", usuario);
-
-        try {
-            // Busca o garanhão pelo ID
-            Optional<Garanhao> garanhaoOptional = garanhaoRepositorio.findById(id_garanhao);
-            if (garanhaoOptional.isPresent()) {
-                Garanhao garanhao = garanhaoOptional.get(); // Obtém o garanhão
-                model.addAttribute("remover", garanhao); // Envia o objeto Garanhão para o modelo
-
-                // Verifica se há movimentações associadas ao garanhão
-                List<Movimentacao> movimentacoesAssociadas = movimentacaoRepositorio.findAll()
-                        .stream()
-                        .filter(movimentacao -> movimentacao.getGaranhao().getId_garanhao().equals(id_garanhao))
-                        .collect(Collectors.toList());
-
-                if (!movimentacoesAssociadas.isEmpty()) {
-                    // Caso existam movimentações associadas
-                    model.addAttribute("message", "Erro ao excluir: Garanhão possui movimentações associadas.");
-                    return "administrativo/garanhoes/remover";
-                }
-
-                // Se não houver movimentações, tenta excluir o garanhão
-                garanhaoRepositorio.deleteById(id_garanhao);
-                model.addAttribute("message", "Garanhão removido com sucesso!");
-                return "administrativo/garanhoes/remover";
-            } else {
-                // Caso o garanhão não seja encontrado
-                model.addAttribute("message", "Garanhão não encontrado!");
-                return "administrativo/garanhoes/remover";
-            }
-        } catch (DataIntegrityViolationException e) {
-            model.addAttribute("message", "Erro ao excluir: Garanhão está vinculado a outras entidades.");
-            return "administrativo/garanhoes/remover";
-        } catch (Exception e) {
-            System.out.println("Erro ao excluir o garanhão: " + e.getMessage());
-            model.addAttribute("message", "Erro ao excluir: " + e.getMessage());
-            return "administrativo/garanhoes/remover";
-        }
-    }
 
 
     @PostMapping("/administrativo/garanhoes/ajustarSaldo")
@@ -409,5 +358,57 @@ public class GaranhaoControle {
 
         return response;
     }	
+    
+    @GetMapping("/removerGaranhao/{id_garanhao}")
+    public String remover(@PathVariable("id_garanhao") Long id_garanhao, Model model, HttpSession session) {
+        System.out.println("ID recebido para exclusão: " + id_garanhao); // Log para verificar o ID
+
+        // Verifica se o usuário está logado na sessão
+        if (session.getAttribute("usuarioLogado") == null) {
+            return "redirect:/login"; // Redireciona para login se o usuário não estiver logado
+        }
+
+        // Obtém o usuário logado da sessão
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        model.addAttribute("usuario", usuario);
+
+        try {
+            // Busca o garanhão pelo ID
+            Optional<Garanhao> garanhaoOptional = garanhaoRepositorio.findById(id_garanhao);
+            if (garanhaoOptional.isPresent()) {
+                Garanhao garanhao = garanhaoOptional.get(); // Obtém o garanhão
+                model.addAttribute("remover", garanhao); // Envia o objeto Garanhão para o modelo
+
+                // Verifica se há movimentações associadas ao garanhão
+                List<Movimentacao> movimentacoesAssociadas = movimentacaoRepositorio.findAll()
+                        .stream()
+                        .filter(movimentacao -> movimentacao.getGaranhao().getId_garanhao().equals(id_garanhao))
+                        .collect(Collectors.toList());
+
+                if (!movimentacoesAssociadas.isEmpty()) {
+                    // Caso existam movimentações associadas
+                    model.addAttribute("message", "Erro ao excluir: Garanhão possui movimentações associadas.");
+                    return "administrativo/garanhoes/remover";
+                }
+
+                // Se não houver movimentações, tenta excluir o garanhão
+                garanhaoRepositorio.deleteById(id_garanhao);
+                model.addAttribute("message", "Garanhão removido com sucesso!");
+                return "administrativo/garanhoes/remover";
+            } else {
+                // Caso o garanhão não seja encontrado
+                model.addAttribute("message", "Garanhão não encontrado!");
+                return "administrativo/garanhoes/remover";
+            }
+        } catch (DataIntegrityViolationException e) {
+            model.addAttribute("message", "Erro ao excluir: Garanhão está vinculado a outras entidades.");
+            return "administrativo/garanhoes/remover";
+        } catch (Exception e) {
+            System.out.println("Erro ao excluir o garanhão: " + e.getMessage());
+            model.addAttribute("message", "Erro ao excluir: " + e.getMessage());
+            return "administrativo/garanhoes/remover";
+        }
+    }
+
 
 }

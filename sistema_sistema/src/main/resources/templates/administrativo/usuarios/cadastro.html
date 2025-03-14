@@ -1,25 +1,26 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
 
-    <meta charset="utf-8"> <!-- Define a codificação de caracteres como UTF-8, suportando caracteres especiais -->
+    <meta charset="utf-8"><!-- Configuração de codificação de caracteres para suportar caracteres especiais -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Configura a página para ser responsiva em dispositivos móveis -->
+    <!-- Configuração de viewport para garantir responsividade em dispositivos móveis -->
 
-    <!-- Estilos e fontes -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Bootstrap CSS: Biblioteca para estilização responsiva e componentes visuais -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <!-- Adiciona os estilos do framework Bootstrap -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Font Awesome: Biblioteca de ícones para botões e elementos visuais -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-    <!-- Adiciona ícones do Font Awesome -->
+    <!-- Select2 CSS: Biblioteca para personalização de elementos <select>, permitindo buscas e seleção múltipla -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Google Fonts: Fonte "Asar" para personalização tipográfica -->
     <link href="https://fonts.googleapis.com/css2?family=Asar&display=swap" rel="stylesheet">
 
-    <title>Cadastro de Usuário</title>
+    <title>Movimentação</title>
 
     <!--icone rosamystica-->
     <link rel="icon"
@@ -43,16 +44,6 @@
             font-family: 'Arial, sans-serif';
         }
 
-        /*titulo*/
-        h1 {
-            font-size: 32px;
-            color: #cf8311;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-            font-family: "Asar", Sans-serif;
-        }
-
         /*fundo secundario*/
         .form-container {
             background: #fff;
@@ -65,6 +56,21 @@
             width: 100%;
             border-top: 4px solid #808080;
             border-bottom: 4px solid #808080;
+        }
+
+        /*titulo*/
+        h1 {
+            font-size: 32px;
+            color: #333333;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: "Asar", Sans-serif;
+            color: #cf8311;
+        }
+
+        .form-row {
+            margin-bottom: 20px;
         }
 
         .form-control {
@@ -82,6 +88,8 @@
             margin-bottom: .5rem;
             font-weight: 600;
         }
+
+
 
         /*botões*/
         .btn {
@@ -268,6 +276,84 @@
             text-align: center;
         }
 
+        /*modal*/
+        .fechar-modal {
+            background: none;
+            /* Remove qualquer fundo */
+            border: none;
+            /* Remove a borda */
+            box-shadow: none;
+            /* Remove sombras ao focar */
+            padding: 0;
+            /* Remove o espaçamento interno */
+            cursor: pointer;
+            /* Mantém o cursor como ponteiro */
+        }
+
+        .fechar-modal i {
+            font-size: 2rem;
+            /* Ajuste o tamanho */
+            color: #ff0000;
+            /* Mantém a cor vermelha */
+        }
+
+        /* Fundo do modal semi-transparente */
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilização do título */
+        .modal-title {
+            font-weight: bold;
+            color: #ff0000;
+            /* Vermelho do Bootstrap */
+        }
+
+        /* Botão de fechar sem fundo e com hover */
+        .fechar-modal {
+            background: none;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .fechar-modal i {
+            font-size: 2rem;
+            color: #ff0000;
+            /* Vermelho */
+            transition: 0.3s;
+        }
+
+        /* Efeito ao passar o mouse no botão de fechar */
+        .fechar-modal i:hover {
+            color: #B22222;
+            /* Vermelho mais escuro */
+            transform: scale(1.2);
+        }
+
+        /* Corpo do modal estilizado */
+        .modal-body {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        /* Texto do aviso maior e centralizado */
+        h5 {
+            font-size: 1.8rem;
+            /* Aumenta o tamanho do texto */
+            font-weight: bold;
+            color: #d9534f;
+            /* Vermelho Bootstrap */
+            text-align: center;
+            /* Centraliza o texto */
+            width: 100%;
+            /* Garante que o alinhamento funcione */
+        }
+
         /*ICONES*/
         .user-icon {
             font-size: 28px;
@@ -360,7 +446,6 @@
 
 <body>
 
-    <!-- Navegação -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-background">
         <div class="container">
             <!-- Logo à esquerda -->
@@ -368,8 +453,6 @@
                 <img src="https://www.harasrosamystica.com.br/wp-content/uploads/2024/07/logo-header-novo.webp"
                     alt="Logo Haras Rosa Mystica">
             </a>
-
-
 
             <!-- Botão do menu responsivo -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
@@ -388,6 +471,9 @@
                 </a>
 
                 <div class="dropdown">
+                    <a class="dropdown-item user-icon" href="#" id="userMenu" role="button">
+                        <i class="fa-solid fa-user" style="color: #ffffff;"></i>
+                    </a>
 
                     <div class="dropdown-menu dropdown-menu-left" style="width: 250px; background-color: #363636;">
 
@@ -425,23 +511,6 @@
                     </div>
                 </div>
 
-                <div class="dropdown">
-
-                    <div class="dropdown-menu dropdown-menu-left"
-                        style="width: 250px; background-color: #363636; padding: 10px;">
-
-                        <!-- Campo para exibir a senha atual -->
-                        <div class="dropdown-item" style="display: flex; flex-direction: column; align-items: center;">
-                            <div style="position: relative; width: 100%;">
-                                <input type="password" id="senhaAtual" th:value="${usuario.senha}" readonly
-                                    style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; background: transparent; color: #ffffff; width: 100%; padding-right: 30px;">
-                                <i class="fa-solid fa-eye" id="toggleSenhaAtual"
-                                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #ffffff; font-size: 14px;"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <a class="dropdown-item" href="/sair">
                     <i class="fa-solid fa-right-from-bracket" style="color: #ff0000;"></i>
                 </a>
@@ -451,74 +520,195 @@
 
     <div class="container d-flex justify-content-center align-items-center">
         <div class="form-container" style="width: 800px; max-width: 900px;">
-            <form action="/administrativo/usuarios/salvar" th:object="${usuario}" method="POST">
+            <form action="/salvarMovimentacao" th:object="${movimentacao}" method="POST">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <a href="/administrativo/usuarios/listar" class="custom-link">
+                    <a href="/home" class="custom-link">
                         <i class="fa-solid fa-circle-left"></i>
                     </a>
-                    <h1 class="m-0 text-center flex-grow-1">Cadastro de Usuário</h1>
+                    <h1 class="m-0 text-center flex-grow-1">Movimentação de Sêmen</h1>
                     <div style="width: 100px;"></div>
                 </div>
-
                 <div class="custom-divider"></div>
 
+
                 <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                        <label>Nome</label>
-                        <input type="text" th:field="*{nome_usuario}" placeholder="Nome do Usuário" class="form-control"
-                            required maxlength="30" />
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label>Função do usuário</label>
-                        <select th:field="*{funcao}" class="form-control" required>
-                            <option value="Veterinaria">Veterinaria</option>
-                            <option value="Administrador">Administrador</option>
-                            <option value="Desenvolvedor">Desenvolvedor</option>
-                            <option value="T.I">T.I</option>
+                    <div class="col-12 col-md-6">
+                        <label for="garanhaoSelect" class="label-info">Selecione o Garanhão</label>
+                        <select id="garanhaoSelect" th:field="*{garanhao}" class="form-control" required >
+                            <option value="">Escolha um Garanhão</option>
+                            <option th:each="gar : ${listarGaranhoes}" 
+							        th:value="${gar.id_garanhao}"
+							        th:text="${gar.id_garanhao + ' - ' + gar.nome_garanhao}">
+							</option>
                         </select>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="botijao" class="label-info">Botijão</label>
+                        <input type="text" id="botijao" th:field="*{botijao}" class="form-control" readonly />
                     </div>
                 </div>
 
                 <div class="form-row">
-                    <div class="col-md-6 mb-3">      
-                    <label>E-mail</label>
-                        <div class="input-group">
-                            <input type="text" th:field="*{email}" id="email" class="form-control" required
-                                placeholder="E-mail, sem @haras.com" maxlength="30" oninput="atualizarEmail()" />
+                <div class="col-12 col-md-6">
+                        <label for="caneca" class="label-info">Caneca</label>
+                        <input type="text" id="caneca" th:field="*{caneca}" class="form-control" readonly />
+                    </div>
+                
+                 <div class="col-12 col-md-6">
+                    <label for="cor_palheta" class="label-info">Palheta</label>
+                    <input type="text" id="cor_palheta" th:field="*{cor_palheta}" class="form-control" readonly />
+                </div>
+
+                </div>
+
+                <div class="form-row">
+                
+                <div class="col-12 col-md-6">
+                        <div class="form-group d-flex align-items-center">
+                            <label for="quantidade" class="label-info mb-0">Quantidade de Palhetas</label>
+                            <div id="saldo-info" style="margin-left: 83px; font-size: 13px">
+                                Restam <span required id="saldo-atual-palhetas">0</span> palhetas
+                            </div>
+                        </div>
+                        <input type="number" required id="quantidade" th:field="*{quantidade}" class="form-control"
+                            min="1" />
+                    </div>
+                    
+                    <div class="col-12 col-md-6">
+                        <label for="destino" class="label-info">Destino</label>
+						<div id="destino" class="form-control d-flex justify-content-center">
+						    <label class="mx-2">
+						        <input required type="radio" name="destino" value="venda" onclick="mostrarCampoAdicional()"> Venda
+						    </label>
+						    <label class="mx-2">
+						        <input required type="radio" name="destino" value="uso_interno" onclick="mostrarCampoAdicional()" checked> Uso Interno
+						    </label>
+						    <label class="mx-2">
+						        <input required type="radio" name="destino" value="transferencia" onclick="mostrarCampoAdicional()"> Transferência
+						    </label>
+						</div>
+
+                    </div>
+    
+                </div>
+
+                <div class="form-row">
+                
+               	<div class="col-12 col-md-6">
+                        <div>
+                            <label for="info-adicional" class="label-info">Informação Adicional</label>
+                            <input required type="text" th:field="*{endereco}" id="info-adicional" class="form-control"
+                                placeholder="Preencha as informações" maxlength="40">
                         </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label>Senha</label>
-                        <input type="text" th:field="*{senha}" placeholder="Senha do Usuário" class="form-control"
-                            required maxlength="15" />
+                    
+                    <div class="col-12 col-md-6">
+                        <label for="prenhez" class="label-info">Status da Prenhez</label>
+						<div id="prenhez" class="form-control d-flex justify-content-center">
+						    <label class="mx-2">
+						        <input type="radio" name="prenhez" value="positivo"> Positivo
+						    </label>
+						    <label class="mx-2">
+						        <input type="radio" name="prenhez" value="negativo"> Negativo
+						    </label>
+						    <label class="mx-2">
+						        <input type="radio" name="prenhez" value="indefinido" checked> Indefinido
+						    </label>
+						</div>
+                    </div>
+
+                </div>
+
+                <!-- Modal de Aviso -->
+                <div class="modal fade" id="saldoAtualModal" tabindex="-1" aria-labelledby="saldoAtualModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="saldoAtualModalLabel">Aviso</h5>
+                                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Números negativos não são permitidos.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-row justify-content-center">
+			<div class="form-row justify-content-center">
 			    <div class="col-12 col-md-6 text-center">
-                         <label>Tipo de usuário</label>
-                        <select th:field="*{tipo}" class="form-control" required>
-                            <option value="ADMIN">Administrador</option>
-                            <option value="USER">Usuário</option>
-                        </select>
+			        <label for="profissional" class="label-info">Escolha um Profissional</label>
+			        <div id="profissional" required class="form-control d-flex justify-content-center">
+			            <label class="mx-2">
+			                <input required type="radio" name="profissional" value="Motoboy" onclick="atualizarCamposProfissional()"> Motoboy
+			            </label>
+			            <label class="mx-2">
+			                <input required type="radio" name="profissional" value="Veterinário" onclick="atualizarCamposProfissional()" checked> Veterinário
+			            </label>
+			        </div>
+			    </div>
+
+                    <!-- Modal de Aviso -->
+                    <div class="modal fade" id="avisoModal" tabindex="-1" aria-labelledby="avisoModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="avisoModalLabel">Aviso</h5>
+                                    <button type="button" class="fechar-modal" data-bs-dismiss="modal"
+                                        aria-label="Fechar">
+                                        <i class="fa-solid fa-circle-xmark"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Você não pode selecionar mais do que o saldo restante.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+				</div>
+
+                <div class="form-row">
+					<div class="col-12 col-md-6">
+                        <label for="nome_profissional" class="label-info">Nome do Profissional</label>
+                        <input type="text" required id="nome_profissional" th:field="*{nome_profissional}"
+                            class="form-control" maxlength="40" />
                     </div>
-                    <div class="col-md-6 mb-3">
-                   
+                    
+                    <div class="col-12 col-md-6">
+                        <label for="identificador_profissional" class="label-info">Identificador do Profissional</label>
+                        <input type="text" required id="identificador_profissional"
+                            th:field="*{identificador_profissional}" class="form-control" maxlength="40" />
+                    </div>
                 </div>
 
+                <div class="form-row">
+                    <div class="col-12 col-md-6">
+                        <label for="data_movimentacao" class="label-info">Data da Movimentação</label>
+                        <input type="date" id="data_movimentacao" th:field="*{data_movimentacao}"
+                            class="form-control" />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="nome_usuario" class="label-info">Movimentação feita por:</label>
+                        <input type="text" id="nome_usuario" th:field="${usuario.nome_usuario}" readonly="true"
+                            class="form-control" />
+                    </div>
+                </div>
+              
                 <div class="custom-divider"></div>
 
-                <input type="hidden" th:field="*{id_usuario}" />
-
                 <div class="d-flex justify-content-between mt-3">
-                    <a href="/administrativo/usuarios/listar" class="btn btn-light btn-sm text-white">
+
+                    <a href="/administrativo/movimentacoes/listar" class="btn btn-light btn-sm text-white">
                         <i class="fa-solid fa-bars-staggered"></i> Lista
                     </a>
                     <button type="submit" class="btn btn-dark btn-sm">
-                        <i class="fa-solid fa-plus"></i> <i class="fa-solid fa-user"></i> Cadastrar
+                        <i class="fa-solid fa-plus"></i> Cadastrar Movimentação
                     </button>
                 </div>
+
             </form>
         </div>
     </div>
@@ -531,80 +721,181 @@
 
         </div>
     </footer>
+    <!-- Fim do Footer -->
+    <!-- Scripts JavaScript -->
+
+    <!-- jQuery: Biblioteca JavaScript para manipulação de DOM, eventos e AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Popper.js: Biblioteca para gerenciamento de pop-ups, tooltips e dropdowns do Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <!-- Bootstrap JavaScript: Biblioteca para interatividade e componentes visuais responsivos -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Select2 JavaScript: Biblioteca para personalização de elementos <select> com busca e múltipla seleção -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <!-- jQuery Mask Plugin: Biblioteca para criação de máscaras em campos de entrada (ex.: CPF, datas, telefones) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <!-- Bootstrap JS (Necessário para o modal funcionar) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
 
-        // Função para ajustar o e-mail antes de salvar
-        function atualizarEmail() {
-            const emailInput = document.getElementById("email");
-            const dominio = "@haras.com";
-
-            // Se o domínio já estiver no valor, extrai apenas a parte antes dele
-            if (emailInput.value.includes(dominio)) {
-                emailInput.value = emailInput.value.split(dominio)[0];
-            }
-
-            // Limita o nome do usuário a 20 caracteres
-            let parteUsuario = emailInput.value.slice(0, 20);
-
-            // Atualiza o campo com a parte do usuário + domínio
-            emailInput.value = parteUsuario + dominio;
-
-            // Mantém o cursor no local correto (antes do domínio)
-            emailInput.setSelectionRange(parteUsuario.length, parteUsuario.length);
-        }
-
-        // Função para aplicar máscara no celular
-        function mascaraCelular(campo) {
-            let valor = campo.value;
-
-            // Remove caracteres não numéricos
-            valor = valor.replace(/\D/g, "");
-
-            // Adiciona parênteses no DDD
-            valor = valor.replace(/^(\d{2})(\d)/, " $1 $2");
-
-            // Adiciona o traço no número
-            valor = valor.replace(/(\d{5})(\d)/, "$1-$2");
-
-            // Limita o tamanho máximo a 14 caracteres
-            valor = valor.substring(0, 14);
-
-            // Atualiza o campo com o valor formatado
-            campo.value = valor;
-        }
-
-        // Função para aplicar máscara no CPF
-        function mascaraCPF(campo) {
-            let valor = campo.value;
-
-            // Remove caracteres não numéricos
-            valor = valor.replace(/\D/g, "");
-
-            // Adiciona pontos e traço no CPF
-            valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
-            valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
-            valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-
-            // Limita o tamanho máximo a 14 caracteres
-            valor = valor.substring(0, 14);
-
-            // Atualiza o campo com o valor formatado
-            campo.value = valor;
-        }
-
-        // Máscara básica para o campo de endereço
         $(document).ready(function () {
-            $('#endereco').on('input', function () {
-                let valor = $(this).val();
-
-                // Permite letras, números, espaços, vírgulas, pontos e hifens
-                valor = valor.replace(/[^a-zA-Z0-9\s.,-]/g, '');
-
-                // Atualiza o campo com o valor formatado
-                $(this).val(valor);
-            });
+            inicializarSelectGaranhao();
+            inicializarEventoMudancaGaranhao();
+            inicializarEventoProfissional();
+            atualizarCamposProfissional();
         });
+
+        // Função para inicializar o Select2 no campo de seleção de garanhão
+        function inicializarSelectGaranhao() {
+            $('#garanhaoSelect').select2();
+        }
+
+        // Função para lidar com a alteração do campo de seleção de garanhão
+        function inicializarEventoMudancaGaranhao() {
+            $('#garanhaoSelect').on('change', function () {
+                var idGaranhao = $(this).val();
+
+                if (idGaranhao) {
+                    carregarDadosGaranhao(idGaranhao);
+                } else {
+                    limparCamposGaranhao();
+                }
+            });
+        }
+
+        document.getElementById("quantidade").addEventListener("input", function (event) {
+            const input = event.target;
+            if (input.value < 0) {
+                input.value = "0"; // substitui o valor negativo para 0
+                let modal = new bootstrap.Modal(document.getElementById("saldoAtualModal")); // Instancia o modal
+                modal.show(); // Exibe o modal
+            }
+        });
+
+        // Elementos do input e saldo
+        const quantidadeInput = document.getElementById('quantidade');
+        const saldoAtualSpan = document.getElementById('saldo-atual-palhetas');
+
+        // Função para atualizar o limite do campo de quantidade
+        function atualizarMaximo() {
+            const saldoAtual = parseInt(saldoAtualSpan.textContent, 10);
+            quantidadeInput.max = saldoAtual; // Define o valor máximo permitido
+        }
+
+        // Função para abrir o modal
+        function abrirModalAviso() {
+            const modal = new bootstrap.Modal(document.getElementById('avisoModal'));
+            modal.show();
+        }
+
+        // Validação ao mudar o valor
+        quantidadeInput.addEventListener('input', (event) => {
+            const saldoAtual = parseInt(saldoAtualSpan.textContent, 10);
+            const valorDigitado = parseInt(event.target.value, 10);
+
+            if (valorDigitado > saldoAtual) {
+                // Exibe o modal de aviso e corrige o valor automaticamente
+                event.target.value = 0;
+                abrirModalAviso();
+            }
+        });
+
+        // Função para carregar os dados do garanhão selecionado
+        function carregarDadosGaranhao(idGaranhao) {
+            $.ajax({
+                url: "/administrativo/garanhoes/dados/" + idGaranhao,
+                method: "GET",
+                success: function (data) {
+                    $("#botijao").val(data.botijao);
+                    $("#caneca").val(data.caneca);
+                    $("#cor_palheta").val(data.cor_palheta);
+                    $("#saldo-atual-palhetas").text(data.saldo_atual_palhetas);
+                    $("#quantidade").attr('max', data.saldo_atual_palhetas);
+                }
+            });
+        }
+
+        // Função para limpar os campos do garanhão
+        function limparCamposGaranhao() {
+            $("#botijao, #caneca, #cor_palheta").val("");
+            $("#saldo-atual-palhetas").text("0");
+            $("#quantidade").attr('max', 0);
+        }
+
+        // Função para atualizar o valor máximo permitido no campo de quantidade
+        function atualizarMaximo() {
+            const saldoAtualSpan = document.getElementById('saldo-atual-palhetas');
+            const quantidadeInput = document.getElementById('quantidade');
+            const saldoAtual = parseInt(saldoAtualSpan.textContent, 10);
+            quantidadeInput.max = saldoAtual > 0 ? saldoAtual : 1;
+        }
+
+        // Função para exibir ou ocultar campos adicionais com base no destino
+        function mostrarCampoAdicional() {
+            const destino = document.querySelector('input[name="destino"]:checked').value;
+            const campoAdicional = document.getElementById("campo-adicional");
+            campoAdicional.style.display = destino === "venda" || destino === "uso_interno" || destino === "transferencia" ? "block" : "none";
+        }
+
+        // Função para inicializar eventos e atualizar os campos com base no tipo de profissional
+        function inicializarEventoProfissional() {
+            $('input[name="profissional"]').on('change', atualizarCamposProfissional);
+        }
+
+        // Função para atualizar os campos com base no tipo de profissional selecionado
+        function atualizarCamposProfissional() {
+            const profissional = document.querySelector('input[name="profissional"]:checked').value;
+            const nomeProfissional = document.getElementById("nome_profissional");
+            const identificadorProfissional = document.getElementById("identificador_profissional");
+
+            if (profissional === "Veterinário") {
+                configurarCamposVeterinario(nomeProfissional, identificadorProfissional);
+            } else if (profissional === "Motoboy") {
+                configurarCamposMotoboy(nomeProfissional, identificadorProfissional);
+            } else {
+                limparCamposProfissional(nomeProfissional, identificadorProfissional);
+            }
+        }
+
+        // Função para configurar campos para o profissional Veterinário
+        function configurarCamposVeterinario(nomeProfissional, identificadorProfissional) {
+            nomeProfissional.placeholder = "Nome do Veterinário";
+            identificadorProfissional.placeholder = "CRMV do Veterinário";
+            identificadorProfissional.setAttribute('maxlength', '7');
+            identificadorProfissional.setAttribute('pattern', '[A-Za-z]{2}-[0-9]{5,6}');
+            identificadorProfissional.title = "Digite o CRMV do Veterinário";
+            identificadorProfissional.value = "";
+            $('#identificador_profissional').unmask();
+            $('#identificador_profissional').mask('AA-000000', {
+                translation: { 'A': { pattern: /[A-Za-z]/, optional: false } }
+            });
+        }
+
+        // Função para configurar campos para o profissional Motoboy
+        function configurarCamposMotoboy(nomeProfissional, identificadorProfissional) {
+            nomeProfissional.placeholder = "Nome do Motoboy";
+            identificadorProfissional.placeholder = "CPF do Motoboy";
+            identificadorProfissional.setAttribute('maxlength', '14');
+            identificadorProfissional.setAttribute('pattern', '[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}');
+            identificadorProfissional.title = "Digite o CPF do Motoboy";
+            identificadorProfissional.value = "";
+            $('#identificador_profissional').unmask();
+            $('#identificador_profissional').mask('000.000.000-00', { reverse: true });
+        }
+
+        // Função para limpar os campos do profissional
+        function limparCamposProfissional(nomeProfissional, identificadorProfissional) {
+            nomeProfissional.placeholder = "";
+            identificadorProfissional.placeholder = "";
+            identificadorProfissional.value = "";
+            $('#identificador_profissional').unmask();
+        }
 
         // Função para alternar a visibilidade da senha
         function togglePassword(inputId, toggleId) {

@@ -1,3 +1,4 @@
+
 package com.projeto.sistema.controle;
 
 import java.time.LocalDate;
@@ -140,10 +141,6 @@ public class MovimentacaoControle {
 
                 // Obtem o nome do garanhão da movimentação (via propriedade nome_garanhao)
                 String nomeGaranhao = movimentacao.getNome_garanhao();
-                
-                // Obtem o nome do garanhão da movimentação (via propriedade nome_garanhao)
-                String botijao = movimentacao.getBotijao();
-                
 
                 // Obtemos a quantidade de palhetas que foi retirada
                 int quantidadePalhetasRemovidas = movimentacao.getQuantidade();
@@ -163,8 +160,7 @@ public class MovimentacaoControle {
                 	    movimentacao.getId_movimentacao(), 
                 	    motivoExclusao, 
                 	    nomeGaranhao,
-                	    usuario.getNome_usuario(),  // Nome do usuário responsável correto
-                	    botijao  // Botijão na posição correta
+                	    usuario.getNome_usuario() // Nome do usuário responsável correto
                 	);
 
                 lixeiraRepositorio.save(lixeira);
