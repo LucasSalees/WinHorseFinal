@@ -41,6 +41,14 @@
             text-align: center;
             font-family: "Asar", Sans-serif;
         }
+        
+        /* Estilo para o título */
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: "Asar", Sans-serif;
+        }
 
         /* Estilo para o fundo secundário do formulário */
         .form-container {
@@ -392,8 +400,8 @@
 	        <h1>Remover - [[${remover.nome_garanhao}]]</h1>
 	
 	        <!-- Mensagem de sucesso ou erro -->
-	        <h1 th:text="${message}" th:classappend="${message.contains('sucesso') ? 'text-success' : (message.contains('erro') ? 'text-danger' : '')}">
-	        </h1>
+	        <h2 th:text="${message}" th:classappend="${message.contains('sucesso') ? 'text-success' : (message.contains('erro') ? 'text-danger' : '')}">
+	        </h2>
 	
 	        <!-- Botão para voltar à lista de garanhões -->
 	        <div class="text-center">

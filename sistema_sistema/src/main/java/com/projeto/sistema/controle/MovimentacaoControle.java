@@ -118,8 +118,8 @@ public class MovimentacaoControle {
         return "redirect:/administrativo/movimentacoes/listar";
     }
     
-    @PostMapping("/refazerMovimentacao/{id_movimentacao}")
-    public String refazer(@PathVariable("id_movimentacao") Long idMovimentacao,
+    @PostMapping("/removerMovimentacao/{id_movimentacao}")
+    public String remover(@PathVariable("id_movimentacao") Long idMovimentacao,
                           @RequestParam("motivoExclusao") String motivoExclusao, 
                           Model model, HttpSession session) {
 
@@ -140,6 +140,10 @@ public class MovimentacaoControle {
 
                 // Obtem o nome do garanhão da movimentação (via propriedade nome_garanhao)
                 String nomeGaranhao = movimentacao.getNome_garanhao();
+                
+                // Obtem o nome do garanhão da movimentação (via propriedade nome_garanhao)
+                String botijao = movimentacao.getBotijao();
+                
 
                 // Obtemos a quantidade de palhetas que foi retirada
                 int quantidadePalhetasRemovidas = movimentacao.getQuantidade();
@@ -155,13 +159,14 @@ public class MovimentacaoControle {
                 garanhao.ajustarSaldoAtual(quantidadePalhetasRemovidas);  // Adiciona de volta ao saldo do garanhão
                 garanhaoRepositorio.save(garanhao);  // Salva o garanhão com o saldo atualizado
 
-                // Salva a movimentação na lixeira com o nome do usuário responsável
                 Lixeira lixeira = new Lixeira(
-                    movimentacao.getId_movimentacao(), 
-                    motivoExclusao, 
-                    nomeGaranhao,
-                    usuario.getNome_usuario()  // Passa o nome do usuário logado como responsável
-                );
+                	    movimentacao.getId_movimentacao(), 
+                	    motivoExclusao, 
+                	    nomeGaranhao,
+                	    usuario.getNome_usuario(),  // Nome do usuário responsável correto
+                	    botijao  // Botijão na posição correta
+                	);
+
                 lixeiraRepositorio.save(lixeira);
 
                 // Exclui a movimentação
@@ -171,7 +176,7 @@ public class MovimentacaoControle {
                 model.addAttribute("remover", movimentacao);  // Adiciona a nome do garanhão à variável "remover" no modelo
 
                 // Adiciona a mensagem de sucesso
-                model.addAttribute("message", "Movimentação movida para a lixeira com sucesso e quantidade de palhetas atualizada!");
+                model.addAttribute("message", "Movimentação excluída com sucesso e quantidade de palhetas atualizada!");
                 return "administrativo/movimentacoes/remover";
             } else {
                 model.addAttribute("message", "Movimentação não encontrada!");
@@ -183,7 +188,7 @@ public class MovimentacaoControle {
         }
     }
 
-    @GetMapping("/removerMovimentacao/{id_movimentacao}")
+    /*@GetMapping("/removerMovimentacao/{id_movimentacao}")
     public String remover(@PathVariable("id_movimentacao") Long id_movimentacao, Model model, HttpSession session) {
         System.out.println("ID recebido para exclusão: " + id_movimentacao); // Log para verificar o ID
 
@@ -219,7 +224,7 @@ public class MovimentacaoControle {
             model.addAttribute("message", "Erro ao excluir: " + e.getMessage());
             return "administrativo/movimentacoes/remover";
         }
-    }
+    }*/
 
 
     @GetMapping("/administrativo/movimentacoes/lixeira")
@@ -265,9 +270,6 @@ public class MovimentacaoControle {
         return "redirect:/administrativo/movimentacoes/lixeira";
     }
 
-
-
-
     @PostMapping("/salvarMovimentacao")
     public ModelAndView salvarMovimentacao(Movimentacao movimentacao) {
         // Buscar o garanhão pelo ID
@@ -285,27 +287,31 @@ public class MovimentacaoControle {
 
             // Atualizar o saldo do garanhão
             garanhao.setSaldo_atual_palhetas(novaQuantidade);
-            garanhaoRepositorio.save(garanhao); // Salvar a atualização no saldo do garanhão
+            garanhaoRepositorio.save(garanhao);
         }
 
         // Preencher os novos campos na movimentação
         movimentacao.setNome_garanhao(garanhao.getNome_garanhao());
-        movimentacao.setData_movimentacao(LocalDate.now());
+
+        // ✅ Agora a data só será definida como hoje se o usuário não preencher outra no formulário
+        if (movimentacao.getData_movimentacao() == null) {
+            movimentacao.setData_movimentacao(LocalDate.now());
+        }
 
         // Garantir que apenas o destino selecionado pelo usuário seja salvo
         String destinoSelecionado = movimentacao.getDestino();
         if (destinoSelecionado != null && !destinoSelecionado.trim().isEmpty()) {
-            movimentacao.setDestino(destinoSelecionado.trim()); // Remove espaços e salva apenas o destino válido
+            movimentacao.setDestino(destinoSelecionado.trim());
         } else {
-            movimentacao.setDestino(null); // Se nenhum destino for selecionado, define como null
+            movimentacao.setDestino(null);
         }
 
         // Salvar movimentação no banco
         movimentacaoRepositorio.save(movimentacao);
 
-        // Redirecionar para a lista de movimentações
         return new ModelAndView("redirect:/administrativo/movimentacoes/listar");
     }
+
     
     @PostMapping("/administrativo/movimentacoes/editarMovimentacao")
     public String salvarEdicaoMovimentacao(@ModelAttribute("movimentacao") Movimentacao movimentacao, RedirectAttributes redirectAttributes) {
@@ -345,6 +351,7 @@ public class MovimentacaoControle {
             movimentacaoExistente.setIdentificador_profissional(movimentacao.getIdentificador_profissional());
             movimentacaoExistente.setNome_profissional(movimentacao.getNome_profissional());
             movimentacaoExistente.setPrenhez(movimentacao.getPrenhez());
+            movimentacaoExistente.setData_movimentacao(movimentacao.getData_movimentacao());
             // Salvar as atualizações no banco de dados
             movimentacaoRepositorio.save(movimentacaoExistente);
             garanhaoRepositorio.save(garanhao);

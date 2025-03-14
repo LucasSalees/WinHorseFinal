@@ -29,18 +29,30 @@ public class Lixeira {
     
     @Column(name = "nome_usuario_responsavel") // Adicionando o nome do usuário responsável
     private String nomeUsuarioResponsavel;
+    
+    @Column(name = "botijao") // Adicionando o nome do usuário responsável
+    private String botijao;
 
     public Lixeira() {}
 
-    public Lixeira(Long idMovimentacao, String motivoExclusao, String nomeGaranhao, String nomeUsuarioResponsavel) {
+    public Lixeira(Long idMovimentacao, String motivoExclusao, String nomeGaranhao, String nomeUsuarioResponsavel, String botijao) {
         this.idMovimentacao = idMovimentacao;
         this.motivoExclusao = motivoExclusao;
         this.nomeGaranhao = nomeGaranhao;
         this.nomeUsuarioResponsavel = nomeUsuarioResponsavel; // Atribuindo o nome do usuário responsável
         this.dataExclusao = LocalDateTime.now();
+        this.botijao = botijao;
     }
 
-    // Getters e setters
+    public String getBotijao() {
+		return botijao;
+	}
+
+	public void setBotijao(String botijao) {
+		this.botijao = botijao;
+	}
+
+	// Getters e setters
     public Long getId() {
         return id;
     }

@@ -28,7 +28,7 @@ public class Movimentacao implements Serializable {
     private String cor_palheta;
     private String endereco;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate data_movimentacao = LocalDate.now(); // Data da movimentação
+    private LocalDate data_movimentacao;
     private String destino; // Ex: "entrada" ou "saida"
     private int quantidade;
     private String profissional;

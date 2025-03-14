@@ -742,7 +742,7 @@
                 <div class="d-flex justify-content-between mt-3">
 
 					<a th:if="${usuario.tipo == 'ADMIN'}"
-					   th:href="@{/refazerMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+					   th:href="@{/removerMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
 					   class="btn btn-danger btn-sm" onclick="openExclusaoModal(this); return false;">
 					   <i class="fa-solid fa-trash" style="color: #ffffff;"></i> Excluir
 					</a>
@@ -760,10 +760,10 @@
 					            </div>
 					            <div class="modal-body">
 					                <p>Tem certeza de que deseja excluir esta movimentação?</p>
-					                <p class="text-danger"><strong>Atenção:</strong> Ao excluir, a quantidade de palhetas movimentadas será retornada ao estoque.</p>
+					                <p class="text-danger"><strong>Atenção:</strong> Ao excluir, a quantidade de palhetas movimentadas será estornada ao estoque.</p>
 					                <div class="mb-3">
 					                    <label for="motivoExclusao" class="form-label">Motivo</label>
-					                    <textarea id="motivoExclusao" class="form-control" rows="3" placeholder="Descreva o motivo da ação..."></textarea>
+					                    <textarea id="motivoExclusao" class="form-control" rows="3" placeholder="Descreva o motivo da ação..." maxlength="50"></textarea>
 					                </div>
 					            </div>
 					            <div class="modal-footer">
@@ -940,7 +940,14 @@
                 usuarioResponsavelField.name = 'nome_usuario_responsavel';
                 usuarioResponsavelField.value = document.getElementById('nome_usuario').value; // Pega do input já preenchido
                 form.appendChild(usuarioResponsavelField);
-
+                
+             // Cria o campo para o botijao (pega do input na tela ou do link)
+                const botijaoField = document.createElement('input');
+                botijaoField.type = 'hidden';
+                botijaoField.name = 'botijao';
+                botijaoField.value = document.getElementById('botijao') ? document.getElementById('botijao').value : link.getAttribute('data-botijao'); // Captura do input ou do atributo data-botijao
+                form.appendChild(botijaoField);
+                
                 // Envia o formulário
                 document.body.appendChild(form);
                 form.submit();

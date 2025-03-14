@@ -476,12 +476,12 @@
 			    <a href="/home" class="custom-link">
 			        <i class="fa-solid fa-circle-left"></i>
 			    </a>
-			    <h1 class="m-0 text-center flex-grow-1">Movimentações Restauradas</h1>
+			    <h1 class="m-0 text-center flex-grow-1">Movimentações Estornadas</h1>
 			    <div style="width: 100px;"></div>
 			</div>
 			
 			<p class="text-muted text-center">
-			    Aqui, o administrador tem acesso à lista de movimentações que foram canceladas devido a erros e podem ser analisadas conforme necessário.
+			    Aqui, o administrador tem acesso à lista de movimentações que foram estornadas devido a erros e podem ser analisadas conforme necessário.
 			</p>
 
             <div class="custom-divider"></div>
@@ -495,6 +495,7 @@
 			        <tr>
 			            <th>Nº Movimentação</th>
 			            <th>Nome do Garanhão</th> 
+			            <!--  <th>Botijão</th>--> 
 			            <th>Nome do Responsável</th>
 			            <th>Motivo da Exclusão</th>
 			            <th>Data da Exclusão</th>
@@ -505,6 +506,7 @@
 			        <tr th:each="lixeira : ${lixeiraList}">
 			            <td th:text="${lixeira.idMovimentacao}"></td>
 			            <td th:text="${lixeira.nomeGaranhao}"></td>
+			            <!--<td th:text="${lixeira.botijao}"></td>-->
 			            <td th:text="${lixeira.nomeUsuarioResponsavel}"></td>
 			            <td th:text="${lixeira.motivoExclusao}"></td>
 			            <td th:text="${#temporals.format(lixeira.dataExclusao, 'dd/MM/yyyy HH:mm')}"></td>

@@ -686,7 +686,7 @@
                 <div class="form-row">
                     <div class="col-12 col-md-6">
                         <label for="data_movimentacao" class="label-info">Data da Movimentação</label>
-                        <input type="text" id="data_movimentacao" th:field="*{data_movimentacao}" readonly="true"
+                        <input type="date" id="data_movimentacao" th:field="*{data_movimentacao}"
                             class="form-control" />
                     </div>
                     <div class="col-12 col-md-6">
@@ -895,22 +895,6 @@
             identificadorProfissional.value = "";
             $('#identificador_profissional').unmask();
         }
-
-        // Função para atualizar a data e hora atual
-        function atualizarHorario() {
-            var now = new Date();
-            var dia = String(now.getDate()).padStart(2, '0');
-            var mes = String(now.getMonth() + 1).padStart(2, '0');
-            var ano = now.getFullYear();
-            var horas = String(now.getHours()).padStart(2, '0');
-            var minutos = String(now.getMinutes()).padStart(2, '0');
-            var dataFormatada = dia + '/' + mes + '/' + ano;
-            document.getElementById('data_movimentacao').value = dataFormatada;
-        }
-
-        // Configura a atualização da hora automaticamente
-        setInterval(atualizarHorario, 1000);
-        atualizarHorario();
 
         // Função para alternar a visibilidade da senha
         function togglePassword(inputId, toggleId) {
