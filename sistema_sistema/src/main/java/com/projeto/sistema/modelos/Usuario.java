@@ -2,11 +2,9 @@ package com.projeto.sistema.modelos;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.time.LocalTime;
+import java.util.List;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "usuarios") // Nome da tabela no banco de dados
@@ -22,8 +20,16 @@ public class Usuario implements Serializable {
     private String senha;
     private String tipo;
     private String funcao;
+    
+    private LocalDateTime data_cadastro = LocalDateTime.now(); // Data e hora do cadastro
 
-	private LocalDateTime data_cadastro = LocalDateTime.now(); // Data e hora do cadastro
+    @ElementCollection
+    @CollectionTable(name = "usuario_dias_permitidos", joinColumns = @JoinColumn(name = "usuario_id"))
+    @Column(name = "dia")
+    private List<String> diasPermitidos;
+
+    private LocalTime horaInicio;
+    private LocalTime horaFim;
 
     // Construtor com todos os parâmetros necessários
     public Usuario(String nome_usuario, String email, String senha) {
@@ -33,9 +39,8 @@ public class Usuario implements Serializable {
         this.data_cadastro = LocalDateTime.now(); // Data e hora de cadastro
     }
 
-    // Construtor padrão (caso precise)
-    public Usuario() {
-    }
+    // Construtor padrão
+    public Usuario() {}
 
     // Getters e Setters
     public Long getId_usuario() {
@@ -77,30 +82,44 @@ public class Usuario implements Serializable {
     public void setData_cadastro(LocalDateTime data_cadastro) {
         this.data_cadastro = data_cadastro;
     }
-    
+
     public String getTipo() {
-		return tipo;
-	}
+        return tipo;
+    }
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
-	public static boolean isPresent() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public String getFuncao() {
+        return funcao;
+    }
 
-	public static Object get() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public void setFuncao(String funcao) {
+        this.funcao = funcao;
+    }
 
-	public String getFuncao() {
-		return funcao;
-	}
+    public List<String> getDiasPermitidos() {
+        return diasPermitidos;
+    }
 
-	public void setFuncao(String funcao) {
-		this.funcao = funcao;
-	}
+    public void setDiasPermitidos(List<String> diasPermitidos) {
+        this.diasPermitidos = diasPermitidos;
+    }
+
+    public LocalTime getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(LocalTime horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public LocalTime getHoraFim() {
+        return horaFim;
+    }
+
+    public void setHoraFim(LocalTime horaFim) {
+        this.horaFim = horaFim;
+    }
 }

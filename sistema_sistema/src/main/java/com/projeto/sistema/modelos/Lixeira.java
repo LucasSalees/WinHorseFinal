@@ -20,6 +20,9 @@ public class Lixeira {
     
     @Column(name = "nome_garanhao")
     private String nomeGaranhao;
+    
+    @Column(name = "quantidade")
+    private Integer quantidade;
 
     @Column(name = "motivo_exclusao")
     private String motivoExclusao;
@@ -32,15 +35,24 @@ public class Lixeira {
 
     public Lixeira() {}
 
-    public Lixeira(Long idMovimentacao, String motivoExclusao, String nomeGaranhao, String nomeUsuarioResponsavel) {
+    public Lixeira(Long idMovimentacao, String motivoExclusao, String nomeGaranhao, Integer quantidade, String nomeUsuarioResponsavel) {
         this.idMovimentacao = idMovimentacao;
         this.motivoExclusao = motivoExclusao;
         this.nomeGaranhao = nomeGaranhao;
+        this.quantidade = quantidade;
         this.nomeUsuarioResponsavel = nomeUsuarioResponsavel; // Atribuindo o nome do usuário responsável
         this.dataExclusao = LocalDateTime.now();
     }
 
-    // Getters e setters
+    public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	// Getters e setters
     public Long getId() {
         return id;
     }

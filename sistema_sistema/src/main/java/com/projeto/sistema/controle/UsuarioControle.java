@@ -1,6 +1,7 @@
 package com.projeto.sistema.controle;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,11 +68,17 @@ public class UsuarioControle {
 	    // Adiciona o usuário logado ao modelo (caso queira mostrar alguma informação do usuário logado)
 	    mv.addObject("usuarioLogado", usuarioLogado);
 
+	    // Preenche o objeto "usuario" com diasPermitidos (por exemplo, todos os dias da semana)
+	    if (usuario.getDiasPermitidos() == null) {
+	        usuario.setDiasPermitidos(Arrays.asList("Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"));
+	    }
+
 	    // Adiciona o objeto de usuário ao modelo para o formulário de cadastro
 	    mv.addObject("Usuario", usuario);
 
 	    return mv; // Retorna a página de cadastro
 	}
+
 
     @PostMapping("/administrativo/usuarios/salvar")
     public ModelAndView salvar(@ModelAttribute Usuario usuario, BindingResult result) {
@@ -91,7 +98,6 @@ public class UsuarioControle {
         return new ModelAndView("redirect:/administrativo/usuarios/listar");  // Redireciona para a listagem após salvar
     }
     
-    // Editar um garanhão específico pelo ID
     @GetMapping("/administrativo/usuarios/eventoUsuario/editarUsuario/{id_usuario}")
     public String editar(@PathVariable("id_usuario") Long id_usuario, Model model, HttpSession session) {
         // Verifica se o usuário está logado
@@ -107,8 +113,15 @@ public class UsuarioControle {
 
         // Se o usuário for encontrado, exibe a página de edição
         if (usuario.isPresent()) {
-            model.addAttribute("usuario", usuario.get()); // Adiciona o objeto usuário ao modelo
-            model.addAttribute("usuarioLogado", usuarioLogado); // Adiciona o usuário logado ao modelo
+            Usuario usuarioAtual = usuario.get();
+            
+            // Passa o objeto usuário e o usuário logado para o modelo
+            model.addAttribute("usuario", usuarioAtual);
+            model.addAttribute("usuarioLogado", usuarioLogado);
+
+            // Passa a lista de diasPermitidos para o modelo
+            model.addAttribute("diasPermitidos", usuarioAtual.getDiasPermitidos());
+
             return "administrativo/usuarios/eventoUsuario"; // Retorna para a página de edição
         }
 
@@ -164,8 +177,10 @@ public class UsuarioControle {
             usuarioExistente.setEmail(usuario.getEmail());
             usuarioExistente.setSenha(usuario.getSenha());
             usuarioExistente.setTipo(usuario.getTipo());
-            usuarioExistente.setData_cadastro(usuario.getData_cadastro());
             usuarioExistente.setFuncao(usuario.getFuncao());
+            usuarioExistente.setDiasPermitidos(usuario.getDiasPermitidos()); // Atualiza os dias permitidos
+            usuarioExistente.setHoraInicio(usuario.getHoraInicio());
+            usuarioExistente.setHoraFim(usuario.getHoraFim());
 
             // Salvar as atualizações no banco de dados
             usuarioRepositorio.save(usuarioExistente);
@@ -179,6 +194,8 @@ public class UsuarioControle {
             return "redirect:/administrativo/usuarios/listar";
         }
     }
+
+
 
     @PostMapping("/administrativo/usuarios/editarUsuarioSenha")
     public String salvarEdicaoUsuarioSenha(
@@ -211,7 +228,6 @@ public class UsuarioControle {
     }
 
 
-    
     @GetMapping("/administrativo/usuarios/perfil")
     public String perfilUsuario(Model model, HttpSession session) {
         // Verifica se o usuário está logado
@@ -225,8 +241,15 @@ public class UsuarioControle {
         // Adiciona as informações do usuário ao modelo
         model.addAttribute("usuario", usuarioLogado);
 
+        // Passa a lista de diasPermitidos e horários para o modelo
+        model.addAttribute("diasPermitidos", usuarioLogado.getDiasPermitidos());
+        model.addAttribute("horaInicio", usuarioLogado.getHoraInicio());  // Adicionando hora de início
+        model.addAttribute("horaFim", usuarioLogado.getHoraFim());        // Adicionando hora de fim
+
         // Retorna para a página de perfil
         return "administrativo/usuarios/perfil"; // Nome do HTML a ser exibido
     }
+
+
 
 }

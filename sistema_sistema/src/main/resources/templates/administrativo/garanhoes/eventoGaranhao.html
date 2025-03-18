@@ -526,7 +526,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark navbar-background">
         <div class="container">
             <!-- Logo à esquerda -->
-            <a class="navbar-brand" href="/home">
+            <a class="navbar-brand" href="https://www.harasrosamystica.com.br/" target="_blank">
                 <img src="https://www.harasrosamystica.com.br/wp-content/uploads/2024/07/logo-header-novo.webp"
                     alt="Logo Haras Rosa Mystica">
             </a>
@@ -557,7 +557,7 @@
                         <a class="dropdown-item" href="/administrativo/usuarios/perfil"
                             style="display: flex; align-items: center; justify-content: space-between;">
 
-                            <span th:text="${usuario.nome_usuario}" style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; cursor: pointer; 
+                            <span th:text="'Perfil - ' + ${usuario.nome_usuario}" style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; cursor: pointer; 
 	                         transition: all 0.3s ease; display: inline-block;">
                             </span>
 
@@ -570,7 +570,7 @@
                             style="display: flex; align-items: center; justify-content: space-between;">
                             <span style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; 
 	                         cursor: pointer; transition: all 0.3s ease;">
-                                Administrador
+                                Lista de Usuários
                             </span>
 
                             <i class="fa-solid fa-circle"
@@ -894,13 +894,13 @@
                     <!-- Botão clicável para ADMIN -->
                     <button th:if="${usuario.tipo == 'ADMIN'}" type="submit" class="btn btn-light btn-sm"
                         id="btnEditarGaranhao">
-                        <i class="fa-solid fa-plus"></i> Editar Garanhão
+                        <i class="fa-solid fa-floppy-disk"></i> Salvar edição
                     </button>
 
                     <!-- Botão desativado para não ADMIN -->
                     <button th:if="${usuario.tipo != 'ADMIN'}" type="button" class="btn btn-light btn-sm"
                         style="pointer-events: none; color: #ffffff; cursor: not-allowed; background-color: #C0C0C0;">
-                        <i class="fa-solid fa-plus" style="color: #ffffff;"></i> Editar Garanhão
+                        <i class="fa-solid fa-floppy-disk" style="color: #ffffff;"></i> Salvar edição
                     </button>
 
                     <input type="hidden" th:field="*{id_garanhao}" />
@@ -909,15 +909,61 @@
         </div>
     </div>
 
-    <!-- Início do Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Input Center.</p>
-            <p>Todos os direitos reservados.</a></p>
+    <!-- Modal de aviso 10 minutos -->
+		<div id="modal10Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+		    <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
+		        <p>Faltam 10 minutos para o fim da sua sessão!</p>
+		        <button onclick="fecharModal('modal10Min')" 
+		                style="background-color: #ffc107; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;" 
+		                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#ffc107'">
+		            OK
+		        </button>
+		    </div>
+		</div>
+		
+		<!-- Modal de aviso 5 minutos -->
+		<div id="modal5Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+		    <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
+		        <p>Faltam 5 minutos para o fim da sua sessão!</p>
+		        <button onclick="fecharModal('modal5Min')" 
+		                style="background-color: #ffc107; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;" 
+		                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#ffc107'">
+		            OK
+		        </button>
+		    </div>
+		</div>
+		
+		<!-- Modal de aviso 1 minuto -->
+		<div id="modal1Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+		    <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
+		        <p>Faltam 1 minuto para o fim da sua sessão!</p>
+		        <button onclick="fecharModal('modal1Min')" 
+		                style="background-color: #dc3545; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;" 
+		                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#dc3545'">
+		            OK
+		        </button>
+		    </div>
+		</div>
 
-        </div>
-    </footer>
-    <!-- Fim do Footer -->
+    <!-- Início do Footer -->
+	<footer class="footer">
+	    <div class="container" style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
+	        <!-- Texto da empresa centralizado -->
+	        <div style="text-align: center;">
+	            <p>&copy; 2025 Input Tecnologia.</p>
+	            <p>Todos os direitos reservados.</p>
+	        </div>
+	
+	        <!-- Logo da empresa à direita -->
+	        <a href="https://input.com.vc/" target="_blank">
+			  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style="position: absolute; right: 50px; height: 40px; width: auto; top: 15px;">
+			</a>
+	
+	        <!-- Relógio e campo oculto que armazena a horaFim do usuário -->
+	        <div id="relogio" style="font-size: 0px; font-weight: bold; visibility: hidden;"></div>
+	        <input type="hidden" id="horaFim" th:value="${horaFim}" />
+	    </div>
+	</footer>
 
     <!-- Importando Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
@@ -1568,6 +1614,61 @@
     	// Inicializando a função para os campos de senha
     	togglePassword("novaSenha", "toggleNovaSenha");
     	togglePassword("confirmarSenha", "toggleConfirmarSenha");
+    	
+    	function atualizarRelogio() {
+            const agora = new Date();
+            const horas = agora.getHours().toString().padStart(2, '0');
+            const minutos = agora.getMinutes().toString().padStart(2, '0');
+            const horarioAtual = `${horas}:${minutos}`;
+
+            document.getElementById("relogio").innerText = horarioAtual;
+
+            const horaFim = document.getElementById("horaFim")?.value?.trim();
+
+            console.log("Hora Atual:", horarioAtual);
+            console.log("Hora Fim do Usuário:", horaFim);
+
+            if (horaFim && horarioAtual === horaFim) {
+                console.log("Hora atingida! Fazendo logout...");
+                window.location.href = "/sair"; // Faz o logout
+            }
+        }
+
+        setInterval(atualizarRelogio, 1000);
+        
+     	// Função para fechar o modal
+        function fecharModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        // Função para verificar o tempo restante e mostrar os avisos
+        function verificarTempoRestante() {
+            const horaFim = document.getElementById("horaFim").value;  // Hora fim do usuário
+            const horaAtual = new Date();
+            const fim = new Date();
+            const [hora, minutos] = horaFim.split(':');
+            fim.setHours(hora, minutos, 0);  // Define a hora fim a partir do valor do servidor
+
+            const tempoRestante = fim - horaAtual;  // Tempo restante em milissegundos
+
+            const minutosRestantes = Math.floor(tempoRestante / 60000);  // Converte para minutos
+
+            if (minutosRestantes <= 10 && minutosRestantes > 5) {
+                document.getElementById("modal10Min").style.display = "block";  // Exibe o modal de 10 minutos
+            } else if (minutosRestantes <= 5 && minutosRestantes > 1) {
+                document.getElementById("modal5Min").style.display = "block";  // Exibe o modal de 5 minutos
+            } else if (minutosRestantes <= 1 && minutosRestantes > 0) {
+                document.getElementById("modal1Min").style.display = "block";  // Exibe o modal de 1 minuto
+            }
+
+            // Se o tempo acabou, desloga o usuário
+            if (minutosRestantes <= 0) {
+                window.location.href = "/sair";  // Redireciona para a página de logout
+            }
+        }
+
+        // Chama a função a cada 60 segundos para atualizar o tempo
+        setInterval(verificarTempoRestante, 60000);
 
 
     </script>

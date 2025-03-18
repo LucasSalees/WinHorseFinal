@@ -60,7 +60,6 @@ public class GaranhaoControle {
         return mv;
     }
     
-
     @GetMapping("/administrativo/garanhoes/listar")
     public ModelAndView listarGaranhoes(HttpSession session) {
         ModelAndView mv = new ModelAndView("administrativo/garanhoes/lista");
@@ -409,6 +408,5 @@ public class GaranhaoControle {
             return "administrativo/garanhoes/remover";
         }
     }
-
 
 }

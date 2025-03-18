@@ -1,5 +1,10 @@
 package com.projeto.sistema.controle;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,47 +47,111 @@ public class PrincipalControle {
         return "administrativo/login";
     }
 
-    // Login do usuário
     @PostMapping("/login")
-    public String login(Model model, Usuario usrParam, /*String lembrar,*/ HttpSession session, HttpServletResponse response) {
+    public String login(Model model, Usuario usrParam, HttpSession session, HttpServletResponse response) {
         Usuario usr = usuarioRepositorio.Login(usrParam.getEmail(), usrParam.getSenha());
 
         if (usr != null) {
-            // Salva o usuário na sessão
+            // Verificar se o usuário tem restrição de horário e dias
+            LocalTime agora = LocalTime.now();
+            DayOfWeek diaAtual = LocalDate.now().getDayOfWeek();
+
+            // Converter dia atual para o nome do dia em português
+            String nomeDia = converterDiaParaPortugues(diaAtual);
+
+            // Imprimir no console o dia atual, os dias permitidos e as horas
+            System.out.println("Usuário conectado.");
+            System.out.println("ID do usuário: " + usr.getId_usuario()); // Exibe o ID do usuário
+            System.out.println("Nome do usuário: " + usr.getNome_usuario()); // Exibe o nome do usuário
+            System.out.println("Dia atual: " + nomeDia); // Exibe o dia atual em português
+            System.out.println("Dias permitidos: " + usr.getDiasPermitidos()); // Exibe os dias permitidos
+            System.out.println("Hora atual: " + agora); // Exibe a hora atual
+            System.out.println("Hora início permitida: " + usr.getHoraInicio()); // Exibe a hora de início permitida
+            System.out.println("Hora fim permitida: " + usr.getHoraFim()); // Exibe a hora de fim permitida
+
+            // Verificar se o dia está na lista de dias permitidos
+            if (usr.getDiasPermitidos() != null && !usr.getDiasPermitidos().contains(nomeDia)) {
+                model.addAttribute("erro", "Data com restrição de acesso, contate seu administrador.");
+                return "administrativo/login";
+            }
+
+            // Verificar se o horário atual está dentro do permitido
+            if (usr.getHoraInicio() != null && usr.getHoraFim() != null) {
+                if (agora.isBefore(usr.getHoraInicio()) || agora.isAfter(usr.getHoraFim())) {
+                    model.addAttribute("erro", "Horário com restrição de acesso, contate seu administrador.");
+                    return "administrativo/login";
+                }
+            }
+
+            // Se tudo estiver correto, salva o usuário na sessão
             session.setAttribute("usuarioLogado", usr);
-            int tempoLogado = 60*60*24*365;// 1 ano de cookie
-            //if(lembrar != null) tempoLogado = (60+60+24+365) // 1 ano de cookie
-            // Configura o cookie
+            int tempoLogado = 60 * 60 * 24 * 365; // 1 ano de cookie
             CookieServico.setCookie(response, "id_usuario", String.valueOf(usr.getId_usuario()), tempoLogado);
+
             return "redirect:/home";
         }
 
-        // Exibe mensagem de erro se o login falhar
-        model.addAttribute("erro", "Email ou senha inválidos");
+        // Se email ou senha estiverem errados
+        model.addAttribute("erro", "Email ou senha inválidos.");
         return "administrativo/login";
     }
 
-    // Página inicial após login
+    // Função para converter o dia da semana para o nome em português
+    public String converterDiaParaPortugues(DayOfWeek dia) {
+        switch (dia) {
+            case MONDAY: return "Segunda";
+            case TUESDAY: return "Terça";
+            case WEDNESDAY: return "Quarta";
+            case THURSDAY: return "Quinta";
+            case FRIDAY: return "Sexta";
+            case SATURDAY: return "Sábado";
+            case SUNDAY: return "Domingo";
+            default: return "";
+        }
+    }
+
+
     @GetMapping("/home")
     public String home(HttpSession session, Model model) {
         if (session.getAttribute("usuarioLogado") == null) {
             return "redirect:/login";
         }
+        
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
+
         model.addAttribute("usuario", usuario);
         return "administrativo/home";
     }
 
+
     // Rota para logout
     @GetMapping("/sair")
     public String logout(HttpSession session, HttpServletResponse response) {
+        // Hora atual quando o usuário sai
+        LocalTime agora = LocalTime.now();
+        
+        // Imprimir no console que o usuário saiu e a hora da saída
+        System.out.println("Usuário saiu às: " + agora); // Exibe a hora da saída
+        System.out.println("Usuário desconectado.");
+
         // Invalida a sessão para limpar os dados
         session.invalidate();
+        
         // Remove o cookie
         CookieServico.setCookie(response, "id_usuario", "", 0);
+        
         // Redireciona para a tela de login
         return "redirect:/login";
     }
+
      
     /////////////////////////// 
     // 		  AJUDA			 //

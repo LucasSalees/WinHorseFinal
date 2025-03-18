@@ -70,6 +70,11 @@
             margin: 10px 0;
             border-top: 1px solid #e1e1e1;
         }
+        
+        .custom-divider-linha {
+            margin: 10px 0;
+            border-top: 1px solid #ffffff;
+        }
 
         /*textos em cima dos inputs*/
         label {
@@ -460,12 +465,10 @@
     <nav class="navbar navbar-expand-lg navbar-dark navbar-background">
         <div class="container">
             <!-- Logo à esquerda -->
-            <a class="navbar-brand" href="/home">
+            <a class="navbar-brand" href="https://www.harasrosamystica.com.br/" target="_blank">
                 <img src="https://www.harasrosamystica.com.br/wp-content/uploads/2024/07/logo-header-novo.webp"
                     alt="Logo Haras Rosa Mystica">
             </a>
-
-
 
             <!-- Botão do menu responsivo -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
@@ -490,7 +493,7 @@
                         <a class="dropdown-item" href="/administrativo/usuarios/perfil"
                             style="display: flex; align-items: center; justify-content: space-between;">
 
-                            <span th:text="${usuario.nome_usuario}" style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; cursor: pointer; 
+                            <span th:text="'Perfil - ' + ${usuario.nome_usuario}" style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; cursor: pointer; 
 	                         transition: all 0.3s ease; display: inline-block;">
                             </span>
 
@@ -503,7 +506,7 @@
                             style="display: flex; align-items: center; justify-content: space-between;">
                             <span style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; 
 	                         cursor: pointer; transition: all 0.3s ease;">
-                                Administrador
+                                Lista de Usuários
                             </span>
 
                             <i class="fa-solid fa-circle"
@@ -546,119 +549,218 @@
     </nav>
 
     <div class="container d-flex justify-content-center align-items-center">
-        <div class="form-container" style="width: 800px; max-width: 900px;">
-            <form action="/administrativo/usuarios/editarUsuario" th:object="${usuario}" method="POST"
-                id="movimentacaoForm">
+    <div class="form-container" style="width: 800px; max-width: 900px;">
+        <form action="/administrativo/usuarios/editarUsuario" th:object="${usuario}" method="POST" id="movimentacaoForm">
 
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <a href="/administrativo/usuarios/listar" class="custom-link">
-                        <i class="fa-solid fa-circle-left"></i>
-                    </a>
-                    <h1 class="m-0 text-center flex-grow-1">Editar - [[${usuario.nome_usuario}]]</h1>
-                    <div style="width: 100px;"></div>
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <a href="/administrativo/usuarios/listar" class="custom-link">
+                    <i class="fa-solid fa-circle-left"></i>
+                </a>
+                <h1 class="m-0 text-center flex-grow-1">Editar - [[${usuario.nome_usuario}]]</h1>
+                <div style="width: 100px;"></div>
+            </div>
+
+            <div class="custom-divider"></div>
+
+            <div>
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label>Nome</label>
+                        <input type="text" th:field="*{nome_usuario}" placeholder="Nome do Usuário" class="form-control" required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Função do usuário</label>
+                        <select th:field="*{funcao}" class="form-control" required>
+                            <option value="Veterinaria">Veterinária</option>
+                            <option value="Administrador">Administrador</option>
+                            <option value="Desenvolvedor">Desenvolvedor</option>
+                            <option value="T.I">T.I</option>
+                        </select>
+                    </div>
                 </div>
+
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label>E-mail</label>
+                        <div class="input-group">
+                            <input type="text" th:field="*{email}" id="email" class="form-control" required placeholder="E-mail, sem @haras.com" maxlength="30" oninput="atualizarEmail()" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Senha</label>
+                        <input type="text" th:field="*{senha}" placeholder="Senha do Usuário" class="form-control" required maxlength="15" />
+                    </div>
+                </div>
+
+                <div class="form-row justify-content-center">
+                    <div class="col-12 col-md-6 text-center">
+                        <label>Tipo de usuário</label>
+                        <select th:field="*{tipo}" class="form-control" required>
+                            <option value="ADMIN">Administrador</option>
+                            <option value="USER">Usuário</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="custom-divider-linha"></div>
+
+				<!-- Novo campo para restrição de acesso -->
+				<div class="form-row justify-content-center">
+				
+				    <!-- Dias permitidos -->
+				    <div class="col-md-12 mb-3 text-center">
+				        <label>Dias permitidos</label>
+				        <div class="d-flex flex-wrap justify-content-center">
+				            <div class="form-check mr-3">
+				                <input class="form-check-input" type="checkbox" th:field="*{diasPermitidos}" value="Segunda"
+				                    th:checked="${#lists.contains(diasPermitidos, 'Segunda')}"> Segunda
+				            </div>
+				            <div class="form-check mr-3">
+				                <input class="form-check-input" type="checkbox" th:field="*{diasPermitidos}" value="Terça"
+				                    th:checked="${#lists.contains(diasPermitidos, 'Terça')}"> Terça
+				            </div>
+				            <div class="form-check mr-3">
+				                <input class="form-check-input" type="checkbox" th:field="*{diasPermitidos}" value="Quarta"
+				                    th:checked="${#lists.contains(diasPermitidos, 'Quarta')}"> Quarta
+				            </div>
+				            <div class="form-check mr-3">
+				                <input class="form-check-input" type="checkbox" th:field="*{diasPermitidos}" value="Quinta"
+				                    th:checked="${#lists.contains(diasPermitidos, 'Quinta')}"> Quinta
+				            </div>
+				            <div class="form-check mr-3">
+				                <input class="form-check-input" type="checkbox" th:field="*{diasPermitidos}" value="Sexta"
+				                    th:checked="${#lists.contains(diasPermitidos, 'Sexta')}"> Sexta
+				            </div>
+				            <div class="form-check mr-3">
+				                <input class="form-check-input" type="checkbox" th:field="*{diasPermitidos}" value="Sábado"
+				                    th:checked="${#lists.contains(diasPermitidos, 'Sábado')}"> Sábado
+				            </div>
+				            <div class="form-check mr-3">
+				                <input class="form-check-input" type="checkbox" th:field="*{diasPermitidos}" value="Domingo"
+				                    th:checked="${#lists.contains(diasPermitidos, 'Domingo')}"> Domingo
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				
+			    <!-- Novo campo para restrição de acesso -->
+				<div class="form-row justify-content-center">
+				
+			    <div class="col-md-6 mb-3 text-center">
+			        <label>Horário permitido</label>
+			        <div class="d-flex justify-content-center">
+			            <input type="time" th:field="*{horaInicio}" class="form-control mx-2">
+			            <span class="mx-2">até</span>
+			            <input type="time" th:field="*{horaFim}" class="form-control mx-2">
+			        </div>
+			        <small class="form-text text-muted">
+			            Para não ter restrições de horário, deixe os campos em branco.
+			        </small>
+			    </div>
+			
+			</div>
+
+
+                <input type="hidden" th:field="*{id_usuario}" />
 
                 <div class="custom-divider"></div>
 
-                <div>
-                    <div class="form-row">
-                        <div class="col-md-6 mb-3">
-                            <label>Nome</label>
-                            <input type="text" th:field="*{nome_usuario}" placeholder="Nome do Usuário"
-                                class="form-control" required />
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label>Função do usuário</label>
-                            <select th:field="*{funcao}" class="form-control" required>
-                                <option value="Veterinaria">Veterinaria</option>
-                                <option value="Administrador">Administrador</option>
-                                <option value="Desenvolvedor">Desenvolvedor</option>
-                                <option value="T.I">T.I</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="col-md-6 mb-3">
-                            <label>E-mail</label>
-                            <div class="input-group">
-                                <input type="text" th:field="*{email}" id="email" class="form-control" required
-                                    placeholder="E-mail, sem @haras.com" maxlength="30" oninput="atualizarEmail()" />
+                <!-- Modal de Confirmação de Exclusão -->
+                <div class="modal fade" id="exclusaoModal" tabindex="-1" aria-labelledby="exclusaoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exclusaoModalLabel">Confirmação</h5>
+                                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </button>
                             </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label>Senha</label>
-                            <input type="text" th:field="*{senha}" placeholder="Senha do Usuário" class="form-control"
-                                required maxlength="15" />
-                        </div>
-                    </div>
-
-                    <div class="form-row justify-content-center">
-			    	<div class="col-12 col-md-6 text-center">
-                            <label>Tipo de usuário</label>
-                            <select th:field="*{tipo}" class="form-control" required>
-                                <option value="ADMIN">Administrador</option>
-                                <option value="USER">Usuário</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <input type="hidden" th:field="*{id_usuario}" />
-
-                    <div class="custom-divider"></div>
-
-                    <!-- Modal de Confirmação de Exclusão -->
-                    <div class="modal fade" id="exclusaoModal" tabindex="-1" aria-labelledby="exclusaoModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exclusaoModalLabel">Confirmação</h5>
-                                    <button type="button" class="fechar-modal" data-bs-dismiss="modal"
-                                        aria-label="Fechar">
-                                        <i class="fa-solid fa-circle-xmark"></i>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Tem certeza que deseja excluir este usuário?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cancelar</button>
-                                    <a id="confirmarExclusaoBtn" class="btn btn-danger">Excluir</a>
-                                </div>
+                            <div class="modal-body">
+                                <p>Tem certeza que deseja excluir este usuário?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <a id="confirmarExclusaoBtn" class="btn btn-danger">Excluir</a>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="d-flex justify-content-between mt-3">
-                        <a th:href="@{/removerUsuario/{id_usuario}(id_usuario=${usuario.id_usuario})}"
-                            class="btn btn-danger btn-sm" onclick="openExclusaoModal(this); return false;">
-                            <i class="fa-solid fa-trash" style="color: #ffffff;"></i> Excluir
-                        </a>
+                <div class="d-flex justify-content-between mt-3">
+                    <a th:href="@{/removerUsuario/{id_usuario}(id_usuario=${usuario.id_usuario})}" class="btn btn-danger btn-sm" onclick="openExclusaoModal(this); return false;">
+                        <i class="fa-solid fa-trash" style="color: #ffffff;"></i> Excluir
+                    </a>
 
-                        <a href="#" id="btnImprimir" class="btn btn-dark btn-sm" onclick="imprimirFormulario()">
-                            <i class="fa-solid fa-print"></i> Imprimir
-                        </a>
-
-                        <button type="submit" class="btn btn-light btn-sm text-white">
-                            <i class="fa-solid fa-plus"></i> Editar Usuário
-                        </button>
-                    </div>
-            </form>
-        </div>
+                    <a href="#" id="btnImprimir" class="btn btn-dark btn-sm" onclick="imprimirFormulario()">
+                        <i class="fa-solid fa-print"></i> Imprimir
+                    </a>
+                    
+                    <button type="submit" class="btn btn-light btn-sm text-white">
+                        <i class="fa-solid fa-floppy-disk"></i> Salvar edição
+                    </button>
+                </div>
+        </form>
     </div>
+</div>
+
     </div>
+    
+
+    <!-- Modal de aviso 10 minutos -->
+		<div id="modal10Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+		    <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
+		        <p>Faltam 10 minutos para o fim da sua sessão!</p>
+		        <button onclick="fecharModal('modal10Min')" 
+		                style="background-color: #ffc107; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;" 
+		                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#ffc107'">
+		            OK
+		        </button>
+		    </div>
+		</div>
+		
+		<!-- Modal de aviso 5 minutos -->
+		<div id="modal5Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+		    <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
+		        <p>Faltam 5 minutos para o fim da sua sessão!</p>
+		        <button onclick="fecharModal('modal5Min')" 
+		                style="background-color: #ffc107; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;" 
+		                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#ffc107'">
+		            OK
+		        </button>
+		    </div>
+		</div>
+		
+		<!-- Modal de aviso 1 minuto -->
+		<div id="modal1Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+		    <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
+		        <p>Faltam 1 minuto para o fim da sua sessão!</p>
+		        <button onclick="fecharModal('modal1Min')" 
+		                style="background-color: #dc3545; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;" 
+		                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#dc3545'">
+		            OK
+		        </button>
+		    </div>
+		</div>
 
     <!-- Início do Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Input Center.</p>
-            <p>Todos os direitos reservados.</a></p>
-
-        </div>
-    </footer>
-    <!-- Fim do Footer -->
+	<footer class="footer">
+	    <div class="container" style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
+	        <!-- Texto da empresa centralizado -->
+	        <div style="text-align: center;">
+	            <p>&copy; 2025 Input Tecnologia.</p>
+	            <p>Todos os direitos reservados.</p>
+	        </div>
+	
+	        <!-- Logo da empresa à direita -->
+	        <a href="https://input.com.vc/" target="_blank">
+			  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style="position: absolute; right: 50px; height: 40px; width: auto; top: 15px;">
+			</a>
+	
+	        <!-- Relógio e campo oculto que armazena a horaFim do usuário -->
+	        <div id="relogio" style="font-size: 0px; font-weight: bold; visibility: hidden;"></div>
+	        <input type="hidden" id="horaFim" th:value="${horaFim}" />
+	    </div>
+	</footer>
 
     <!-- Bootstrap JS (Necessário para o modal funcionar) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -695,58 +797,6 @@
             }
         });
 
-        // Função para aplicar máscara no celular
-        function mascaraCelular(campo) {
-            let valor = campo.value;
-
-            // Remove caracteres não numéricos
-            valor = valor.replace(/\D/g, "");
-
-            // Adiciona parênteses no DDD
-            valor = valor.replace(/^(\d{2})(\d)/, " $1 $2");
-
-            // Adiciona o traço no número
-            valor = valor.replace(/(\d{5})(\d)/, "$1-$2");
-
-            // Limita o tamanho máximo a 14 caracteres
-            valor = valor.substring(0, 14);
-
-            // Atualiza o campo com o valor formatado
-            campo.value = valor;
-        }
-
-        // Função para aplicar máscara no CPF
-        function mascaraCPF(campo) {
-            let valor = campo.value;
-
-            // Remove caracteres não numéricos
-            valor = valor.replace(/\D/g, "");
-
-            // Adiciona pontos e traço no CPF
-            valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
-            valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
-            valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-
-            // Limita o tamanho máximo a 14 caracteres
-            valor = valor.substring(0, 14);
-
-            // Atualiza o campo com o valor formatado
-            campo.value = valor;
-        }
-
-        // Máscara básica para o campo de endereço
-        $(document).ready(function () {
-            $('#endereco').on('input', function () {
-                let valor = $(this).val();
-
-                // Permite letras, números, espaços, vírgulas, pontos e hifens
-                valor = valor.replace(/[^a-zA-Z0-9\s.,-]/g, '');
-
-                // Atualiza o campo com o valor formatado
-                $(this).val(valor);
-            });
-        });
-
         function openExclusaoModal(link) {
             // Exibe o modal de confirmação
             const modal = new bootstrap.Modal(document.getElementById('exclusaoModal'));
@@ -764,199 +814,196 @@
             const email = document.getElementById('email').value;
             const senha = document.getElementById('senha').value;
             const tipo = document.getElementById('tipo').value;
-            const cpf = document.getElementById('cpf').value;
-            const celular = document.getElementById('celular').value;
-            const endereco = document.getElementById('endereco').value;
             const funcao = document.getElementById('funcao').value;
+            
+            // Captura os dias permitidos
+            const diasPermitidos = [];
+            document.querySelectorAll('input[name="diasPermitidos"]:checked').forEach((checkbox) => {
+                diasPermitidos.push(checkbox.value);
+            });
+
+            // Captura o horário permitido
+            const horaInicio = document.getElementById('horaInicio').value;
+            const horaFim = document.getElementById('horaFim').value;
 
             // Abre uma nova janela para impressão
             const janelaImpressao = window.open('', '', 'width=800,height=600');
 
             // Adiciona o conteúdo formatado para a impressão
             janelaImpressao.document.write(`
-						<html>
-						    <head>
-						        <title>Impressão - Haras Rosa Mystica</title>
-						        <style>
-						            /* Estilo geral */
-						            body {
-						                font-family: 'Arial', sans-serif;
-						                margin: 0;
-						                padding: 0;
-						                color: #000;
-						                background-color: #fff;
-						            }
+                <html>
+                    <head>
+                        <title>Impressão - Haras Rosa Mystica</title>
+                        <style>
+                            /* Estilo geral */
+                            body {
+                                font-family: 'Arial', sans-serif;
+                                margin: 0;
+                                padding: 0;
+                                color: #000;
+                                background-color: #fff;
+                            }
 
-						            /* Cabeçalho */
-						            .header {
-						                display: flex;
-						                align-items: center;
-						                justify-content: space-between;
-						                padding: 20px;
-						                border-bottom: 1px solid #000;
-						            }
+                            /* Cabeçalho */
+                            .header {
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                padding: 20px;
+                                border-bottom: 1px solid #000;
+                            }
 
-						            .header-img img {
-						                width: 120px;
-						                height: auto;
-						            }
+                            .header-img img {
+                                width: 120px;
+                                height: auto;
+                            }
 
-						            .header-title {
-						                font-size: 28px;
-						                font-weight: bold;
-						                text-transform: uppercase;
-						                color: #000;
-						                margin: 0 20px;
-						                text-align: center;
-						                flex-grow: 1;
-						            }
+                            .header-title {
+                                font-size: 28px;
+                                font-weight: bold;
+                                text-transform: uppercase;
+                                color: #000;
+                                margin: 0 20px;
+                                text-align: center;
+                                flex-grow: 1;
+                            }
 
-						            /* Conteúdo */
-						            .content {
-						                width: 80%;
-						                margin: 20px auto;
-						            }
+                            /* Conteúdo */
+                            .content {
+                                width: 80%;
+                                margin: 20px auto;
+                            }
 
-						            table {
-						                width: 100%;
-						                border-collapse: collapse;
-						                margin: 20px auto;
-						                font-size: 14px;
-						                color: #000;
-						            }
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin: 20px auto;
+                                font-size: 14px;
+                                color: #000;
+                            }
 
-						            th, td {
-						                border: 1px solid #000;
-						                padding: 8px;
-						                text-align: left;
-						            }
+                            th, td {
+                                border: 1px solid #000;
+                                padding: 8px;
+                                text-align: left;
+                            }
 
-						            th {
-						                font-weight: bold;
-						                text-transform: uppercase;
-						            }
+                            th {
+                                font-weight: bold;
+                                text-transform: uppercase;
+                            }
 
-						            /* Seção extra */
-						            .extra-section {
-						                margin-top: 20px;
-						                font-size: 14px;
-						                line-height: 1.8;
-						            }
+                            /* Seção extra */
+                            .extra-section {
+                                margin-top: 20px;
+                                font-size: 14px;
+                                line-height: 1.8;
+                            }
 
-						            .extra-line {
-						                margin-bottom: 10px;
-						            }
+                            .extra-line {
+                                margin-bottom: 10px;
+                            }
 
-						            .extra-line span {
-						                display: inline-block;
-						                width: 150px;
-						                font-weight: bold;
-						            }
+                            .extra-line span {
+                                display: inline-block;
+                                width: 150px;
+                                font-weight: bold;
+                            }
 
-						            /* Rodapé */
-						            .footer {
-						                text-align: center;
-						                font-size: 12px;
-						                color: #000;
-						                padding: 10px 0;
-						                border-top: 1px solid #000;
-						                position: relative;
-						            }
+                            /* Rodapé */
+                            .footer {
+                                text-align: center;
+                                font-size: 12px;
+                                color: #000;
+                                padding: 10px 0;
+                                border-top: 1px solid #000;
+                                position: relative;
+                            }
 
-						            .signature {
-						                display: flex;
-						                justify-content: space-between;
-						                align-items: center;
-						                gap: 20px;
-						                font-size: 12px;
-						            }
+                            .signature {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                gap: 20px;
+                                font-size: 12px;
+                            }
 
-						            .signature-block .label {
-						                text-align: center;
-						            }
+                            .signature-block .label {
+                                text-align: center;
+                            }
 
-						            .label {
-						                margin-bottom: 20px;
-						            }
+                            .label {
+                                margin-bottom: 20px;
+                            }
 
-						            /* Configurações para impressão */
-						            @media print {
-						                .footer {
-						                    position: fixed;
-						                    bottom: 0;
-						                    width: 100%;
-						                    border: none;
-						                }
+                            /* Configurações para impressão */
+                            @media print {
+                                .footer {
+                                    position: fixed;
+                                    bottom: 0;
+                                    width: 100%;
+                                    border: none;
+                                }
 
-						                .header, .content {
-						                    page-break-inside: avoid;
-						                }
-						            }
-						        </style>
-						    </head>
-						    <body>
-						        <div class="header">
-						            <div class="header-img">
-						            	<img src="https://www.harasrosamystica.com.br/wp-content/uploads/2024/07/logo-header-novo.webp" alt="Logo Haras Rosa Mystica">
-						            </div>
-						            <h2 class="header-title">Detalhes do usuário</h2>
-						        </div>
+                                .header, .content {
+                                    page-break-inside: avoid;
+                                }
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="header">
+                            <div class="header-img">
+                                <img src="https://www.harasrosamystica.com.br/wp-content/uploads/2024/07/logo-header-novo.webp" alt="Logo Haras Rosa Mystica">
+                            </div>
+                            <h2 class="header-title">Detalhes do usuário</h2>
+                        </div>
 
-						        <div class="content">
-						            <table>
-						                <tr>
-						                    <td>Nome do Usuário:</td>
-						                    <td>${nome_usuario}</td>
-						                </tr>
-						                <tr>
-						                    <td>Email:</td>
-						                    <td>${email}</td>
-						                </tr>
-						                <tr>
-						                    <td>Senha:</td>
-						                    <td>${senha}</td>
-						                </tr>
-						                <tr>
-						                    <td>Tipo:</td>
-						                    <td>${tipo}</td>
-						                </tr>
-						                <tr>
-						                    <td>Celular:</td>
-						                    <td>${celular}</td>
-						                </tr>
-										<tr>
-						                    <td>CPF:</td>
-						                    <td>${cpf}</td>
-						                </tr>
-										<tr>
-						                    <td>Endereço:</td>
-						                    <td>${endereco}</td>
-						                </tr>
-										<tr>
-						                    <td>Função:</td>
-						                    <td>${funcao}</td>
-						                </tr>
-						                
-						            </table>
+                        <div class="content">
+                            <table>
+                                <tr>
+                                    <td>Nome do Usuário:</td>
+                                    <td>${nome_usuario}</td>
+                                </tr>
+                                <tr>
+                                    <td>Email:</td>
+                                    <td>${email}</td>
+                                </tr>
+                                <tr>
+                                    <td>Senha:</td>
+                                    <td>${senha}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tipo:</td>
+                                    <td>${tipo}</td>
+                                </tr>
+                                <tr>
+                                    <td>Função:</td>
+                                    <td>${funcao}</td>
+                                </tr>
+                                <tr>
+                                    <td>Dias permitidos:</td>
+                                    <td>${diasPermitidos.join(', ')}</td>
+                                </tr>
+                                <tr>
+                                    <td>Horário permitido:</td>
+                                    <td>${horaInicio ? horaInicio : 'Sem restrição'} até ${horaFim ? horaFim : 'Sem restrição'}</td>
+                                </tr>
+                            </table>
+                        </div>
 
-						            
-						        </div>
-
-						        <div class="footer">
-						            <div class="signature">
-						                <div class="signature-block">
-						                    
-						                </div>
-						                
-						            </div>
-						            <div class="footer-text">
-						                © 2024 Haras Rosa Mystica - Todos os direitos reservados.
-						            </div>
-						        </div>
-						    </body>
-						</html>
-
-					    `);
+                        <div class="footer">
+                            <div class="signature">
+                                <div class="signature-block">
+                                </div>
+                            </div>
+                            <div class="footer-text">
+                                © 2024 Haras Rosa Mystica - Todos os direitos reservados.
+                            </div>
+                        </div>
+                    </body>
+                </html>
+            `);
 
             // Fecha o conteúdo e prepara para impressão
             janelaImpressao.document.close();
@@ -968,6 +1015,7 @@
                 janelaImpressao.close();
             }, 500);
         }
+
 
         // Função para alternar a visibilidade da senha
         function togglePassword(inputId, toggleId) {
@@ -990,6 +1038,61 @@
         // Aplicando aos campos
         togglePassword("senhaAtual", "toggleSenhaAtual");
         togglePassword("novaSenha", "toggleNovaSenha");
+        
+        function atualizarRelogio() {
+            const agora = new Date();
+            const horas = agora.getHours().toString().padStart(2, '0');
+            const minutos = agora.getMinutes().toString().padStart(2, '0');
+            const horarioAtual = `${horas}:${minutos}`;
+
+            document.getElementById("relogio").innerText = horarioAtual;
+
+            const horaFim = document.getElementById("horaFim")?.value?.trim();
+
+            console.log("Hora Atual:", horarioAtual);
+            console.log("Hora Fim do Usuário:", horaFim);
+
+            if (horaFim && horarioAtual === horaFim) {
+                console.log("Hora atingida! Fazendo logout...");
+                window.location.href = "/sair"; // Faz o logout
+            }
+        }
+
+        setInterval(atualizarRelogio, 1000);
+        
+     	// Função para fechar o modal
+        function fecharModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        // Função para verificar o tempo restante e mostrar os avisos
+        function verificarTempoRestante() {
+            const horaFim = document.getElementById("horaFim").value;  // Hora fim do usuário
+            const horaAtual = new Date();
+            const fim = new Date();
+            const [hora, minutos] = horaFim.split(':');
+            fim.setHours(hora, minutos, 0);  // Define a hora fim a partir do valor do servidor
+
+            const tempoRestante = fim - horaAtual;  // Tempo restante em milissegundos
+
+            const minutosRestantes = Math.floor(tempoRestante / 60000);  // Converte para minutos
+
+            if (minutosRestantes <= 10 && minutosRestantes > 5) {
+                document.getElementById("modal10Min").style.display = "block";  // Exibe o modal de 10 minutos
+            } else if (minutosRestantes <= 5 && minutosRestantes > 1) {
+                document.getElementById("modal5Min").style.display = "block";  // Exibe o modal de 5 minutos
+            } else if (minutosRestantes <= 1 && minutosRestantes > 0) {
+                document.getElementById("modal1Min").style.display = "block";  // Exibe o modal de 1 minuto
+            }
+
+            // Se o tempo acabou, desloga o usuário
+            if (minutosRestantes <= 0) {
+                window.location.href = "/sair";  // Redireciona para a página de logout
+            }
+        }
+
+        // Chama a função a cada 60 segundos para atualizar o tempo
+        setInterval(verificarTempoRestante, 60000);
 
     </script>
 

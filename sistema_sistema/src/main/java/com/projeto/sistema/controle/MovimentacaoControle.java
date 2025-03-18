@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -141,6 +142,9 @@ public class MovimentacaoControle {
 
                 // Obtem o nome do garanhão da movimentação (via propriedade nome_garanhao)
                 String nomeGaranhao = movimentacao.getNome_garanhao();
+                
+                // Obtemos a quantidade de palhetas que foi retirada
+                int quantidade = movimentacao.getQuantidade();
 
                 // Obtemos a quantidade de palhetas que foi retirada
                 int quantidadePalhetasRemovidas = movimentacao.getQuantidade();
@@ -160,6 +164,7 @@ public class MovimentacaoControle {
                 	    movimentacao.getId_movimentacao(), 
                 	    motivoExclusao, 
                 	    nomeGaranhao,
+                	    quantidade,
                 	    usuario.getNome_usuario() // Nome do usuário responsável correto
                 	);
 
@@ -309,58 +314,75 @@ public class MovimentacaoControle {
     }
 
     
+    @Transactional
     @PostMapping("/administrativo/movimentacoes/editarMovimentacao")
-    public String salvarEdicaoMovimentacao(@ModelAttribute("movimentacao") Movimentacao movimentacao, RedirectAttributes redirectAttributes) {
-        // Buscar a movimentação existente pelo ID
-        Optional<Movimentacao> movimentacaoExistenteOpt = movimentacaoRepositorio.findById(movimentacao.getId_movimentacao());
-        
-        if (movimentacaoExistenteOpt.isPresent()) {
-            Movimentacao movimentacaoExistente = movimentacaoExistenteOpt.get();
-
-            // Obter o garanhão associado à movimentação
-            Garanhao garanhao = movimentacaoExistente.getGaranhao();
-            if (garanhao == null) {
-                redirectAttributes.addFlashAttribute("mensagemErro", "Garanhão associado à movimentação não encontrado.");
-                return "redirect:/administrativo/movimentacoes/listar";
+    public String salvarEdicaoMovimentacao(@ModelAttribute("movimentacao") Movimentacao movimentacao, RedirectAttributes redirectAttributes, HttpSession session) {
+        try {
+            // Verifica se o usuário está logado
+            Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+            if (usuario == null) {
+                return "redirect:/login";
             }
 
-            // Calcular a diferença entre a quantidade antiga e a nova
-            int quantidadeAntiga = movimentacaoExistente.getQuantidade();
-            int diferenca = movimentacao.getQuantidade() - quantidadeAntiga;
+            // Buscar a movimentação existente pelo ID
+            Optional<Movimentacao> movimentacaoExistenteOpt = movimentacaoRepositorio.findById(movimentacao.getId_movimentacao());
+            
+            if (movimentacaoExistenteOpt.isPresent()) {
+                Movimentacao movimentacaoExistente = movimentacaoExistenteOpt.get();
 
-            // Atualizar o saldo do garanhão
-            int novoSaldo = garanhao.getSaldo_atual_palhetas() - diferenca;
+                // Obter o garanhão associado à movimentação
+                Garanhao garanhao = movimentacaoExistente.getGaranhao();
+                if (garanhao == null) {
+                    redirectAttributes.addFlashAttribute("mensagemErro", "Garanhão associado à movimentação não encontrado.");
+                    return "redirect:/administrativo/movimentacoes/listar";
+                }
 
-            if (novoSaldo < 0) {
-                // Se o saldo for insuficiente
-                redirectAttributes.addFlashAttribute("mensagemErro", "Saldo insuficiente para ajustar a movimentação.");
+                // Calcular a diferença entre a quantidade antiga e a nova
+                int quantidadeAntiga = movimentacaoExistente.getQuantidade();
+                int diferenca = movimentacao.getQuantidade() - quantidadeAntiga;
+
+                // Atualizar o saldo do garanhão
+                int novoSaldo = garanhao.getSaldo_atual_palhetas() - diferenca;
+
+                if (novoSaldo < 0) {
+                    // Se o saldo for insuficiente
+                    redirectAttributes.addFlashAttribute("mensagemErro", "Saldo insuficiente para ajustar a movimentação.");
+                    return "redirect:/administrativo/movimentacoes/listar";
+                }
+
+                garanhao.setSaldo_atual_palhetas(novoSaldo);
+
+                // Atualizar os campos editáveis da movimentação
+                movimentacaoExistente.setNome_garanhao(movimentacao.getNome_garanhao());
+                movimentacaoExistente.setQuantidade(movimentacao.getQuantidade());
+                movimentacaoExistente.setEndereco(movimentacao.getEndereco());
+                movimentacaoExistente.setIdentificador_profissional(movimentacao.getIdentificador_profissional());
+                movimentacaoExistente.setNome_profissional(movimentacao.getNome_profissional());
+                movimentacaoExistente.setPrenhez(movimentacao.getPrenhez());
+                movimentacaoExistente.setData_movimentacao(movimentacao.getData_movimentacao());
+
+                // Atualiza o destino apenas se o usuário for ADMIN
+                if (usuario.getTipo().equals("ADMIN")) {
+                    movimentacaoExistente.setDestino(movimentacao.getDestino());
+                }
+
+                // Salvar as atualizações no banco de dados
+                movimentacaoRepositorio.save(movimentacaoExistente);
+                garanhaoRepositorio.save(garanhao);
+
+                // Mensagem de sucesso
+                redirectAttributes.addFlashAttribute("mensagemSucesso", "Movimentação atualizada com sucesso.");
+                return "redirect:/administrativo/movimentacoes/listar"; // Redireciona para a lista de movimentações
+            } else {
+                // Caso a movimentação não seja encontrada
+                redirectAttributes.addFlashAttribute("mensagemErro", "Movimentação não encontrada.");
                 return "redirect:/administrativo/movimentacoes/listar";
             }
-
-            garanhao.setSaldo_atual_palhetas(novoSaldo);
-
-            // Atualizar os campos editáveis da movimentação
-            movimentacaoExistente.setNome_garanhao(movimentacao.getNome_garanhao());
-            movimentacaoExistente.setQuantidade(movimentacao.getQuantidade());
-            movimentacaoExistente.setDestino(movimentacao.getDestino());
-            movimentacaoExistente.setEndereco(movimentacao.getEndereco());
-            movimentacaoExistente.setIdentificador_profissional(movimentacao.getIdentificador_profissional());
-            movimentacaoExistente.setNome_profissional(movimentacao.getNome_profissional());
-            movimentacaoExistente.setPrenhez(movimentacao.getPrenhez());
-            movimentacaoExistente.setData_movimentacao(movimentacao.getData_movimentacao());
-            // Salvar as atualizações no banco de dados
-            movimentacaoRepositorio.save(movimentacaoExistente);
-            garanhaoRepositorio.save(garanhao);
-
-            // Mensagem de sucesso
-            redirectAttributes.addFlashAttribute("mensagemSucesso", "Movimentação atualizada com sucesso.");
-            return "redirect:/administrativo/movimentacoes/listar"; // Redireciona para a lista de movimentações
-        } else {
-            // Caso a movimentação não seja encontrada
-            redirectAttributes.addFlashAttribute("mensagemErro", "Movimentação não encontrada.");
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar movimentação: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("mensagemErro", "Erro ao salvar movimentação.");
             return "redirect:/administrativo/movimentacoes/listar";
         }
-
     }
  
 }
