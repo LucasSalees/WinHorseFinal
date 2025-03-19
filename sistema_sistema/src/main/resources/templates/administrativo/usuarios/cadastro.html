@@ -605,25 +605,23 @@
 		    </div>
 		</div>
 
-    <!-- Início do Footer -->
+        <!-- Início do Footer -->
 	<footer class="footer">
 	    <div class="container" style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
 	        <!-- Texto da empresa centralizado -->
 	        <div style="text-align: center;">
-	            <p>&copy; 2025 Input Tecnologia.</p>
+	            <p>&copy; 2025 <a href="https://input.com.vc/" target="_blank">
+				  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style=" height: 35px; width: auto;">
+				</a> </p>
 	            <p>Todos os direitos reservados.</p>
 	        </div>
-	
-	        <!-- Logo da empresa à direita -->
-	        <a href="https://input.com.vc/" target="_blank">
-			  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style="position: absolute; right: 50px; height: 40px; width: auto; top: 15px;">
-			</a>
-	
+
 	        <!-- Relógio e campo oculto que armazena a horaFim do usuário -->
 	        <div id="relogio" style="font-size: 0px; font-weight: bold; visibility: hidden;"></div>
 	        <input type="hidden" id="horaFim" th:value="${horaFim}" />
 	    </div>
 	</footer>
+    <!-- Fim do Footer -->
 
 
     <script>
