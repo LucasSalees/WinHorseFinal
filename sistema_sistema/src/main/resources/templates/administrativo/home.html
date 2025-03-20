@@ -667,11 +667,7 @@
                                         class="list-group-item list-group-item-action">
                                         <i class="fa-solid fa-list"></i> Lista de Movimentações
                                     </a>
-                                    
-                                    <a th:if="${usuario.tipo == 'ADMIN'}" href="/administrativo/movimentacoes/lixeira"
-                                        class="list-group-item list-group-item-action">
-                                        <i class="fa-solid fa-list"></i> Movimentações Estornadas
-                                    </a>
+                                 
                                 </ul>
                             </div>
                         </div>
@@ -717,13 +713,15 @@
 		    </div>
 		</div>
 
-    <!-- Início do Footer -->
+    	<!-- Início do Footer -->
 	<footer class="footer">
 	    <div class="container" style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
 	        <!-- Texto da empresa centralizado -->
 	        <div style="text-align: center;">
 	            <p>&copy; 2025 <a href="https://input.com.vc/" target="_blank">
-				  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style=" height: 35px; width: auto;">
+				  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style="height: 35px; width: auto; transition: transform 0.3s ease, opacity 0.3s ease;" 
+				  onmouseover="this.style.transform='scale(1.02)';" 
+				  onmouseout="this.style.transform='scale(1)';">
 				</a> </p>
 	            <p>Todos os direitos reservados.</p>
 	        </div>
@@ -805,7 +803,7 @@
         console.log("Hora Atual:", horarioAtual);
         console.log("Hora Fim do Usuário:", horaFim);
 
-        if (horaFim && horarioAtual === horaFim) {
+        if (horaFim && horarioAtual >= horaFim) {
             console.log("Hora atingida! Fazendo logout...");
             window.location.href = "/sair"; // Faz o logout
         }
@@ -818,7 +816,7 @@
         document.getElementById(modalId).style.display = "none";
     }
 
-    // Função para verificar o tempo restante e mostrar os avisos
+ // Função para verificar o tempo restante e mostrar os avisos
     function verificarTempoRestante() {
         const horaFim = document.getElementById("horaFim").value;  // Hora fim do usuário
         const horaAtual = new Date();
@@ -830,11 +828,16 @@
 
         const minutosRestantes = Math.floor(tempoRestante / 60000);  // Converte para minutos
 
-        if (minutosRestantes <= 10 && minutosRestantes > 5) {
+        // Exibe o modal de 10 minutos quando minutosRestantes for igual a 10
+        if (minutosRestantes == 10) {
             document.getElementById("modal10Min").style.display = "block";  // Exibe o modal de 10 minutos
-        } else if (minutosRestantes <= 5 && minutosRestantes > 1) {
+        } 
+        // Exibe o modal de 5 minutos quando minutosRestantes for igual a 5
+        else if (minutosRestantes == 5) {
             document.getElementById("modal5Min").style.display = "block";  // Exibe o modal de 5 minutos
-        } else if (minutosRestantes <= 1 && minutosRestantes > 0) {
+        }
+        // Exibe o modal de 1 minuto quando minutosRestantes for igual a 1
+        else if (minutosRestantes == 1) {
             document.getElementById("modal1Min").style.display = "block";  // Exibe o modal de 1 minuto
         }
 

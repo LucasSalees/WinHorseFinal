@@ -390,6 +390,7 @@
             background-size: 400% 400%;
             animation: gradientFooterAnimation 8s ease infinite;
         }
+       
     </style>
 
 </head>
@@ -497,7 +498,7 @@
                             <th class="text-center">Profissional</th>
                             <th class="text-center">Documento</th>
                             <th class="text-center">Responsável</th>
-                            <th class="text-center">Prenhez</th>
+                            <th class="text-center">Embrião</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -561,7 +562,7 @@
                             </td>
                             <td class="text-center">
                                 <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
-                                    th:text="${movimentacao.prenhez}"></a>
+                                    th:text="${movimentacao.embriao}"></a>
                             </td>
                     </tbody>
                 </table>
@@ -574,6 +575,13 @@
                         <i class="fa-solid fa-print"></i> Imprimir
                     </a>
                 </div>
+                
+                <div class="col text-center">
+                    <a th:if="${usuario.tipo == 'ADMIN'}" href="/administrativo/movimentacoes/lixeira" class="btn btn-danger btn-sm text-white">
+                        <i class="fa-solid fa-trash-can-arrow-up"></i> Movimentações estornadas
+                    </a>
+                </div>
+                
                 <!-- Botão habilitado apenas para ADMIN -->
                 <div class="col text-right">
                     <a href="/administrativo/movimentacoes/cadastro">
@@ -623,13 +631,15 @@
 		    </div>
 		</div>
 
-        <!-- Início do Footer -->
+       	<!-- Início do Footer -->
 	<footer class="footer">
 	    <div class="container" style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
 	        <!-- Texto da empresa centralizado -->
 	        <div style="text-align: center;">
 	            <p>&copy; 2025 <a href="https://input.com.vc/" target="_blank">
-				  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style=" height: 35px; width: auto;">
+				  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style="height: 35px; width: auto; transition: transform 0.3s ease, opacity 0.3s ease;" 
+				  onmouseover="this.style.transform='scale(1.02)';" 
+				  onmouseout="this.style.transform='scale(1)';">
 				</a> </p>
 	            <p>Todos os direitos reservados.</p>
 	        </div>
@@ -817,42 +827,6 @@
                 janelaImpressao.close();
             });
 
-            // Função para alternar a visibilidade da senha
-            function togglePassword(inputId, toggleId) {
-                const input = document.getElementById(inputId);
-                const toggle = document.getElementById(toggleId);
-
-                toggle.addEventListener("click", function () {
-                    if (input.type === "password") {
-                        input.type = "text";
-                        toggle.classList.remove("fa-eye");
-                        toggle.classList.add("fa-eye-slash");
-                    } else {
-                        input.type = "password";
-                        toggle.classList.remove("fa-eye-slash");
-                        toggle.classList.add("fa-eye");
-                    }
-                });
-            }
-
-            // Aplicando aos campos
-            togglePassword("novaSenha", "toggleNovaSenha");
-            togglePassword("confirmarSenha", "toggleConfirmarSenha");
-
-            // Validação de senha
-            document.getElementById("movimentacaoForm").addEventListener("submit", function (event) {
-                const senha = document.getElementById("novaSenha").value;
-                const confirmarSenha = document.getElementById("confirmarSenha").value;
-                const mensagemErro = document.getElementById("mensagemErro");
-
-                if (senha !== confirmarSenha) {
-                    event.preventDefault(); // Impede o envio do formulário
-                    mensagemErro.style.display = "block"; // Exibe a mensagem de erro
-                } else {
-                    mensagemErro.style.display = "none"; // Oculta a mensagem se estiver correta
-                }
-            });
-            
             function atualizarRelogio() {
                 const agora = new Date();
                 const horas = agora.getHours().toString().padStart(2, '0');
@@ -866,7 +840,7 @@
                 console.log("Hora Atual:", horarioAtual);
                 console.log("Hora Fim do Usuário:", horaFim);
 
-                if (horaFim && horarioAtual === horaFim) {
+                if (horaFim && horarioAtual >= horaFim) {
                     console.log("Hora atingida! Fazendo logout...");
                     window.location.href = "/sair"; // Faz o logout
                 }
@@ -879,7 +853,7 @@
                 document.getElementById(modalId).style.display = "none";
             }
 
-            // Função para verificar o tempo restante e mostrar os avisos
+         // Função para verificar o tempo restante e mostrar os avisos
             function verificarTempoRestante() {
                 const horaFim = document.getElementById("horaFim").value;  // Hora fim do usuário
                 const horaAtual = new Date();
@@ -891,11 +865,16 @@
 
                 const minutosRestantes = Math.floor(tempoRestante / 60000);  // Converte para minutos
 
-                if (minutosRestantes <= 10 && minutosRestantes > 5) {
+                // Exibe o modal de 10 minutos quando minutosRestantes for igual a 10
+                if (minutosRestantes == 10) {
                     document.getElementById("modal10Min").style.display = "block";  // Exibe o modal de 10 minutos
-                } else if (minutosRestantes <= 5 && minutosRestantes > 1) {
+                } 
+                // Exibe o modal de 5 minutos quando minutosRestantes for igual a 5
+                else if (minutosRestantes == 5) {
                     document.getElementById("modal5Min").style.display = "block";  // Exibe o modal de 5 minutos
-                } else if (minutosRestantes <= 1 && minutosRestantes > 0) {
+                }
+                // Exibe o modal de 1 minuto quando minutosRestantes for igual a 1
+                else if (minutosRestantes == 1) {
                     document.getElementById("modal1Min").style.display = "block";  // Exibe o modal de 1 minuto
                 }
 

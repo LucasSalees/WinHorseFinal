@@ -3,6 +3,7 @@ package com.projeto.sistema.controle;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,8 @@ import com.projeto.sistema.modelos.Usuario;
 import com.projeto.sistema.repositorios.GaranhaoRepositorio;
 import com.projeto.sistema.repositorios.LixeiraRepositorio;
 import com.projeto.sistema.repositorios.MovimentacaoRepositorio;
+import com.projeto.sistema.repositorios.UsuarioRepositorio;
+
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -39,10 +42,13 @@ public class MovimentacaoControle {
     
     @Autowired
     private LixeiraRepositorio lixeiraRepositorio;
+    
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
 
     // Página de cadastro de movimentação
     @GetMapping("/administrativo/movimentacoes/cadastro")
-    public ModelAndView cadastrar(Movimentacao movimentacao, HttpSession session) {
+    public ModelAndView cadastrar(Movimentacao movimentacao, HttpSession session, Model model) {
         ModelAndView mv = new ModelAndView("/administrativo/movimentacoes/cadastro");
 
         // Verifica se o usuário está logado
@@ -53,6 +59,15 @@ public class MovimentacaoControle {
 
         // Obtém o usuário logado da sessão
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
+        
         mv.addObject("usuario", usuario); // Adiciona o usuário ao modelo
 
         // Lista de garanhões para exibir no formulário
@@ -66,7 +81,7 @@ public class MovimentacaoControle {
 
     // Listagem de todas as movimentações
     @GetMapping("/administrativo/movimentacoes/listar")
-    public ModelAndView listarMovimentacoes(HttpSession session) {
+    public ModelAndView listarMovimentacoes(HttpSession session,  Model model) {
         ModelAndView mv = new ModelAndView("administrativo/movimentacoes/lista");
 
         // Verifica se o usuário está logado
@@ -78,6 +93,15 @@ public class MovimentacaoControle {
 
         // Obtém o usuário logado da sessão
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
+        
         mv.addObject("usuario", usuario); // Adiciona o usuário ao modelo
 
         // Lista de movimentações para exibir na página
@@ -87,7 +111,7 @@ public class MovimentacaoControle {
         return mv;
     }
  
-    // Página de edição de movimentação
+ // Página de edição de movimentação
     @GetMapping("/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}")
     public String editar(@PathVariable("id_movimentacao") Long id_movimentacao, Model model, HttpSession session) {
         // Verifica se o usuário está logado
@@ -96,29 +120,45 @@ public class MovimentacaoControle {
             return "redirect:/login"; // Redireciona para o login se o usuário não estiver logado
         }
 
-        model.addAttribute("usuario", usuario); // Adiciona o usuário atual ao modelo (opcional)
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
+
+        // Adiciona o usuário atual ao modelo (opcional, caso precise exibir informações do usuário na página)
+        model.addAttribute("usuario", usuario); 
 
         // Busca a movimentação pelo ID
         Optional<Movimentacao> movimentacao = movimentacaoRepositorio.findById(id_movimentacao);
 
         if (movimentacao.isPresent()) {
-            Movimentacao movimentacaoEncontrada = movimentacao.get();
-            Garanhao garanhao = movimentacaoEncontrada.getGaranhao();
+            Movimentacao movimentacaoEncontrada = movimentacao.get(); // Obtém a movimentação encontrada
+            Garanhao garanhao = movimentacaoEncontrada.getGaranhao(); // Obtém o garanhão relacionado à movimentação
 
-            // Adiciona os dados da movimentação ao modelo
+            // Adiciona os dados da movimentação e do garanhão ao modelo
             model.addAttribute("movimentacao", movimentacaoEncontrada);
+            
+            // Verifica se o garanhão existe antes de tentar acessar seus atributos
             model.addAttribute("nome_garanhao", garanhao != null ? garanhao.getNome_garanhao() : "N/A");
             model.addAttribute("saldo_atual_palhetas", garanhao != null ? garanhao.getSaldo_atual_palhetas() : 0);
+            
+            // Adiciona o endereço da movimentação ao modelo
             model.addAttribute("endereco", movimentacaoEncontrada.getEndereco());
 
+            // Adiciona o nome do usuário responsável pela movimentação
             model.addAttribute("nome_usuario_responsavel", movimentacaoEncontrada.getNome_usuario());
 
-            return "administrativo/movimentacoes/eventoMovimentacao"; // Retorna para a página de edição
+            return "administrativo/movimentacoes/eventoMovimentacao"; // Retorna para a página de edição da movimentação
         }
 
         // Caso não encontre a movimentação, redireciona para a lista de movimentações
         return "redirect:/administrativo/movimentacoes/listar";
     }
+
     
     @PostMapping("/removerMovimentacao/{id_movimentacao}")
     public String remover(@PathVariable("id_movimentacao") Long idMovimentacao,
@@ -132,6 +172,15 @@ public class MovimentacaoControle {
 
         // Obtém o usuário logado da sessão
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
+        
         model.addAttribute("usuario", usuario);
 
         try {
@@ -229,7 +278,7 @@ public class MovimentacaoControle {
 
 
     @GetMapping("/administrativo/movimentacoes/lixeira")
-    public ModelAndView listarLixeira(HttpSession session) {
+    public ModelAndView listarLixeira(HttpSession session, Model model) {
         ModelAndView mv = new ModelAndView("administrativo/movimentacoes/lixeira");
 
         // Verifica se o usuário está logado
@@ -240,6 +289,15 @@ public class MovimentacaoControle {
 
         // Obtém o usuário logado da sessão
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
+        
         mv.addObject("usuario", usuario);
 
         // Lista de itens da lixeira
@@ -358,7 +416,7 @@ public class MovimentacaoControle {
                 movimentacaoExistente.setEndereco(movimentacao.getEndereco());
                 movimentacaoExistente.setIdentificador_profissional(movimentacao.getIdentificador_profissional());
                 movimentacaoExistente.setNome_profissional(movimentacao.getNome_profissional());
-                movimentacaoExistente.setPrenhez(movimentacao.getPrenhez());
+                movimentacaoExistente.setEmbriao(movimentacao.getEmbriao());
                 movimentacaoExistente.setData_movimentacao(movimentacao.getData_movimentacao());
 
                 // Atualiza o destino apenas se o usuário for ADMIN

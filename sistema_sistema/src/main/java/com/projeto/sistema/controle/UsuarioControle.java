@@ -1,6 +1,7 @@
 package com.projeto.sistema.controle;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -235,7 +236,17 @@ public class UsuarioControle {
             return "redirect:/login"; // Redireciona para o login se o usuário não estiver logado
         }
 
-        // Obtém o usuário logado da sessão
+     // Obtém o usuário logado da sessão
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
+        
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
 
         // Adiciona as informações do usuário ao modelo

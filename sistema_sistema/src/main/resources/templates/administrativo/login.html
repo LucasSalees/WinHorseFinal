@@ -15,90 +15,105 @@
 		
 		<style>
 			body {
-				font-family: "Asar", Sans-serif;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: 100vh;
-				background-image: url('https://restrita.harasrosamystica.com.br/assets/rm/imagens/bg_cavalo.png');
-				background-size: cover;
-				background-position: center;
-				background-repeat: no-repeat;
-				background-color: #363636;
+			    font-family: "Asar", Sans-serif;
+			    display: flex;
+			    flex-direction: column; /* Organiza os elementos na coluna */
+			    justify-content: center; /* Centraliza o conteúdo verticalmente */
+			    align-items: center; /* Centraliza o conteúdo horizontalmente */
+			    height: 100vh;
+			    margin: 0; /* Remove margens padrão */
+			    background-image: url('https://restrita.harasrosamystica.com.br/assets/rm/imagens/bg_cavalo.png');
+			    background-size: cover;
+			    background-position: center;
+			    background-repeat: no-repeat;
+			    background-color: #363636;
 			}
-
+			
 			.login-container {
-				background-color: rgba(54, 54, 54, 0.8);
+			    background-color: rgba(54, 54, 54, 0.8);
 				padding: 30px;
 				border-radius: 8px;
 				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 				width: 390px; /* Reduzido para um layout mais compacto */
 				text-align: center;
-			}
-
-			.logo {
-				margin-bottom: 20px;
-			}
-
-			.logo img {
-				max-width: 100%;
-				width: 250px;
-				height: auto;
-				margin: 0 auto;
-			}
-
-			h2, h3 {
-				margin-bottom: 20px;
-				color: #cf8311;
-				font-size: 25px;
-			}
-
-			.input-group {
-				margin-bottom: 15px;
-				text-align: left;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-			}
-
-			.input-group label {
-				font-size: 20px;
-				color: #cf8311;
-				margin-bottom: 5px;
-			}
-
-			.input-group input {
-				width: 325px; 
-				padding: 8px;
-				font-size: 18px;
-				border: 1px solid #ccc;
-				border-radius: 4px;
-				background: rgba(54, 54, 54, 0.8);
-				color: #ffffff;
-				text-align: center; /* Centraliza o texto dentro do input */
-			}
-
-			.input-group input:focus {
-				border-color: #007BFF;
-				outline: none;
-			}
-
-			.btn-login {
-				padding: 10px;
-				font-size: 14px;
-				background-color: #cf8311;
-				color: white;
-				border: none;
-				border-radius: 4px;
-				cursor: pointer;
-				width: 100px;
-				margin: 0 auto; 
-			}
-
-			.btn-login:hover {
-				background-color: #97600e;
+				margin-top:190px;
 			}
 			
+			.logo {
+			    margin-bottom: 20px;
+			}
+			
+			.logo img {
+			    max-width: 100%;
+			    width: 300;
+			    height: 100px;
+			    margin: 0 auto;
+			}
+			
+			h2, h3 {
+			    margin-bottom: 20px;
+			    color: #cf8311;
+			    font-size: 25px;
+			}
+			
+			.input-group {
+			    margin-bottom: 15px;
+			    text-align: left;
+			    display: flex;
+			    flex-direction: column;
+			    align-items: center;
+			}
+			
+			.input-group label {
+			    font-size: 20px;
+			    color: #cf8311;
+			    margin-bottom: 5px;
+			}
+			
+			.input-group input {
+			    width: 325px; 
+			    padding: 8px;
+			    font-size: 18px;
+			    border: 1px solid #ccc;
+			    border-radius: 4px;
+			    background: rgba(54, 54, 54, 0.8);
+			    color: #ffffff;
+			    text-align: center; /* Centraliza o texto dentro do input */
+			}
+			
+			.input-group input:focus {
+			    border-color: #007BFF;
+			    outline: none;
+			}
+			
+			.btn-login {
+			    padding: 10px;
+			    font-size: 14px;
+			    background-color: #cf8311;
+			    color: white;
+			    border: none;
+			    border-radius: 4px;
+			    cursor: pointer;
+			    width: 100px;
+			    margin: 0 auto; 
+			}
+			
+			.btn-login:hover {
+			    background-color: #97600e;
+			}
+			
+			.footer {
+	            font-size: 1rem;
+	            width: 100%;
+	            color: #fff;
+	            text-align: center;
+	            padding: 20px 0;
+	            font-family: 'Roboto', sans-serif;
+	            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	            position: relative;
+	            margin-top: auto;
+	        }
+
 		</style>
 	
 </head>
@@ -108,7 +123,7 @@
 	<div class="login-container">
 		<!-- Logo -->
 		<div class="logo">
-			<a class="navbar-brand" href="#">
+			<a class="navbar-brand" href="https://www.harasrosamystica.com.br/" target="_blank">
 				<img src="https://www.harasrosamystica.com.br/wp-content/uploads/2024/07/logo-header-novo.webp" alt="Logo Haras Rosa Mystica">
 			</a>
 		</div>
@@ -131,6 +146,26 @@
 			<button type="submit" class="btn-login">Entrar</button>
 		</form>
 	</div>
+	
+	<!-- Início do Footer -->
+	<footer class="footer">
+	    <div class="container" style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
+	        <!-- Texto da empresa centralizado -->
+	        <div style="text-align: center;">
+	            <p>&copy; 2025 <a href="https://input.com.vc/" target="_blank">
+				  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style="height: 35px; width: auto; transition: transform 0.3s ease, opacity 0.3s ease;" 
+				  onmouseover="this.style.transform='scale(1.02)';" 
+				  onmouseout="this.style.transform='scale(1)';">
+				</a> </p>
+	            <p>Todos os direitos reservados.</p>
+	        </div>
+
+	        <!-- Relógio e campo oculto que armazena a horaFim do usuário -->
+	        <div id="relogio" style="font-size: 0px; font-weight: bold; visibility: hidden;"></div>
+	        <input type="hidden" id="horaFim" th:value="${horaFim}" />
+	    </div>
+	</footer>
+    <!-- Fim do Footer -->
 </body>
 
 </html>

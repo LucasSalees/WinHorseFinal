@@ -594,13 +594,15 @@
 		    </div>
 		</div>
 
-        <!-- Início do Footer -->
+        	<!-- Início do Footer -->
 	<footer class="footer">
 	    <div class="container" style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
 	        <!-- Texto da empresa centralizado -->
 	        <div style="text-align: center;">
 	            <p>&copy; 2025 <a href="https://input.com.vc/" target="_blank">
-				  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style=" height: 35px; width: auto;">
+				  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style="height: 35px; width: auto; transition: transform 0.3s ease, opacity 0.3s ease;" 
+				  onmouseover="this.style.transform='scale(1.02)';" 
+				  onmouseout="this.style.transform='scale(1)';">
 				</a> </p>
 	            <p>Todos os direitos reservados.</p>
 	        </div>
@@ -613,82 +615,66 @@
     <!-- Fim do Footer -->
 	
     <script>
-        // Função para alternar a visibilidade da senha
-        function togglePassword(inputId, toggleId) {
-            const input = document.getElementById(inputId);
-            const toggle = document.getElementById(toggleId);
+    
+    function atualizarRelogio() {
+        const agora = new Date();
+        const horas = agora.getHours().toString().padStart(2, '0');
+        const minutos = agora.getMinutes().toString().padStart(2, '0');
+        const horarioAtual = `${horas}:${minutos}`;
 
-            toggle.addEventListener("click", function () {
-                if (input.type === "password") {
-                    input.type = "text";
-                    toggle.classList.remove("fa-eye");
-                    toggle.classList.add("fa-eye-slash");
-                } else {
-                    input.type = "password";
-                    toggle.classList.remove("fa-eye-slash");
-                    toggle.classList.add("fa-eye");
-                }
-            });
+        document.getElementById("relogio").innerText = horarioAtual;
+
+        const horaFim = document.getElementById("horaFim")?.value?.trim();
+
+        console.log("Hora Atual:", horarioAtual);
+        console.log("Hora Fim do Usuário:", horaFim);
+
+        if (horaFim && horarioAtual >= horaFim) {
+            console.log("Hora atingida! Fazendo logout...");
+            window.location.href = "/sair"; // Faz o logout
+        }
+    }
+
+    setInterval(atualizarRelogio, 1000);
+    
+ 	// Função para fechar o modal
+    function fecharModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+    }
+
+ // Função para verificar o tempo restante e mostrar os avisos
+    function verificarTempoRestante() {
+        const horaFim = document.getElementById("horaFim").value;  // Hora fim do usuário
+        const horaAtual = new Date();
+        const fim = new Date();
+        const [hora, minutos] = horaFim.split(':');
+        fim.setHours(hora, minutos, 0);  // Define a hora fim a partir do valor do servidor
+
+        const tempoRestante = fim - horaAtual;  // Tempo restante em milissegundos
+
+        const minutosRestantes = Math.floor(tempoRestante / 60000);  // Converte para minutos
+
+        // Exibe o modal de 10 minutos quando minutosRestantes for igual a 10
+        if (minutosRestantes == 10) {
+            document.getElementById("modal10Min").style.display = "block";  // Exibe o modal de 10 minutos
+        } 
+        // Exibe o modal de 5 minutos quando minutosRestantes for igual a 5
+        else if (minutosRestantes == 5) {
+            document.getElementById("modal5Min").style.display = "block";  // Exibe o modal de 5 minutos
+        }
+        // Exibe o modal de 1 minuto quando minutosRestantes for igual a 1
+        else if (minutosRestantes == 1) {
+            document.getElementById("modal1Min").style.display = "block";  // Exibe o modal de 1 minuto
         }
 
-        // Aplicando aos campos
-        togglePassword("senhaAtual", "toggleSenhaAtual");
-        togglePassword("novaSenha", "toggleNovaSenha");
-        
-        function atualizarRelogio() {
-            const agora = new Date();
-            const horas = agora.getHours().toString().padStart(2, '0');
-            const minutos = agora.getMinutes().toString().padStart(2, '0');
-            const horarioAtual = `${horas}:${minutos}`;
-
-            document.getElementById("relogio").innerText = horarioAtual;
-
-            const horaFim = document.getElementById("horaFim")?.value?.trim();
-
-            console.log("Hora Atual:", horarioAtual);
-            console.log("Hora Fim do Usuário:", horaFim);
-
-            if (horaFim && horarioAtual === horaFim) {
-                console.log("Hora atingida! Fazendo logout...");
-                window.location.href = "/sair"; // Faz o logout
-            }
+        // Se o tempo acabou, desloga o usuário
+        if (minutosRestantes <= 0) {
+            window.location.href = "/sair";  // Redireciona para a página de logout
         }
+    }
 
-        setInterval(atualizarRelogio, 1000);
-        
-     	// Função para fechar o modal
-        function fecharModal(modalId) {
-            document.getElementById(modalId).style.display = "none";
-        }
-
-        // Função para verificar o tempo restante e mostrar os avisos
-        function verificarTempoRestante() {
-            const horaFim = document.getElementById("horaFim").value;  // Hora fim do usuário
-            const horaAtual = new Date();
-            const fim = new Date();
-            const [hora, minutos] = horaFim.split(':');
-            fim.setHours(hora, minutos, 0);  // Define a hora fim a partir do valor do servidor
-
-            const tempoRestante = fim - horaAtual;  // Tempo restante em milissegundos
-
-            const minutosRestantes = Math.floor(tempoRestante / 60000);  // Converte para minutos
-
-            if (minutosRestantes <= 10 && minutosRestantes > 5) {
-                document.getElementById("modal10Min").style.display = "block";  // Exibe o modal de 10 minutos
-            } else if (minutosRestantes <= 5 && minutosRestantes > 1) {
-                document.getElementById("modal5Min").style.display = "block";  // Exibe o modal de 5 minutos
-            } else if (minutosRestantes <= 1 && minutosRestantes > 0) {
-                document.getElementById("modal1Min").style.display = "block";  // Exibe o modal de 1 minuto
-            }
-
-            // Se o tempo acabou, desloga o usuário
-            if (minutosRestantes <= 0) {
-                window.location.href = "/sair";  // Redireciona para a página de logout
-            }
-        }
-
-        // Chama a função a cada 60 segundos para atualizar o tempo
-        setInterval(verificarTempoRestante, 60000);
+    // Chama a função a cada 60 segundos para atualizar o tempo
+    setInterval(verificarTempoRestante, 60000);
 
     </script>
 

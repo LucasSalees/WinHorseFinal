@@ -945,25 +945,25 @@
 		    </div>
 		</div>
 
-    <!-- Início do Footer -->
+    	<!-- Início do Footer -->
 	<footer class="footer">
 	    <div class="container" style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
 	        <!-- Texto da empresa centralizado -->
 	        <div style="text-align: center;">
-	            <p>&copy; 2025 Input Tecnologia.</p>
+	            <p>&copy; 2025 <a href="https://input.com.vc/" target="_blank">
+				  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style="height: 35px; width: auto; transition: transform 0.3s ease, opacity 0.3s ease;" 
+				  onmouseover="this.style.transform='scale(1.02)';" 
+				  onmouseout="this.style.transform='scale(1)';">
+				</a> </p>
 	            <p>Todos os direitos reservados.</p>
 	        </div>
-	
-	        <!-- Logo da empresa à direita -->
-	        <a href="https://input.com.vc/" target="_blank">
-			  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style="position: absolute; right: 50px; height: 40px; width: auto; top: 15px;">
-			</a>
-	
+
 	        <!-- Relógio e campo oculto que armazena a horaFim do usuário -->
 	        <div id="relogio" style="font-size: 0px; font-weight: bold; visibility: hidden;"></div>
 	        <input type="hidden" id="horaFim" th:value="${horaFim}" />
 	    </div>
 	</footer>
+    <!-- Fim do Footer -->
 
     <!-- Importando Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
@@ -1358,6 +1358,7 @@
             }
 
             // Captura os valores dos campos do formulário
+            const idGaranhao = document.getElementById('id_garanhao').value;
             const nomeGaranhao = document.getElementById('nome_garanhao').value;
             const corPalheta = document.querySelector('select[name="cor_palheta"]').value;
             const botijao = document.querySelector('select[name="botijao"]').value;
@@ -1499,20 +1500,24 @@
 
 				        <div class="content">
 				            <table>
+				            <tr>
+			                    <td>ID:</td>
+			                    <td>${idGaranhao}</td>
+			                </tr>
 				                <tr>
-				                    <td>Nome do Garanhão:</td>
+				                    <td>Garanhão:</td>
 				                    <td>${nomeGaranhao}</td>
 				                </tr>
 				                <tr>
-				                    <td>Letra do Botijão:</td>
+				                    <td>Botijão:</td>
 				                    <td>${botijao}</td>
 				                </tr>
 				                <tr>
-				                    <td>Número da Caneca:</td>
+				                    <td>Caneca:</td>
 				                    <td>${caneca}</td>
 				                </tr>
 				                <tr>
-				                    <td>Cor da Palheta:</td>
+				                    <td>Palheta:</td>
 				                    <td>${corPalheta}</td>
 				                </tr>
 				                <tr>
@@ -1556,66 +1561,8 @@
                 janelaImpressao.close();
             }, 500);
         }
-
-        // Função para exibir o modal com a mensagem
-        function exibirModal(mensagem) {
-            document.getElementById('modalMensagemTexto').innerText = mensagem;
-            var modalMensagem = new bootstrap.Modal(document.getElementById('modalMensagem'));
-            modalMensagem.show();
-        }
-
-        // Inicializa o script ao carregar
-        inicializar();
-
-    	document.getElementById("movimentacaoForm").addEventListener("submit", function (event) {
-    	    const senha = document.getElementById("novaSenha").value;
-    	    const confirmarSenha = document.getElementById("confirmarSenha").value;
-    	    const mensagemErro = document.getElementById("mensagemErro");
-    	
-    	    if (senha !== confirmarSenha) {
-    	        event.preventDefault(); // Impede o envio do formulário
-    	        mensagemErro.style.display = "block"; // Exibe a mensagem de erro
-    	    } else {
-    	        mensagemErro.style.display = "none"; // Oculta a mensagem se estiver correta
-    	        event.preventDefault(); // Impede o envio real para simular o modal
-    	        abrirModal(); // Exibe o modal de sucesso
-    	    }
-    	});
-    	
-    	// Função para exibir o modal
-    	function abrirModal() {
-    	    document.getElementById("modalSucesso").style.display = "block";
-    	}
-    	
-    	// Função para fechar o modal
-    	function fecharModal() {
-    	    document.getElementById("modalSucesso").style.display = "none";
-    	    document.getElementById("movimentacaoForm").submit(); // Envia o formulário após fechar o modal
-    	}
-    	
-    	// Função para alternar a visibilidade da senha
-    	function togglePassword(inputId, toggleId) {
-    	    const input = document.getElementById(inputId);
-    	    const toggle = document.getElementById(toggleId);
-    	
-    	    toggle.addEventListener("click", function () {
-    	        if (input.type === "password") {
-    	            input.type = "text"; // Torna a senha visível
-    	            toggle.classList.remove("fa-eye"); // Remove o ícone de olho fechado
-    	            toggle.classList.add("fa-eye-slash"); // Adiciona o ícone de olho aberto
-    	        } else {
-    	            input.type = "password"; // Torna a senha invisível
-    	            toggle.classList.remove("fa-eye-slash"); // Remove o ícone de olho aberto
-    	            toggle.classList.add("fa-eye"); // Adiciona o ícone de olho fechado
-    	        }
-    	    });
-    	}
-    	
-    	// Inicializando a função para os campos de senha
-    	togglePassword("novaSenha", "toggleNovaSenha");
-    	togglePassword("confirmarSenha", "toggleConfirmarSenha");
-    	
-    	function atualizarRelogio() {
+        
+        function atualizarRelogio() {
             const agora = new Date();
             const horas = agora.getHours().toString().padStart(2, '0');
             const minutos = agora.getMinutes().toString().padStart(2, '0');
@@ -1628,7 +1575,7 @@
             console.log("Hora Atual:", horarioAtual);
             console.log("Hora Fim do Usuário:", horaFim);
 
-            if (horaFim && horarioAtual === horaFim) {
+            if (horaFim && horarioAtual >= horaFim) {
                 console.log("Hora atingida! Fazendo logout...");
                 window.location.href = "/sair"; // Faz o logout
             }
@@ -1641,7 +1588,7 @@
             document.getElementById(modalId).style.display = "none";
         }
 
-        // Função para verificar o tempo restante e mostrar os avisos
+     	// Função para verificar o tempo restante e mostrar os avisos
         function verificarTempoRestante() {
             const horaFim = document.getElementById("horaFim").value;  // Hora fim do usuário
             const horaAtual = new Date();
@@ -1653,11 +1600,16 @@
 
             const minutosRestantes = Math.floor(tempoRestante / 60000);  // Converte para minutos
 
-            if (minutosRestantes <= 10 && minutosRestantes > 5) {
+            // Exibe o modal de 10 minutos quando minutosRestantes for igual a 10
+            if (minutosRestantes == 10) {
                 document.getElementById("modal10Min").style.display = "block";  // Exibe o modal de 10 minutos
-            } else if (minutosRestantes <= 5 && minutosRestantes > 1) {
+            } 
+            // Exibe o modal de 5 minutos quando minutosRestantes for igual a 5
+            else if (minutosRestantes == 5) {
                 document.getElementById("modal5Min").style.display = "block";  // Exibe o modal de 5 minutos
-            } else if (minutosRestantes <= 1 && minutosRestantes > 0) {
+            }
+            // Exibe o modal de 1 minuto quando minutosRestantes for igual a 1
+            else if (minutosRestantes == 1) {
                 document.getElementById("modal1Min").style.display = "block";  // Exibe o modal de 1 minuto
             }
 
@@ -1670,6 +1622,26 @@
         // Chama a função a cada 60 segundos para atualizar o tempo
         setInterval(verificarTempoRestante, 60000);
 
+        // Função para exibir o modal com a mensagem
+        function exibirModal(mensagem) {
+            document.getElementById('modalMensagemTexto').innerText = mensagem;
+            var modalMensagem = new bootstrap.Modal(document.getElementById('modalMensagem'));
+            modalMensagem.show();
+        }
+
+        // Inicializa o script ao carregar
+        inicializar();
+
+    	// Função para exibir o modal
+    	function abrirModal() {
+    	    document.getElementById("modalSucesso").style.display = "block";
+    	}
+    	
+    	// Função para fechar o modal
+    	function fecharModal() {
+    	    document.getElementById("modalSucesso").style.display = "none";
+    	    document.getElementById("movimentacaoForm").submit(); // Envia o formulário após fechar o modal
+    	}
 
     </script>
 

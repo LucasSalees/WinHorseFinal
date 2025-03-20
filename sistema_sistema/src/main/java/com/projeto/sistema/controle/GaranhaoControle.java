@@ -2,6 +2,7 @@ package com.projeto.sistema.controle;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class GaranhaoControle {
     private MovimentacaoRepositorio movimentacaoRepositorio;
 
     @GetMapping("/administrativo/garanhoes/cadastro")
-    public ModelAndView cadastrar(HttpSession session, Garanhao garanhao) {
+    public ModelAndView cadastrar(HttpSession session, Garanhao garanhao, Model model) {
         ModelAndView mv = new ModelAndView("/administrativo/garanhoes/cadastro");
 
         // Verifica se o usuário está logado
@@ -52,6 +53,14 @@ public class GaranhaoControle {
 
         // Obtém o usuário logado da sessão
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
 
         // Adiciona o objeto 'usuario' ao modelo
         mv.addObject("usuario", usuario);
@@ -61,7 +70,7 @@ public class GaranhaoControle {
     }
     
     @GetMapping("/administrativo/garanhoes/listar")
-    public ModelAndView listarGaranhoes(HttpSession session) {
+    public ModelAndView listarGaranhoes(HttpSession session, Model model) {
         ModelAndView mv = new ModelAndView("administrativo/garanhoes/lista");
 
         // Verifica se o usuário está logado
@@ -72,6 +81,14 @@ public class GaranhaoControle {
 
         // Obtém o usuário logado da sessão
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
 
         // Adiciona o objeto 'usuario' ao modelo
         mv.addObject("usuario", usuario);
@@ -83,7 +100,7 @@ public class GaranhaoControle {
     }
     
     @GetMapping("/administrativo/garanhoes/listaValor")
-    public ModelAndView listarValoresGaranhoes(HttpSession session) {
+    public ModelAndView listarValoresGaranhoes(HttpSession session, Model model) {
         ModelAndView mv = new ModelAndView("administrativo/garanhoes/listaValor"); // Aponta para a página correta
 
         // Verifica se o usuário está logado
@@ -94,6 +111,14 @@ public class GaranhaoControle {
 
         // Obtém o usuário logado da sessão
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
 
         // Adiciona o objeto 'usuario' ao modelo
         mv.addObject("usuario", usuario);
@@ -114,8 +139,26 @@ public class GaranhaoControle {
             return "redirect:/login"; // Redireciona para o login se o usuário não estiver logado
         }
 
-        // Obtém o usuário logado da sessão
+     // Obtém o usuário logado da sessão
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
+        
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
+        
         model.addAttribute("usuario", usuario); // Adiciona o usuário ao modelo
 
         // Busca o garanhão pelo id
@@ -141,8 +184,17 @@ public class GaranhaoControle {
             return "redirect:/login"; // Redireciona para o login se o usuário não estiver logado
         }
 
-        // Obtém o usuário logado da sessão
+     // Obtém o usuário logado da sessão
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
+        
         model.addAttribute("usuario", usuario); // Adiciona o usuário ao modelo
 
         // Busca o garanhão pelo id
@@ -273,7 +325,7 @@ public class GaranhaoControle {
         // Validação do formulário
         if (result.hasErrors()) {
             // Se houver erros de validação, volta para o formulário com os erros
-            return cadastrar(null, garanhao);  // Retorna para o formulário com os erros
+            return cadastrar(null, garanhao, null);  // Retorna para o formulário com os erros
         }
 
         // Definir a data de cadastro (utiliza a data e hora atuais)
@@ -283,7 +335,7 @@ public class GaranhaoControle {
         if (garanhao.getSaldo_atual_palhetas() < 0) {
             // Caso o saldo atual seja negativo, impedir a gravação
             result.rejectValue("saldo_atual_palhetas", "error.garanhao", "O saldo de palhetas não pode ser negativo.");
-            return cadastrar(null, garanhao);  // Retorna para o formulário com a mensagem de erro
+            return cadastrar(null, garanhao, null);  // Retorna para o formulário com a mensagem de erro
         }
 
         try {
@@ -293,7 +345,7 @@ public class GaranhaoControle {
             // Caso ocorra algum erro ao salvar, você pode capturar e tratar aqui
             e.printStackTrace();  // Exibe o erro detalhado no log para diagnóstico
             result.rejectValue("nome_garanhao", "error.garanhao", "Erro ao salvar o Garanhão. Tente novamente.");
-            return cadastrar(null, garanhao);  // Retorna para o formulário com a mensagem de erro
+            return cadastrar(null, garanhao, null);  // Retorna para o formulário com a mensagem de erro
         }
 
         // Após salvar com sucesso, redireciona para a listagem dos Garanhões
@@ -305,7 +357,7 @@ public class GaranhaoControle {
     public ModelAndView ajustarSaldo(Long idGaranhao, int quantidade) {
         if (quantidade <= 0) {
             // Caso a quantidade seja inválida
-            return listarGaranhoes(null);
+            return listarGaranhoes(null, null);
         }
 
         Optional<Garanhao> garanhaoOpt = garanhaoRepositorio.findById(idGaranhao);
@@ -316,7 +368,7 @@ public class GaranhaoControle {
 
             if (novoSaldo < 0) {
                 // Se o saldo for insuficiente, retorne uma mensagem de erro
-                return listarGaranhoes(null);
+                return listarGaranhoes(null, null);
             }
 
             // Atualiza o saldo e salva o Garanhao
@@ -326,7 +378,7 @@ public class GaranhaoControle {
             // Se o Garanhão não for encontrado, retorne um erro ou mensagem
         }
 
-        return listarGaranhoes(null);
+        return listarGaranhoes(null, null);
     }
 
     @GetMapping("/administrativo/garanhoes/dados/{id}")

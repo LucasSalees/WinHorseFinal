@@ -131,7 +131,6 @@ public class PrincipalControle {
         return "administrativo/home";
     }
 
-
     // Rota para logout
     @GetMapping("/sair")
     public String logout(HttpSession session, HttpServletResponse response) {
@@ -152,7 +151,6 @@ public class PrincipalControle {
         return "redirect:/login";
     }
 
-     
     /////////////////////////// 
     // 		  AJUDA			 //
     ///////////////////////////

@@ -474,7 +474,7 @@
         <div class="form-container" style="width: 200%; max-width: 1500px;">
 
             <div class="d-flex align-items-center justify-content-between mb-3">
-			    <a href="/home" class="custom-link">
+			    <a href="/administrativo/movimentacoes/listar" class="custom-link">
 			        <i class="fa-solid fa-circle-left"></i>
 			    </a>
 			    <h1 class="m-0 text-center flex-grow-1">Movimentações Estornadas</h1>
@@ -570,13 +570,15 @@
 		    </div>
 		</div>
 
-        <!-- Início do Footer -->
+        	<!-- Início do Footer -->
 	<footer class="footer">
 	    <div class="container" style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
 	        <!-- Texto da empresa centralizado -->
 	        <div style="text-align: center;">
 	            <p>&copy; 2025 <a href="https://input.com.vc/" target="_blank">
-				  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style=" height: 35px; width: auto;">
+				  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style="height: 35px; width: auto; transition: transform 0.3s ease, opacity 0.3s ease;" 
+				  onmouseover="this.style.transform='scale(1.02)';" 
+				  onmouseout="this.style.transform='scale(1)';">
 				</a> </p>
 	            <p>Todos os direitos reservados.</p>
 	        </div>
@@ -764,42 +766,6 @@
                 janelaImpressao.close();
             });
 
-            // Função para alternar a visibilidade da senha
-            function togglePassword(inputId, toggleId) {
-                const input = document.getElementById(inputId);
-                const toggle = document.getElementById(toggleId);
-
-                toggle.addEventListener("click", function () {
-                    if (input.type === "password") {
-                        input.type = "text";
-                        toggle.classList.remove("fa-eye");
-                        toggle.classList.add("fa-eye-slash");
-                    } else {
-                        input.type = "password";
-                        toggle.classList.remove("fa-eye-slash");
-                        toggle.classList.add("fa-eye");
-                    }
-                });
-            }
-
-            // Aplicando aos campos
-            togglePassword("novaSenha", "toggleNovaSenha");
-            togglePassword("confirmarSenha", "toggleConfirmarSenha");
-
-            // Validação de senha
-            document.getElementById("movimentacaoForm").addEventListener("submit", function (event) {
-                const senha = document.getElementById("novaSenha").value;
-                const confirmarSenha = document.getElementById("confirmarSenha").value;
-                const mensagemErro = document.getElementById("mensagemErro");
-
-                if (senha !== confirmarSenha) {
-                    event.preventDefault(); // Impede o envio do formulário
-                    mensagemErro.style.display = "block"; // Exibe a mensagem de erro
-                } else {
-                    mensagemErro.style.display = "none"; // Oculta a mensagem se estiver correta
-                }
-            });
-            
             function atualizarRelogio() {
                 const agora = new Date();
                 const horas = agora.getHours().toString().padStart(2, '0');

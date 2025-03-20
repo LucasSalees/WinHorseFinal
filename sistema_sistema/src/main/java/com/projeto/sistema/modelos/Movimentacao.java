@@ -36,7 +36,7 @@ public class Movimentacao implements Serializable {
     private String nome_profissional;
     private String identificador_profissional;
     private String nome_usuario;
-    private String prenhez; // Nova coluna adicionada
+    private String embriao; // Nova coluna adicionada
 
     @ManyToOne
     @JoinColumn(name = "garanhao_id_garanhao", referencedColumnName = "id_garanhao")
@@ -160,11 +160,11 @@ public class Movimentacao implements Serializable {
         this.nome_usuario = nome_usuario;
     }
 
-    public String getPrenhez() {
-        return prenhez;
+    public String getEmbriao() {
+        return embriao;
     }
 
-    public void setPrenhez(String prenhez) {
-        this.prenhez = prenhez;
+    public void setEmbriao(String embriao) {
+        this.embriao = embriao;
     }
 }
