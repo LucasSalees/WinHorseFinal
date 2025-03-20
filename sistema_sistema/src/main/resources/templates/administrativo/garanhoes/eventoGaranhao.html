@@ -1357,7 +1357,7 @@
                 return; // Não prossegue com o salvamento
             }
 
-            // Captura os valores dos campos do formulário
+         // Captura os valores dos campos do formulário
             const idGaranhao = document.getElementById('id_garanhao').value;
             const nomeGaranhao = document.getElementById('nome_garanhao').value;
             const corPalheta = document.querySelector('select[name="cor_palheta"]').value;
@@ -1378,6 +1378,18 @@
             const caneca = document.getElementById('caneca').value;
             const dataCadastro = document.getElementById('data_cadastro').value;
             const saldoAtualPalhetas = document.getElementById('saldo_atual_palhetas').value;
+
+            // Captura o valor da Modalidade (Somente se for ADMIN)
+            const modalidadeSelect = document.getElementById('modalidadeSelect');
+            const modalidade = modalidadeSelect ? modalidadeSelect.value : "";
+
+            // Captura o valor do campo Valor (Somente se for ADMIN)
+            const valorInput = document.getElementById('valor');
+            const valor = valorInput ? valorInput.value : "";
+
+            // Captura o valor da moeda (Somente se for ADMIN)
+            const moedaSelect = document.getElementById('moeda');
+            const moeda = moedaSelect ? moedaSelect.value : "";
 
             // Abre uma nova janela para impressão
             const janelaImpressao = window.open('', '', 'width=800,height=600');
@@ -1501,36 +1513,44 @@
 				        <div class="content">
 				            <table>
 				            <tr>
-			                    <td>ID:</td>
+			                    <td>ID</td>
 			                    <td>${idGaranhao}</td>
 			                </tr>
 				                <tr>
-				                    <td>Garanhão:</td>
+				                    <td>Garanhão</td>
 				                    <td>${nomeGaranhao}</td>
 				                </tr>
 				                <tr>
-				                    <td>Botijão:</td>
+				                    <td>Botijão</td>
 				                    <td>${botijao}</td>
 				                </tr>
 				                <tr>
-				                    <td>Caneca:</td>
+				                    <td>Caneca</td>
 				                    <td>${caneca}</td>
 				                </tr>
 				                <tr>
-				                    <td>Palheta:</td>
+				                    <td>Palheta</td>
 				                    <td>${corPalheta}</td>
 				                </tr>
 				                <tr>
-				                    <td>Saldo Atual de Palhetas:</td>
+				                    <td>Saldo Atual de Palhetas</td>
 				                    <td>${saldoAtualPalhetas}</td>
 				                </tr>
 				                <tr>
-				                    <td>Data da Contagem:</td>
+				                    <td>Data da Contagem</td>
 				                    <td>${dataContagemInicial}</td>
 				                </tr>
 				                <tr>
-				                    <td>Data do Cadastro:</td>
+				                    <td>Data do Cadastro</td>
 				                    <td>${dataCadastro}</td>
+				                <tr>
+				                    <td>Valor</td>
+				                    <td>${valor} ${moeda}</td>
+				                </tr>
+
+					            <tr>
+				                    <td>Modalidade:</td>
+				                    <td>${modalidade}</td>
 				                </tr>
 				            </table>
 				        </div>
@@ -1538,12 +1558,11 @@
 				        <div class="footer">
 				            <div class="signature">
 				                <div class="signature-block">
-				                    <div class="label">___________________________________________</div>
-				                    <div class="label">Assinatura do veterinário</div>
+				                    
 				                </div>
 				            </div>
 				            <div class="footer-text">
-				                © 2024 Haras Rosa Mystica - Todos os direitos reservados.
+				                © 2025 Haras Rosa Mystica - Todos os direitos reservados.
 				            </div>
 				        </div>
 				    </body>

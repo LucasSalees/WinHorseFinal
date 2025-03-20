@@ -487,6 +487,16 @@
                     </div>
                 </div>
                 
+	            <div class="form-row">
+				    <div class="col-md-6 mb-3">
+				        <label>Hora de Início</label>
+				        <span th:text="${horaInicio}" class="form-control-plaintext"></span>
+				    </div>
+				    <div class="col-md-6 mb-3">
+				        <label>Hora de Fim</label>
+				        <span th:text="${horaFim}" class="form-control-plaintext"></span>
+				    </div>
+				</div>
                             <!-- Exibindo e Editando os Dias Permitidos -->
             <div class="form-row">
 			    <div class="col-md-12 mb-3">
@@ -524,16 +534,7 @@
 			    </div>
 			</div>
 
-            <div class="form-row">
-			    <div class="col-md-6 mb-3">
-			        <label>Hora de Início</label>
-			        <span th:text="${horaInicio}" class="form-control-plaintext"></span>
-			    </div>
-			    <div class="col-md-6 mb-3">
-			        <label>Hora de Fim</label>
-			        <span th:text="${horaFim}" class="form-control-plaintext"></span>
-			    </div>
-			</div>
+
 
                 <input type="hidden" th:field="*{id_usuario}" />
 

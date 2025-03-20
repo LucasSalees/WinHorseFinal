@@ -390,6 +390,13 @@
             background-size: 400% 400%;
             animation: gradientFooterAnimation 8s ease infinite;
         }
+        
+        .btn-custom {
+	        width: 267px; 
+	        height: 41px;
+	        margin-left: 30px;
+	    }
+	    
     </style>
 
 </head>
@@ -536,8 +543,14 @@
                         <i class="fa-solid fa-print"></i> Imprimir
                     </a>
                 </div>
+                
+                 <div class="col text-center">
+                    <a th:if="${usuario.tipo == 'ADMIN'}"  href="/administrativo/garanhoes/listaValor" class="btn btn-success btn-custom text-white">
+                        <i class="fa-solid fa-dollar-sign"></i> Lista de valores
+                    </a>
+                </div>
+                
                 <div class="col text-right">
-
                     <a th:if="${usuario.tipo == 'ADMIN'}" href="/administrativo/garanhoes/cadastro">
                         <button type="button" class="btn btn-dark btn-sm">
                             <i class="fa-solid fa-plus"></i> <i class="fa-solid fa-horse-head"></i> Cadastrar

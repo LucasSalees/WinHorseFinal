@@ -390,6 +390,12 @@
             background-size: 400% 400%;
             animation: gradientFooterAnimation 8s ease infinite;
         }
+        
+		.btn-custom {
+	        width: 267px; 
+	        height: 41px;
+	        margin-left: 83px;
+	    }
        
     </style>
 
@@ -577,7 +583,7 @@
                 </div>
                 
                 <div class="col text-center">
-                    <a th:if="${usuario.tipo == 'ADMIN'}" href="/administrativo/movimentacoes/lixeira" class="btn btn-danger btn-sm text-white">
+                    <a th:if="${usuario.tipo == 'ADMIN'}" href="/administrativo/movimentacoes/lixeira" class="btn btn-danger btn-custom text-white">
                         <i class="fa-solid fa-trash-can-arrow-up"></i> Movimentações estornadas
                     </a>
                 </div>
@@ -734,7 +740,7 @@
 		        }
 
 		        table {
-		            width: 100%;
+		            width: 500px;
 		            border-collapse: collapse;
 		            margin: 20px auto;
 		            font-size: 14px; /* Tamanho consistente */

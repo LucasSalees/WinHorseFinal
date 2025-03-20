@@ -1119,6 +1119,7 @@
 
         function imprimirFormulario() {
             // Captura os valores dos campos do formulário
+            const idMovimentacao = document.getElementById('id_movimentacao').value;
             const nomeGaranhao = document.getElementById('nome_garanhao').value;
             const botijao = document.getElementById('botijao').value;
             const caneca = document.getElementById('caneca').value;
@@ -1127,6 +1128,7 @@
             const destino = document.querySelector('input[name="destino"]:checked').value; // Captura o valor do radio button
             const infoAdicional = document.getElementById('info-adicional').value;
             const dataMovimentacao = formatarData(document.getElementById('data_movimentacao').value); // Formatar a data aqui
+            const embriao = document.querySelector('input[name="embriao"]:checked').value;
             const profissional = document.querySelector('input[name="profissional"]:checked').value;
             const nomeProfissional = document.getElementById('nome_profissional').value;
             const identificadorProfissional = document.getElementById('identificador_profissional').value;
@@ -1267,52 +1269,60 @@
 
 				        <div class="content">
 				            <table>
+				            <tr>
+			                    <td>ID</td>
+			                    <td>${idMovimentacao}</td>
+			                </tr>
 				                <tr>
-				                    <td>Nome do Garanhão:</td>
+				                    <td>Garanhão</td>
 				                    <td>${nomeGaranhao}</td>
 				                </tr>
 				                <tr>
-				                    <td>Letra do Botijão:</td>
+				                    <td>Botijão</td>
 				                    <td>${botijao}</td>
 				                </tr>
 				                <tr>
-				                    <td>Número da Caneca:</td>
+				                    <td>Caneca</td>
 				                    <td>${caneca}</td>
 				                </tr>
 				                <tr>
-				                    <td>Cor da Palheta:</td>
+				                    <td>Palheta</td>
 				                    <td>${corPalheta}</td>
 				                </tr>
 				                <tr>
-				                    <td>Quantidade de Palhetas:</td>
+				                    <td>Palhetas</td>
 				                    <td>${quantidade}</td>
 				                </tr>
 				                <tr>
-				                    <td>Destino:</td>
+				                    <td>Destino</td>
 				                    <td>${destino}</td>
 				                </tr>
 				                <tr>
-				                    <td>Informação Adicional:</td>
+				                    <td>Informação Adicional</td>
 				                    <td>${infoAdicional}</td>
 				                </tr>
 				                <tr>
-				                    <td>Data da Movimentação:</td>
+				                    <td>Data da Movimentação</td>
 				                    <td>${dataMovimentacao}</td>
 				                </tr>
 				                <tr>
-				                    <td>Profissional:</td>
+				                    <td>Status do embrião</td>
+				                    <td>${embriao}</td>
+				                </tr>
+				                <tr>
+				                    <td>Profissional</td>
 				                    <td>${profissional}</td>
 				                </tr>
 				                <tr>
-				                    <td>Nome do Profissional:</td>
+				                    <td>Nome</td>
 				                    <td>${nomeProfissional}</td>
 				                </tr>
 				                <tr>
-				                    <td>Identificador do Profissional:</td>
+				                    <td>Documento</td>
 				                    <td>${identificadorProfissional}</td>
 				                </tr>
 								<tr>
-				                    <td>Responsável pela movimentação:</td>
+				                    <td>Responsável</td>
 				                    <td>${nome_usuario}</td>
 				                </tr>
 							</tr>
@@ -1346,7 +1356,7 @@
 				                </div>
 				            </div>
 				            <div class="footer-text">
-				                © 2024 Haras Rosa Mystica - Todos os direitos reservados.
+				                © 2025 Haras Rosa Mystica - Todos os direitos reservados.
 				            </div>
 				        </div>
 				    </body>
