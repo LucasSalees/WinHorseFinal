@@ -81,23 +81,42 @@ public class UsuarioControle {
 	}
 
 
-    @PostMapping("/administrativo/usuarios/salvar")
-    public ModelAndView salvar(@ModelAttribute Usuario usuario, BindingResult result) {
-        // Validação do formulário
-        if (result.hasErrors()) {
-            // Se houver erros de validação, volta para o formulário com os erros
-            return cadastrar(usuario, null);  // Retorna para o formulário com os erros
-        }
+	@PostMapping("/administrativo/usuarios/salvar")
+	public ModelAndView salvar(@ModelAttribute Usuario usuario, BindingResult result) {
+	    // Validação do formulário
+	    if (result.hasErrors()) {
+	        return cadastrar(usuario, null);  // Retorna para o formulário com os erros
+	    }
 
-        // Definir a data de cadastro (utiliza a data e hora atuais)
-        usuario.setData_cadastro(LocalDateTime.now());
+	    // Definir a data de cadastro (utiliza a data e hora atuais)
+	    usuario.setData_cadastro(LocalDateTime.now());
 
-        // Salvar o usuário no banco de dados
-        usuarioRepositorio.save(usuario);
+	    // 🖨️ Exibir os valores no terminal
+	    System.out.println("USUÁRIO FEZ UM CADASTRO DE UM USUÁRIO");
+	    System.out.println("Cadastro de Usuário:");
+	    System.out.println("Nome: " + usuario.getNome_usuario());
+	    System.out.println("Função: " + usuario.getFuncao());
+	    System.out.println("E-mail: " + usuario.getEmail());
+	    System.out.println("Senha: " + usuario.getSenha());
+	    System.out.println("Tipo de Usuário: " + usuario.getTipo());
+	    System.out.println("Dias Permitidos: " + usuario.getDiasPermitidos());
+	    System.out.println("Horário Permitido: " + usuario.getHoraInicio() + " até " + usuario.getHoraFim());
+	    System.out.println("Data de Cadastro: " + usuario.getData_cadastro());
 
-        // Após salvar com sucesso, redireciona para a listagem dos usuários
-        return new ModelAndView("redirect:/administrativo/usuarios/listar");  // Redireciona para a listagem após salvar
-    }
+	    try {
+	        // Salvar o usuário no banco de dados
+	        usuarioRepositorio.save(usuario);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        result.rejectValue("email", "error.usuario", "Erro ao salvar o Usuário. Tente novamente.");
+	        System.out.println("Erro ao salvar o Usuário. Tente novamente.");
+	        return cadastrar(usuario, null);
+	    }
+
+	    // Após salvar com sucesso, redireciona para a listagem dos usuários
+	    return new ModelAndView("redirect:/administrativo/usuarios/listar");  
+	}
+
     
     @GetMapping("/administrativo/usuarios/eventoUsuario/editarUsuario/{id_usuario}")
     public String editar(@PathVariable("id_usuario") Long id_usuario, Model model, HttpSession session) {
@@ -132,8 +151,7 @@ public class UsuarioControle {
     
     @GetMapping("/removerUsuario/{id_usuario}")
     public String remover(@PathVariable("id_usuario") Long id_usuario, Model model, HttpSession session) {
-        System.out.println("ID recebido para exclusão: " + id_usuario); // Log para verificar o ID
-
+        
         // Verifica se o usuário está logado na sessão
         if (session.getAttribute("usuarioLogado") == null) {
             return "redirect:/login"; // Redireciona para login se o usuário não estiver logado
@@ -149,29 +167,66 @@ public class UsuarioControle {
             if (usuarioOptional.isPresent()) {
                 Usuario usuarioEncontrado = usuarioOptional.get(); // Obtém o usuário
                 model.addAttribute("remover", usuarioEncontrado); // Envia o objeto para o modelo
+
+                // Exibir os dados do usuário a ser excluído
+                System.out.println("USUÁRIO FEZ UMA TENTATIVA DE EXCLUSÃO DE USUÁRIO");
+                System.out.println("USUÁRIO A SER EXCLUÍDO:");
+                System.out.println("ID: " + usuarioEncontrado.getId_usuario());
+                System.out.println("Nome: " + usuarioEncontrado.getNome_usuario());
+                System.out.println("Função: " + usuarioEncontrado.getFuncao());
+                System.out.println("E-mail: " + usuarioEncontrado.getEmail());
+                System.out.println("Tipo de Usuário: " + usuarioEncontrado.getTipo());
+                System.out.println("Dias Permitidos: " + usuarioEncontrado.getDiasPermitidos());
+                System.out.println("Horário Permitido: " + usuarioEncontrado.getHoraInicio() + " até " + usuarioEncontrado.getHoraFim());
+
                 // Tenta excluir o usuário
                 usuarioRepositorio.deleteById(id_usuario);
                 model.addAttribute("message", "Usuário removido com sucesso!");
+                System.out.println("STATUS DA EXCLUSÃO:");
+                System.out.println("Exclusão confirmada.");
+                return "administrativo/usuarios/remover";
             } else {
+                // Caso o usuário não seja encontrado
                 model.addAttribute("message", "Usuário não encontrado!");
+                System.out.println("STATUS DA EXCLUSÃO:");
+                System.out.println("ERRO, usuário não encontrado.");
+                return "administrativo/usuarios/remover";
             }
         } catch (DataIntegrityViolationException e) {
+            // Caso ocorra um erro de violação de integridade no banco de dados
             model.addAttribute("message", "Erro ao excluir: Usuário está vinculado a outras entidades.");
+            System.out.println("STATUS DA EXCLUSÃO:");
+            System.out.println("ERRO, Usuário está vinculado a outras entidades.");
+            return "administrativo/usuarios/remover";
         } catch (Exception e) {
+            // Caso qualquer outro erro ocorra
             System.out.println("Erro ao excluir o usuário: " + e.getMessage());
             model.addAttribute("message", "Erro ao excluir: " + e.getMessage());
+            System.out.println("STATUS DA EXCLUSÃO:");
+            System.out.println("ERRO, Erro ao excluir: " + e.getMessage());
+            return "administrativo/usuarios/remover";
         }
-
-        return "administrativo/usuarios/remover"; // Retorna para a mesma página com mensagem
     }
+
 
     @PostMapping("/administrativo/usuarios/editarUsuario")
     public String salvarEdicaoUsuario(@ModelAttribute("usuario") Usuario usuario, RedirectAttributes redirectAttributes) {
         // Buscar o usuário existente pelo ID
         Optional<Usuario> usuarioExistenteOpt = usuarioRepositorio.findById(usuario.getId_usuario());
-        
+
         if (usuarioExistenteOpt.isPresent()) {
             Usuario usuarioExistente = usuarioExistenteOpt.get();
+
+            // Exibir os dados antigos antes da alteração
+            System.out.println("USUÁRIO FEZ UMA EDIÇÃO DE UM USUÁRIO");
+            System.out.println("Dados Antigos do Usuário:");
+            System.out.println("Nome: " + usuarioExistente.getNome_usuario());
+            System.out.println("Função: " + usuarioExistente.getFuncao());
+            System.out.println("E-mail: " + usuarioExistente.getEmail());
+            System.out.println("Senha: " + usuarioExistente.getSenha());
+            System.out.println("Tipo de Usuário: " + usuarioExistente.getTipo());
+            System.out.println("Dias Permitidos: " + usuarioExistente.getDiasPermitidos());
+            System.out.println("Horário Permitido: " + usuarioExistente.getHoraInicio() + " até " + usuarioExistente.getHoraFim());
 
             // Atualizar os campos editáveis do usuário
             usuarioExistente.setNome_usuario(usuario.getNome_usuario());
@@ -179,23 +234,32 @@ public class UsuarioControle {
             usuarioExistente.setSenha(usuario.getSenha());
             usuarioExistente.setTipo(usuario.getTipo());
             usuarioExistente.setFuncao(usuario.getFuncao());
-            usuarioExistente.setDiasPermitidos(usuario.getDiasPermitidos()); // Atualiza os dias permitidos
+            usuarioExistente.setDiasPermitidos(usuario.getDiasPermitidos()); 
             usuarioExistente.setHoraInicio(usuario.getHoraInicio());
             usuarioExistente.setHoraFim(usuario.getHoraFim());
+
+            // Exibir os novos dados após a alteração
+            System.out.println("Novos Dados do Usuário:");
+            System.out.println("Nome: " + usuarioExistente.getNome_usuario());
+            System.out.println("Função: " + usuarioExistente.getFuncao());
+            System.out.println("E-mail: " + usuarioExistente.getEmail());
+            System.out.println("Senha: " + usuarioExistente.getSenha());
+            System.out.println("Tipo de Usuário: " + usuarioExistente.getTipo());
+            System.out.println("Dias Permitidos: " + usuarioExistente.getDiasPermitidos());
+            System.out.println("Horário Permitido: " + usuarioExistente.getHoraInicio() + " até " + usuarioExistente.getHoraFim());
 
             // Salvar as atualizações no banco de dados
             usuarioRepositorio.save(usuarioExistente);
 
             // Mensagem de sucesso
             redirectAttributes.addFlashAttribute("mensagemSucesso", "Usuário atualizado com sucesso.");
-            return "redirect:/administrativo/usuarios/listar"; // Redireciona para a lista de usuários
+            return "redirect:/administrativo/usuarios/listar";  
         } else {
             // Caso o usuário não seja encontrado
             redirectAttributes.addFlashAttribute("mensagemErro", "Usuário não encontrado.");
             return "redirect:/administrativo/usuarios/listar";
         }
     }
-
 
 
     @PostMapping("/administrativo/usuarios/editarUsuarioSenha")

@@ -84,7 +84,7 @@
         /*textos em cima dos inputs*/
         label {
             display: inline-block;
-            margin-bottom: .5rem;
+            margin-bottom: 1rem;
             font-weight: 600;
         }
 
@@ -530,39 +530,39 @@
                 <div class="custom-divider"></div>
 
 
-                <div class="form-row">
-                    <div class="col-12 col-md-6">
+                <div class="form-row justify-content-center">
+                    <div class="col-12 col-md-6 text-center">
                         <label for="garanhaoSelect" class="label-info">Selecione o Garanhão</label>
-                        <select id="garanhaoSelect" th:field="*{garanhao}" class="form-control" required >
+                        <select id="garanhaoSelect" th:field="*{garanhao}" class="form-control" required>
                             <option value="">Escolha um Garanhão</option>
-                            <option th:each="gar : ${listarGaranhoes}" 
-							        th:value="${gar.id_garanhao}"
-							        th:text="${gar.id_garanhao + ' - ' + gar.nome_garanhao}">
-							</option>
+                            <option th:each="gar : ${listarGaranhoes}" th:value="${gar.id_garanhao}"
+                                th:text="${gar.id_garanhao + ' - ' + gar.nome_garanhao}">
+                            </option>
                         </select>
                     </div>
+                </div>
+
+                <div class="form-row">
+
                     <div class="col-12 col-md-6">
                         <label for="botijao" class="label-info">Botijão</label>
                         <input type="text" id="botijao" th:field="*{botijao}" class="form-control" readonly />
                     </div>
-                </div>
 
-                <div class="form-row">
-                <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-6">
                         <label for="caneca" class="label-info">Caneca</label>
                         <input type="text" id="caneca" th:field="*{caneca}" class="form-control" readonly />
                     </div>
-                
-                 <div class="col-12 col-md-6">
-                    <label for="cor_palheta" class="label-info">Palheta</label>
-                    <input type="text" id="cor_palheta" th:field="*{cor_palheta}" class="form-control" readonly />
-                </div>
-
                 </div>
 
                 <div class="form-row">
-                
-                <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-6">
+                        <label for="cor_palheta" class="label-info">Palheta</label>
+                        <input type="text" id="cor_palheta" th:field="*{cor_palheta}" class="form-control" readonly />
+                    </div>
+
+
+                    <div class="col-12 col-md-6">
                         <div class="form-group d-flex align-items-center">
                             <label for="quantidade" class="label-info mb-0">Quantidade de Palhetas</label>
                             <div id="saldo-info" style="margin-left: 83px; font-size: 13px">
@@ -572,50 +572,37 @@
                         <input type="number" required id="quantidade" th:field="*{quantidade}" class="form-control"
                             min="1" />
                     </div>
-                    
+                </div>
+                <div class="form-row">
+
                     <div class="col-12 col-md-6">
                         <label for="destino" class="label-info">Destino</label>
-						<div id="destino" class="form-control d-flex justify-content-center">
-						    <label class="mx-2">
-						        <input required type="radio" name="destino" value="venda" onclick="mostrarCampoAdicional()"> Venda
-						    </label>
-						    <label class="mx-2">
-						        <input required type="radio" name="destino" value="uso_interno" onclick="mostrarCampoAdicional()" checked> Uso Interno
-						    </label>
-						    <label class="mx-2">
-						        <input required type="radio" name="destino" value="transferencia" onclick="mostrarCampoAdicional()"> Transferência
-						    </label>
-						</div>
-
-                    </div>
-    
-                </div>
-
-                <div class="form-row">
-                
-               	<div class="col-12 col-md-6">
-                        <div>
-                            <label for="info-adicional" class="label-info">Informação Adicional</label>
-                            <input required type="text" th:field="*{endereco}" id="info-adicional" class="form-control"
-                                placeholder="Preencha as informações" maxlength="40">
+                        <div id="destino" class="form-control d-flex justify-content-center">
+                            <label class="mx-2">
+                                <input required type="radio" name="destino" value="venda"
+                                    onclick="mostrarCampoAdicional()"> Venda
+                            </label>
+                            <label class="mx-2">
+                                <input required type="radio" name="destino" value="uso_interno"
+                                    onclick="mostrarCampoAdicional()" checked> Uso Interno
+                            </label>
+                            <label class="mx-2">
+                                <input required type="radio" name="destino" value="transferencia"
+                                    onclick="mostrarCampoAdicional()"> Transferência
+                            </label>
                         </div>
-                    </div>
-                    
-                    <div class="col-12 col-md-6">
-                        <label for="embriao" class="label-info">Status do Embrião</label>
-						<div id="embriao" class="form-control d-flex justify-content-center">
-						    <label class="mx-2">
-						        <input type="radio" name="embriao" value="positivo"> Positivo
-						    </label>
-						    <label class="mx-2">
-						        <input type="radio" name="embriao" value="negativo"> Negativo
-						    </label>
-						    <label class="mx-2">
-						        <input type="radio" name="embriao" value="indefinido" checked> Indefinido
-						    </label>
-						</div>
+
                     </div>
 
+
+
+                    <div class="col-12 col-md-6">
+                        <label for="caneca" class="label-info">Observações</label>
+                        <input required type="text" th:field="*{endereco}" id="info-adicional" class="form-control"
+                            placeholder="Preencha as informações" maxlength="40">
+
+
+                    </div>
                 </div>
 
                 <!-- Modal de Aviso -->
@@ -636,18 +623,67 @@
                     </div>
                 </div>
 
-			<div class="form-row justify-content-center">
-			    <div class="col-12 col-md-6 text-center">
-			        <label for="profissional" class="label-info">Escolha um Profissional</label>
-			        <div id="profissional" required class="form-control d-flex justify-content-center">
-			            <label class="mx-2">
-			                <input required type="radio" name="profissional" value="Motoboy" onclick="atualizarCamposProfissional()"> Motoboy
-			            </label>
-			            <label class="mx-2">
-			                <input required type="radio" name="profissional" value="Veterinário" onclick="atualizarCamposProfissional()" checked> Veterinário
-			            </label>
-			        </div>
-			    </div>
+                <div class="custom-divider"></div>
+
+                <div class="form-row">
+
+                    <div class="col-12 col-md-6">
+                        <label for="embriao" class="label-info">Status do Embrião</label>
+                        <div id="embriao" class="form-control d-flex justify-content-center">
+                            <label class="mx-2">
+                                <input type="radio" name="embriao" value="positivo"> Positivo
+                            </label>
+                            <label class="mx-2">
+                                <input type="radio" name="embriao" value="negativo"> Negativo
+                            </label>
+                            <label class="mx-2">
+                                <input type="radio" name="embriao" value="indefinido" checked> Indefinido
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Campo de Quantidade de Embrião -->
+                    <div class="col-12 col-md-6">
+                        <label for="quantidade_embriao" class="label-info">Quantidade de Embrião</label>
+                        <input type="number" id="quantidade_embriao" th:field="*{quantidade_embriao}"
+                            class="form-control" min="0" oninput="verificarValor()" />
+                    </div>
+                </div>
+
+                <!-- Modal de Aviso -->
+                <div class="modal fade" id="saldoAtualModal" tabindex="-1" aria-labelledby="saldoAtualModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="saldoAtualModalLabel">Aviso</h5>
+                                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Números negativos não são permitidos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="custom-divider"></div>
+
+                <div class="form-row justify-content-center">
+                    <div class="col-12 col-md-6 text-center">
+                        <label for="profissional" class="label-info">Escolha um Profissional</label>
+                        <div id="profissional" required class="form-control d-flex justify-content-center">
+                            <label class="mx-2">
+                                <input required type="radio" name="profissional" value="Motoboy"
+                                    onclick="atualizarCamposProfissional()"> Motoboy
+                            </label>
+                            <label class="mx-2">
+                                <input required type="radio" name="profissional" value="Veterinário"
+                                    onclick="atualizarCamposProfissional()" checked> Veterinário
+                            </label>
+                        </div>
+                    </div>
 
                     <!-- Modal de Aviso -->
                     <div class="modal fade" id="avisoModal" tabindex="-1" aria-labelledby="avisoModalLabel"
@@ -667,21 +703,23 @@
                             </div>
                         </div>
                     </div>
-				</div>
+                </div>
 
                 <div class="form-row">
-					<div class="col-12 col-md-6">
+                    <div class="col-12 col-md-6">
                         <label for="nome_profissional" class="label-info">Nome do Profissional</label>
                         <input type="text" required id="nome_profissional" th:field="*{nome_profissional}"
                             class="form-control" maxlength="40" />
                     </div>
-                    
+
                     <div class="col-12 col-md-6">
                         <label for="identificador_profissional" class="label-info">Identificador do Profissional</label>
                         <input type="text" required id="identificador_profissional"
                             th:field="*{identificador_profissional}" class="form-control" maxlength="40" />
                     </div>
                 </div>
+
+                <div class="custom-divider"></div>
 
                 <div class="form-row">
                     <div class="col-12 col-md-6">
@@ -695,7 +733,7 @@
                             class="form-control" />
                     </div>
                 </div>
-              
+
                 <div class="custom-divider"></div>
 
                 <div class="d-flex justify-content-between mt-3">
@@ -712,60 +750,69 @@
         </div>
     </div>
 
-	<!-- Modal de aviso 10 minutos -->
-	<div id="modal10Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
-	    <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
-	        <p>Faltam 10 minutos para o fim da sua sessão!</p>
-	        <button onclick="fecharModal('modal10Min')" 
-	                style="background-color: #ffc107; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;" 
-	                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#ffc107'">
-	            OK
-	        </button>
-	    </div>
-	</div>
-	
-	<!-- Modal de aviso 5 minutos -->
-	<div id="modal5Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
-	    <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
-	        <p>Faltam 5 minutos para o fim da sua sessão!</p>
-	        <button onclick="fecharModal('modal5Min')" 
-	                style="background-color: #ffc107; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;" 
-	                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#ffc107'">
-	            OK
-	        </button>
-	    </div>
-	</div>
-	
-	<!-- Modal de aviso 1 minuto -->
-	<div id="modal1Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
-	    <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
-	        <p>Faltam 1 minuto para o fim da sua sessão!</p>
-	        <button onclick="fecharModal('modal1Min')" 
-	                style="background-color: #dc3545; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;" 
-	                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#dc3545'">
-	            OK
-	        </button>
-	    </div>
-	</div>
-	
-	<!-- Início do Footer -->
-	<footer class="footer">
-	    <div class="container" style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
-	        <!-- Texto da empresa centralizado -->
-	        <div style="text-align: center;">
-	            <p>&copy; 2025 <a href="https://input.com.vc/" target="_blank">
-				  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style="height: 35px; width: auto; transition: transform 0.3s ease, opacity 0.3s ease;" 
-				  onmouseover="this.style.transform='scale(1.02)';" 
-				  onmouseout="this.style.transform='scale(1)';">
-				</a> </p>
-	            <p>Todos os direitos reservados.</p>
-	        </div>
+    <!-- Modal de aviso 10 minutos -->
+    <div id="modal10Min" class="modal"
+        style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-content"
+            style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
+            <p>Faltam 10 minutos para o fim da sua sessão!</p>
+            <button onclick="fecharModal('modal10Min')"
+                style="background-color: #ffc107; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;"
+                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#ffc107'">
+                OK
+            </button>
+        </div>
+    </div>
 
-	        <!-- Relógio e campo oculto que armazena a horaFim do usuário -->
-	        <div id="relogio" style="font-size: 0px; font-weight: bold; visibility: hidden;"></div>
-	        <input type="hidden" id="horaFim" th:value="${horaFim}" />
-	    </div>
-	</footer>
+    <!-- Modal de aviso 5 minutos -->
+    <div id="modal5Min" class="modal"
+        style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-content"
+            style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
+            <p>Faltam 5 minutos para o fim da sua sessão!</p>
+            <button onclick="fecharModal('modal5Min')"
+                style="background-color: #ffc107; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;"
+                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#ffc107'">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal de aviso 1 minuto -->
+    <div id="modal1Min" class="modal"
+        style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-content"
+            style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
+            <p>Faltam 1 minuto para o fim da sua sessão!</p>
+            <button onclick="fecharModal('modal1Min')"
+                style="background-color: #dc3545; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;"
+                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#dc3545'">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <!-- Início do Footer -->
+    <footer class="footer">
+        <div class="container"
+            style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
+            <!-- Texto da empresa centralizado -->
+            <div style="text-align: center;">
+                <p>&copy; 2025 <a href="https://input.com.vc/" target="_blank">
+                        <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp"
+                            alt="Logo Input"
+                            style="height: 35px; width: auto; transition: transform 0.3s ease, opacity 0.3s ease;"
+                            onmouseover="this.style.transform='scale(1.02)';"
+                            onmouseout="this.style.transform='scale(1)';">
+                    </a> </p>
+                <p>Todos os direitos reservados.</p>
+            </div>
+
+            <!-- Relógio e campo oculto que armazena a horaFim do usuário -->
+            <div id="relogio" style="font-size: 0px; font-weight: bold; visibility: hidden;"></div>
+            <input type="hidden" id="horaFim" th:value="${horaFim}" />
+        </div>
+    </footer>
     <!-- Fim do Footer -->
 
     <!-- jQuery: Biblioteca JavaScript para manipulação de DOM, eventos e AJAX -->
@@ -821,6 +868,17 @@
                 modal.show(); // Exibe o modal
             }
         });
+
+        function verificarValor() {
+            let quantidade = document.getElementById("quantidade_embriao");
+
+            if (quantidade.value < 0) {
+                quantidade.value = 0; // Reseta para 0 caso seja negativo
+                var modal = new bootstrap.Modal(document.getElementById("saldoAtualModal"));
+                modal.show(); // Exibe o modal de aviso
+            }
+        }
+
 
         // Elementos do input e saldo
         const quantidadeInput = document.getElementById('quantidade');
@@ -940,7 +998,7 @@
             identificadorProfissional.value = "";
             $('#identificador_profissional').unmask();
         }
-        
+
         function atualizarRelogio() {
             const agora = new Date();
             const horas = agora.getHours().toString().padStart(2, '0');
@@ -961,13 +1019,13 @@
         }
 
         setInterval(atualizarRelogio, 1000);
-        
-     	// Função para fechar o modal
+
+        // Função para fechar o modal
         function fecharModal(modalId) {
             document.getElementById(modalId).style.display = "none";
         }
 
-     // Função para verificar o tempo restante e mostrar os avisos
+        // Função para verificar o tempo restante e mostrar os avisos
         function verificarTempoRestante() {
             const horaFim = document.getElementById("horaFim").value;  // Hora fim do usuário
             const horaAtual = new Date();
@@ -982,7 +1040,7 @@
             // Exibe o modal de 10 minutos quando minutosRestantes for igual a 10
             if (minutosRestantes == 10) {
                 document.getElementById("modal10Min").style.display = "block";  // Exibe o modal de 10 minutos
-            } 
+            }
             // Exibe o modal de 5 minutos quando minutosRestantes for igual a 5
             else if (minutosRestantes == 5) {
                 document.getElementById("modal5Min").style.display = "block";  // Exibe o modal de 5 minutos
@@ -1001,7 +1059,7 @@
         // Chama a função a cada 60 segundos para atualizar o tempo
         setInterval(verificarTempoRestante, 60000);
 
-        
+
     </script>
 
 </body>

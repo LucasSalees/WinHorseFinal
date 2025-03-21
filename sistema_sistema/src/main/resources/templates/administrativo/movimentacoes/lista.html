@@ -505,6 +505,7 @@
                             <th class="text-center">Documento</th>
                             <th class="text-center">Responsável</th>
                             <th class="text-center">Embrião</th>
+                            <th class="text-center">Quantidade de embrião</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -569,6 +570,10 @@
                             <td class="text-center">
                                 <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
                                     th:text="${movimentacao.embriao}"></a>
+                            </td>
+                            <td class="text-center">
+                                <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                                    th:text="${movimentacao.quantidade_embriao}"></a>
                             </td>
                     </tbody>
                 </table>

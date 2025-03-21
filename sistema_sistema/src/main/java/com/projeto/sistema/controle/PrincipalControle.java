@@ -2,6 +2,7 @@ package com.projeto.sistema.controle;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -55,23 +56,25 @@ public class PrincipalControle {
             // Verificar se o usuário tem restrição de horário e dias
             LocalTime agora = LocalTime.now();
             DayOfWeek diaAtual = LocalDate.now().getDayOfWeek();
+            LocalDateTime dataHoraAtual = LocalDateTime.now(); // Data e hora atual
 
             // Converter dia atual para o nome do dia em português
             String nomeDia = converterDiaParaPortugues(diaAtual);
 
             // Imprimir no console o dia atual, os dias permitidos e as horas
             System.out.println("Usuário conectado.");
+            System.out.println("Data e Hora da entrada: " + dataHoraAtual); // Exibe a data e hora completa
             System.out.println("ID do usuário: " + usr.getId_usuario()); // Exibe o ID do usuário
             System.out.println("Nome do usuário: " + usr.getNome_usuario()); // Exibe o nome do usuário
-            System.out.println("Dia atual: " + nomeDia); // Exibe o dia atual em português
+            System.out.println("Dia da entrada: " + nomeDia); // Exibe o dia atual em português
             System.out.println("Dias permitidos: " + usr.getDiasPermitidos()); // Exibe os dias permitidos
-            System.out.println("Hora atual: " + agora); // Exibe a hora atual
             System.out.println("Hora início permitida: " + usr.getHoraInicio()); // Exibe a hora de início permitida
             System.out.println("Hora fim permitida: " + usr.getHoraFim()); // Exibe a hora de fim permitida
 
             // Verificar se o dia está na lista de dias permitidos
             if (usr.getDiasPermitidos() != null && !usr.getDiasPermitidos().contains(nomeDia)) {
                 model.addAttribute("erro", "Data com restrição de acesso, contate seu administrador.");
+                System.out.println("Data com restrição de acesso, contate seu administrador.");
                 return "administrativo/login";
             }
 
@@ -79,6 +82,7 @@ public class PrincipalControle {
             if (usr.getHoraInicio() != null && usr.getHoraFim() != null) {
                 if (agora.isBefore(usr.getHoraInicio()) || agora.isAfter(usr.getHoraFim())) {
                     model.addAttribute("erro", "Horário com restrição de acesso, contate seu administrador.");
+                    System.out.println("Horário com restrição de acesso, contate seu administrador.");
                     return "administrativo/login";
                 }
             }
@@ -93,6 +97,7 @@ public class PrincipalControle {
 
         // Se email ou senha estiverem errados
         model.addAttribute("erro", "Email ou senha inválidos.");
+        System.out.println("Email ou senha inválidos.");
         return "administrativo/login";
     }
 
@@ -109,6 +114,7 @@ public class PrincipalControle {
             default: return "";
         }
     }
+
 
 
     @GetMapping("/home")
@@ -131,14 +137,20 @@ public class PrincipalControle {
         return "administrativo/home";
     }
 
-    // Rota para logout
     @GetMapping("/sair")
     public String logout(HttpSession session, HttpServletResponse response) {
+        // Recupera o objeto usuarioLogado da sessão
+        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+
+        // Se o usuário não estiver na sessão (caso ele tenha saído de algum jeito ou a sessão tenha expirado)
+        String nomeUsuario = (usuarioLogado != null) ? usuarioLogado.getNome_usuario() : "Usuário desconhecido";
+
         // Hora atual quando o usuário sai
         LocalTime agora = LocalTime.now();
-        
-        // Imprimir no console que o usuário saiu e a hora da saída
-        System.out.println("Usuário saiu às: " + agora); // Exibe a hora da saída
+        LocalDateTime dataHoraAtual = LocalDateTime.now(); // Data e hora atual
+
+        // Exibe a mensagem no console
+        System.out.println("Data e Hora da saída: " + dataHoraAtual); // Exibe a data e hora completa
         System.out.println("Usuário desconectado.");
 
         // Invalida a sessão para limpar os dados
@@ -150,6 +162,7 @@ public class PrincipalControle {
         // Redireciona para a tela de login
         return "redirect:/login";
     }
+
 
     /////////////////////////// 
     // 		  AJUDA			 //

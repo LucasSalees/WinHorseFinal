@@ -220,20 +220,36 @@ public class GaranhaoControle {
         if (garanhaoExistenteOpt.isPresent()) {
             Garanhao garanhaoExistente = garanhaoExistenteOpt.get();
 
+            // Exibir os dados antigos antes da alteração
+            System.out.println("USUÁRIO FEZ UMA EDIÇÃO DE VALOR");
+            System.out.println("Dados Antigos do Garanhão:");
+            System.out.println("Nome: " + garanhaoExistente.getNome_garanhao());
+            System.out.println("Valor: " + garanhaoExistente.getValor());
+            System.out.println("Moeda: " + garanhaoExistente.getMoeda());
+            System.out.println("MOdalidade: " + garanhaoExistente.getModalidade());
+
             // Garantir que o saldo atual não seja negativo
             if (garanhao.getSaldo_atual_palhetas() < 0) {
                 redirectAttributes.addFlashAttribute("mensagemErro", "O saldo de palhetas não pode ser negativo.");
                 return "redirect:/administrativo/garanhoes/listaValor";
             }
 
-            // Atualizar apenas os campos alterados
-            atualizarCamposGaranhao(garanhao, garanhaoExistente);
+            // Atualizar apenas os campos alterados (neste caso, o valor)
+            garanhaoExistente.setValor(garanhao.getValor());
+            garanhaoExistente.setMoeda(garanhao.getMoeda());
+            garanhaoExistente.setModalidade(garanhao.getModalidade());
+
+            // Exibir os novos dados após a alteração
+            System.out.println("Novos Dados do Garanhão:");
+            System.out.println("Nome: " + garanhaoExistente.getNome_garanhao());
+            System.out.println("Valor: " + garanhaoExistente.getValor());
+            System.out.println("Modalidade: " + garanhaoExistente.getModalidade());
 
             // Salvar as atualizações no banco de dados
             garanhaoRepositorio.save(garanhaoExistente);
 
             // Mensagem de sucesso
-            redirectAttributes.addFlashAttribute("mensagemSucesso", "Garanhão atualizado com sucesso.");
+            redirectAttributes.addFlashAttribute("mensagemSucesso", "Valor do garanhão atualizado com sucesso.");
             return "redirect:/administrativo/garanhoes/listaValor";
         } else {
             // Caso o garanhão não seja encontrado
@@ -242,6 +258,7 @@ public class GaranhaoControle {
         }
     }
 
+
     @PostMapping("/administrativo/garanhoes/editarGaranhao")
     public String salvarEdicaoGaranhao(@ModelAttribute("garanhao") Garanhao garanhao, RedirectAttributes redirectAttributes) {
         // Buscar o garanhão existente pelo ID
@@ -249,6 +266,17 @@ public class GaranhaoControle {
 
         if (garanhaoExistenteOpt.isPresent()) {
             Garanhao garanhaoExistente = garanhaoExistenteOpt.get();
+
+            // Exibir os dados antigos antes da alteração
+            System.out.println("USUÁRIO FEZ UMA EDIÇÃO");
+            System.out.println("Dados Antigos do Garanhão:");
+            System.out.println("Nome: " + garanhaoExistente.getNome_garanhao());
+            System.out.println("Cor da Palheta: " + garanhaoExistente.getCor_palheta());
+            System.out.println("Botijão: " + garanhaoExistente.getBotijao());
+            System.out.println("Caneca: " + garanhaoExistente.getCaneca());
+            System.out.println("Saldo Atual de Palhetas: " + garanhaoExistente.getSaldo_atual_palhetas());
+            System.out.println("Valor: " + garanhaoExistente.getValor());
+            System.out.println("Moeda: " + garanhaoExistente.getMoeda());
 
             // Garantir que o saldo atual não seja negativo
             if (garanhao.getSaldo_atual_palhetas() < 0) {
@@ -259,6 +287,16 @@ public class GaranhaoControle {
             // Atualizar apenas os campos alterados
             atualizarCamposGaranhao(garanhao, garanhaoExistente);
 
+            // Exibir os novos dados após a alteração
+            System.out.println("Novos Dados do Garanhão:");
+            System.out.println("Nome: " + garanhaoExistente.getNome_garanhao());
+            System.out.println("Cor da Palheta: " + garanhaoExistente.getCor_palheta());
+            System.out.println("Botijão: " + garanhaoExistente.getBotijao());
+            System.out.println("Caneca: " + garanhaoExistente.getCaneca());
+            System.out.println("Saldo Atual de Palhetas: " + garanhaoExistente.getSaldo_atual_palhetas());
+            System.out.println("Valor: " + garanhaoExistente.getValor());
+            System.out.println("Moeda: " + garanhaoExistente.getMoeda());
+
             // Salvar as atualizações no banco de dados
             garanhaoRepositorio.save(garanhaoExistente);
 
@@ -271,7 +309,6 @@ public class GaranhaoControle {
             return "redirect:/administrativo/garanhoes/listar";
         }
     }
-
 
     private void atualizarCamposGaranhao(Garanhao novo, Garanhao existente) {
         // Atualiza o saldo atual
@@ -324,8 +361,7 @@ public class GaranhaoControle {
     public ModelAndView salvar(@ModelAttribute Garanhao garanhao, BindingResult result) {
         // Validação do formulário
         if (result.hasErrors()) {
-            // Se houver erros de validação, volta para o formulário com os erros
-            return cadastrar(null, garanhao, null);  // Retorna para o formulário com os erros
+            return cadastrar(null, garanhao, null);
         }
 
         // Definir a data de cadastro (utiliza a data e hora atuais)
@@ -333,24 +369,36 @@ public class GaranhaoControle {
 
         // Verificar o saldo atual de palhetas e definir o saldo atual
         if (garanhao.getSaldo_atual_palhetas() < 0) {
-            // Caso o saldo atual seja negativo, impedir a gravação
             result.rejectValue("saldo_atual_palhetas", "error.garanhao", "O saldo de palhetas não pode ser negativo.");
-            return cadastrar(null, garanhao, null);  // Retorna para o formulário com a mensagem de erro
+            return cadastrar(null, garanhao, null);
         }
+
+        // 🖨️ Exibir os valores no terminal
+        System.out.println("USUÁRIO FEZ UM CADASTRO DE GARANHÃO");
+        System.out.println("Cadastro de Garanhão:");
+        System.out.println("Nome Garanhão: " + garanhao.getNome_garanhao());
+        System.out.println("Cor da Palheta: " + garanhao.getCor_palheta());
+        System.out.println("Botijão: " + garanhao.getBotijao());
+        System.out.println("Caneca: " + garanhao.getCaneca());
+        System.out.println("Saldo Atual de Palhetas: " + garanhao.getSaldo_atual_palhetas());
+        System.out.println("Contagem Inicial: " + garanhao.getData_contagem_inicial());
+        System.out.println("Modalidade: " + garanhao.getModalidade());
+        System.out.println("Valor: " + garanhao.getValor());
+        System.out.println("Moeda: " + garanhao.getMoeda());
+        System.out.println("Data Cadastro: " + garanhao.getData_cadastro());
 
         try {
             // Salvando o Garanhão
-            garanhaoRepositorio.save(garanhao);  // Salva sem precisar de flush, o Spring cuida disso
+            garanhaoRepositorio.save(garanhao);
         } catch (Exception e) {
-            // Caso ocorra algum erro ao salvar, você pode capturar e tratar aqui
-            e.printStackTrace();  // Exibe o erro detalhado no log para diagnóstico
+            e.printStackTrace();
             result.rejectValue("nome_garanhao", "error.garanhao", "Erro ao salvar o Garanhão. Tente novamente.");
-            return cadastrar(null, garanhao, null);  // Retorna para o formulário com a mensagem de erro
+            return cadastrar(null, garanhao, null);
         }
 
-        // Após salvar com sucesso, redireciona para a listagem dos Garanhões
-        return new ModelAndView("redirect:/administrativo/garanhoes/listar");  // Redireciona para a listagem após salvar
+        return new ModelAndView("redirect:/administrativo/garanhoes/listar");
     }
+
 
 
     @PostMapping("/administrativo/garanhoes/ajustarSaldo")
@@ -412,7 +460,6 @@ public class GaranhaoControle {
     
     @GetMapping("/removerGaranhao/{id_garanhao}")
     public String remover(@PathVariable("id_garanhao") Long id_garanhao, Model model, HttpSession session) {
-        System.out.println("ID recebido para exclusão: " + id_garanhao); // Log para verificar o ID
 
         // Verifica se o usuário está logado na sessão
         if (session.getAttribute("usuarioLogado") == null) {
@@ -430,6 +477,21 @@ public class GaranhaoControle {
                 Garanhao garanhao = garanhaoOptional.get(); // Obtém o garanhão
                 model.addAttribute("remover", garanhao); // Envia o objeto Garanhão para o modelo
 
+                // Exibir os dados do garanhão a ser excluído
+                System.out.println("USUÁRIO FEZ UMA TENTATIVA DE EXCLUSÃO DE GARANHÃO");
+                System.out.println("GARANHÃO A SER EXCLUIDO:");
+                System.out.println("ID do garanhão: " + garanhao.getId_garanhao());
+                System.out.println("Nome Garanhão: " + garanhao.getNome_garanhao());
+                System.out.println("Cor da Palheta: " + garanhao.getCor_palheta());
+                System.out.println("Botijão: " + garanhao.getBotijao());
+                System.out.println("Caneca: " + garanhao.getCaneca());
+                System.out.println("Saldo Atual de Palhetas: " + garanhao.getSaldo_atual_palhetas());
+                System.out.println("Contagem Inicial: " + garanhao.getData_contagem_inicial());
+                System.out.println("Modalidade: " + garanhao.getModalidade());
+                System.out.println("Valor: " + garanhao.getValor());
+                System.out.println("Moeda: " + garanhao.getMoeda());
+                System.out.println("Data Cadastro: " + garanhao.getData_cadastro());
+
                 // Verifica se há movimentações associadas ao garanhão
                 List<Movimentacao> movimentacoesAssociadas = movimentacaoRepositorio.findAll()
                         .stream()
@@ -439,26 +501,39 @@ public class GaranhaoControle {
                 if (!movimentacoesAssociadas.isEmpty()) {
                     // Caso existam movimentações associadas
                     model.addAttribute("message", "Erro ao excluir: Garanhão possui movimentações associadas.");
+                    System.out.println("STATUS DA EXCLUSÃO:");
+                    System.out.println("Exclusão negada, garanhão possui movimentações associadas");
                     return "administrativo/garanhoes/remover";
                 }
 
                 // Se não houver movimentações, tenta excluir o garanhão
                 garanhaoRepositorio.deleteById(id_garanhao);
                 model.addAttribute("message", "Garanhão removido com sucesso!");
+                System.out.println("STATUS DA EXCLUSÃO:");
+                System.out.println("Exclusão confirmada");
                 return "administrativo/garanhoes/remover";
             } else {
                 // Caso o garanhão não seja encontrado
                 model.addAttribute("message", "Garanhão não encontrado!");
+                System.out.println("STATUS DA EXCLUSÃO:");
+                System.out.println("ERRO, garanhão não encontrado");
                 return "administrativo/garanhoes/remover";
             }
         } catch (DataIntegrityViolationException e) {
+            // Caso ocorra um erro de violação de integridade no banco de dados
             model.addAttribute("message", "Erro ao excluir: Garanhão está vinculado a outras entidades.");
+            System.out.println("STATUS DA EXCLUSÃO:");
+            System.out.println("ERRO, Garanhão está vinculado a outras entidades.");
             return "administrativo/garanhoes/remover";
         } catch (Exception e) {
+            // Caso qualquer outro erro ocorra
             System.out.println("Erro ao excluir o garanhão: " + e.getMessage());
             model.addAttribute("message", "Erro ao excluir: " + e.getMessage());
+            System.out.println("STATUS DA EXCLUSÃO:");
+            System.out.println("ERRO, Erro ao excluir: " + e.getMessage());
             return "administrativo/garanhoes/remover";
         }
     }
+
 
 }

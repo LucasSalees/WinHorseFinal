@@ -127,7 +127,7 @@
         .btn-danger:hover {
             background-color: #B22222;
         }
-        
+
         /*botão vermelho*/
         .btn-redo {
             background-color: #0000FF;
@@ -462,10 +462,10 @@
             background-size: 400% 400%;
             animation: gradientFooterAnimation 8s ease infinite;
         }
-        
+
         .form-group {
-    		margin-bottom: .5rem;
-		}
+            margin-bottom: .5rem;
+        }
     </style>
 
 </head>
@@ -550,46 +550,48 @@
                 id="movimentacaoForm">
 
                 <div class="d-flex align-items-center mb-3">
-				    <a href="/administrativo/movimentacoes/listar" class="custom-link me-auto">
-				        <i class="fa-solid fa-circle-left"></i>
-				    </a>
-				    
-				    <h1 class="m-0 text-center flex-grow-1">
-				        Movimentação - [[${movimentacao.nome_garanhao}]]
-				    </h1>
+                    <a href="/administrativo/movimentacoes/listar" class="custom-link me-auto">
+                        <i class="fa-solid fa-circle-left"></i>
+                    </a>
 
-				</div>
+                    <h1 class="m-0 text-center flex-grow-1">
+                        Movimentação - [[${movimentacao.nome_garanhao}]]
+                    </h1>
+
+                </div>
 
                 <div class="custom-divider"></div>
 
-                <div class="form-row">
-                    <div class="col-12 col-md-6">
+                <div class="form-row justify-content-center">
+                    <div class="col-12 col-md-6 text-center">
                         <label for="nome_garanhao" class="label-info">Nome</label>
-                        <input type="text" id="nome_garanhao" th:field="*{nome_garanhao}"  class="form-control"
+                        <input type="text" id="nome_garanhao" th:field="*{nome_garanhao}" class="form-control"
                             readonly />
                     </div>
-                    
+                </div>
+
+                <div class="form-row">
                     <div class="col-12 col-md-6">
                         <label for="botijao" class="label-info">Botijão</label>
                         <input type="text" id="botijao" th:field="*{botijao}" class="form-control" readonly />
                     </div>
 
+
+
+                    <div class="col-12 col-md-6">
+                        <label for="caneca" class="label-info">Caneca</label>
+                        <input type="text" id="caneca" th:field="*{caneca}" class="form-control" readonly min="1" />
+                    </div>
                 </div>
 
                 <div class="form-row">
                     <div class="col-12 col-md-6">
-                    <label for="caneca" class="label-info">Caneca</label>
-                        <input type="text" id="caneca" th:field="*{caneca}" class="form-control" readonly min="1" />
-					</div>
-					
-                     <div class="col-12 col-md-6">
                         <label for="cor_palheta" class="label-info">Palheta</label>
                         <input type="text" id="cor_palheta" th:field="*{cor_palheta}" class="form-control" readonly />
                     </div>
-                    
-                </div>
 
-                <div class="form-row">
+
+
                     <div class="col-12 col-md-6">
                         <div class="form-group d-flex align-items-center">
                             <label for="quantidade" class="label-info mb-0">Quantidade de Palhetas</label>
@@ -601,61 +603,41 @@
                         <input type="number" required id="quantidade" name="quantidade" th:field="*{quantidade}"
                             class="form-control" th:readonly="${usuario.tipo != 'ADMIN'}" min="0" />
                     </div>
-
-                     <div class="col-12 col-md-6">
-					    <label for="destino" class="label-info">Destino</label>
-					    <div id="destino" class="form-control d-flex justify-content-center">
-					        <label class="mx-2">
-					            <input required type="radio" name="destino" value="venda"
-					                   th:checked="${movimentacao.destino == 'venda'}"
-					                   th:disabled="${usuario.tipo != 'ADMIN'}"
-					                   onclick="mostrarCampoAdicional()">
-					            Venda
-					        </label>
-					
-					        <label class="mx-2">
-					            <input required type="radio" name="destino" value="uso_interno"
-					                   th:checked="${movimentacao.destino == 'uso_interno'}"
-					                   th:disabled="${usuario.tipo != 'ADMIN'}"
-					                   onclick="mostrarCampoAdicional()">
-					            Uso Interno
-					        </label>
-					
-					        <label class="mx-2">
-					            <input required type="radio" name="destino" value="transferencia"
-					                   th:checked="${movimentacao.destino == 'transferencia'}"
-					                   th:disabled="${usuario.tipo != 'ADMIN'}"
-					                   onclick="mostrarCampoAdicional()">
-					            Transferência
-					        </label>
-					    </div>
-					</div>
                 </div>
-
                 <div class="form-row">
-                     <div class="col-12 col-md-6">
-                      <label for="info-adicional" class="label-info">Informação Adicional</label>
-                      <input required type="text" th:field="*{endereco}" id="info-adicional" class="form-control"
-                          placeholder="Preencha as informações" th:readonly="${usuario.tipo != 'ADMIN'}">
-                  </div>
-
                     <div class="col-12 col-md-6">
-                        <label for="embriao" class="label-info">Status do Embrião</label>
-							<div id="embriao" class="form-control d-flex justify-content-center">
-							    <label class="mx-2">
-							        <input type="radio" name="embriao" value="positivo" 
-							               th:checked="${movimentacao.embriao == 'positivo'}"> Positivo
-							    </label>
-							    <label class="mx-2">
-							        <input type="radio" name="embriao" value="negativo" 
-							               th:checked="${movimentacao.embriao == 'negativo'}"> Negativo
-							    </label>
-							    <label class="mx-2">
-							        <input type="radio" name="embriao" value="indefinido" 
-							               th:checked="${movimentacao.embriao == 'indefinido'}"> Indefinido
-							    </label>
-							</div>
+                        <label for="destino" class="label-info">Destino</label>
+                        <div id="destino" class="form-control d-flex justify-content-center">
+                            <label class="mx-2">
+                                <input required type="radio" name="destino" value="venda"
+                                    th:checked="${movimentacao.destino == 'venda'}"
+                                    th:disabled="${usuario.tipo != 'ADMIN'}" onclick="mostrarCampoAdicional()">
+                                Venda
+                            </label>
+
+                            <label class="mx-2">
+                                <input required type="radio" name="destino" value="uso_interno"
+                                    th:checked="${movimentacao.destino == 'uso_interno'}"
+                                    th:disabled="${usuario.tipo != 'ADMIN'}" onclick="mostrarCampoAdicional()">
+                                Uso Interno
+                            </label>
+
+                            <label class="mx-2">
+                                <input required type="radio" name="destino" value="transferencia"
+                                    th:checked="${movimentacao.destino == 'transferencia'}"
+                                    th:disabled="${usuario.tipo != 'ADMIN'}" onclick="mostrarCampoAdicional()">
+                                Transferência
+                            </label>
+                        </div>
                     </div>
+
+
+					<div class="col-12 col-md-6">
+					        <label for="endereco" class="label-info">Observações</label>
+					        <input required type="text" th:field="*{endereco}" id="info-adicional" class="form-control"
+					               placeholder="Preencha as informações" th:readonly="${usuario.tipo != 'ADMIN'}">
+					</div>
+
                 </div>
 
                 <!-- Modal de Aviso -->
@@ -676,28 +658,59 @@
                     </div>
                 </div>
 
-                    <!-- Modal de Aviso -->
-                    <div class="modal fade" id="avisoModal" tabindex="-1" aria-labelledby="avisoModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="avisoModalLabel">Aviso</h5>
-                                    <button type="button" class="fechar-modal" data-bs-dismiss="modal"
-                                        aria-label="Fechar">
-                                        <i class="fa-solid fa-circle-xmark"></i>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Você não pode selecionar mais do que o saldo restante.</p>
-                                </div>
+                <!-- Modal de Aviso -->
+                <div class="modal fade" id="avisoModal" tabindex="-1" aria-labelledby="avisoModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="avisoModalLabel">Aviso</h5>
+                                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Você não pode selecionar mais do que o saldo restante.</p>
                             </div>
                         </div>
                     </div>
+                </div>
 
-               <div class="form-row justify-content-center">
-			    <div class="col-12 col-md-6 text-center">
-                    <label for="profissional" class="label-info">Profissional</label>
+                <div class="custom-divider"></div>
+
+                <div class="form-row">
+                    <div class="col-12 col-md-6">
+                        <label for="embriao" class="label-info">Status do Embrião</label>
+                        <div id="embriao" class="form-control d-flex justify-content-center">
+                            <label class="mx-2">
+                                <input type="radio" name="embriao" value="positivo"
+                                    th:checked="${movimentacao.embriao == 'positivo'}"> Positivo
+                            </label>
+                            <label class="mx-2">
+                                <input type="radio" name="embriao" value="negativo"
+                                    th:checked="${movimentacao.embriao == 'negativo'}"> Negativo
+                            </label>
+                            <label class="mx-2">
+                                <input type="radio" name="embriao" value="indefinido"
+                                    th:checked="${movimentacao.embriao == 'indefinido'}"> Indefinido
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Campo de Quantidade de Embrião -->
+                    <div class="col-12 col-md-6">
+                        <label for="quantidade_embriao" class="label-info">Quantidade de Embrião</label>
+                        <input type="number" id="quantidade_embriao" th:field="*{quantidade_embriao}"
+                            class="form-control" min="0" oninput="verificarValor()" />
+                    </div>
+
+                </div>
+
+                <div class="custom-divider"></div>
+
+                <div class="form-row justify-content-center">
+                    <div class="col-12 col-md-6 text-center">
+                        <label for="profissional" class="label-info">Profissional</label>
                         <div id="profissional" required class="form-control d-flex justify-content-center">
                             <label class="mx-2">
                                 <input required type="radio" name="profissional" value="Motoboy"
@@ -712,27 +725,29 @@
                                 Veterinário
                             </label>
                         </div>
+                    </div>
                 </div>
-                </div>
-                
+
                 <div class="form-row">
                     <div class="col-12 col-md-6">
                         <label for="nome_profissional" class="label-info">Nome do Profissional</label>
                         <input type="text" required id="nome_profissional" th:field="*{nome_profissional}"
                             th:readonly="${usuario.tipo != 'ADMIN'}" class="form-control" />
                     </div>
-                   <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-6">
                         <label for="identificador_profissional" class="label-info">Identificador do Profissional</label>
                         <input type="text" id="identificador_profissional" th:field="*{identificador_profissional}"
                             class="form-control" required th:readonly="${usuario.tipo != 'ADMIN'}" />
                     </div>
                 </div>
 
+                <div class="custom-divider"></div>
+
                 <div class="form-row">
                     <div class="col-12 col-md-6">
                         <label for="data_movimentacao" class="label-info">Data da Movimentação</label>
-                        <input type="date" id="data_movimentacao" th:field="*{data_movimentacao}" th:readonly="${usuario.tipo != 'ADMIN'}"
-                            class="form-control" />
+                        <input type="date" id="data_movimentacao" th:field="*{data_movimentacao}"
+                            th:readonly="${usuario.tipo != 'ADMIN'}" class="form-control" />
                     </div>
                     <div class="col-12 col-md-6">
                         <label for="nome_usuario" class="label-info">Movimentação feita por:</label>
@@ -747,43 +762,48 @@
 
                 <div class="d-flex justify-content-between mt-3">
 
-					<a th:if="${usuario.tipo == 'ADMIN'}"
-					   th:href="@{/removerMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
-					   class="btn btn-danger btn-sm" onclick="openExclusaoModal(this); return false;">
-					   <i class="fa-solid fa-trash" style="color: #ffffff;"></i> Excluir
-					</a>
-					
-					<!-- Modal de Exclusão -->
-					<div class="modal fade" id="exclusaoModal" tabindex="-1" aria-labelledby="exclusaoModalLabel" aria-hidden="true">
-					    <div class="modal-dialog">
-					        <div class="modal-content">
-					            <div class="modal-header">
-					                <h5 class="modal-title" id="exclusaoModalLabel">Excluir Movimentação</h5>
-						                <button type="button" class="fechar-modal" data-bs-dismiss="modal"
-	                                        aria-label="Fechar">
-	                                        <i class="fa-solid fa-circle-xmark"></i>
-	                                    </button>
-					            </div>
-					            <div class="modal-body">
-					                <p>Tem certeza de que deseja excluir esta movimentação?</p>
-					                <p class="text-danger"><strong>Atenção:</strong> Ao excluir, a quantidade de palhetas movimentadas será estornada ao estoque.</p>
-					                <div class="mb-3">
-					                    <label for="motivoExclusao" class="form-label">Motivo</label>
-					                    <textarea id="motivoExclusao" class="form-control" rows="3" placeholder="Descreva o motivo da ação..." maxlength="50"></textarea>
-					                </div>
-					            </div>
-					            <div class="modal-footer">
-					                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-					                <button type="button" id="confirmarExclusaoBtn" class="btn btn-danger">Confirmar</button>
-					            </div>
-					        </div>
-					    </div>
-					</div>
-					
-					<a th:if="${usuario.tipo != 'ADMIN'}" class="btn btn-danger btn-sm"
-					   style="pointer-events: none; color: #ffffff; cursor: not-allowed; background-color: #C0C0C0;">
-					   <i class="fa-solid fa-trash" style="color: #ffffff;"></i> Excluir
-					</a>
+                    <a th:if="${usuario.tipo == 'ADMIN'}"
+                        th:href="@{/removerMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                        class="btn btn-danger btn-sm" onclick="openExclusaoModal(this); return false;">
+                        <i class="fa-solid fa-trash" style="color: #ffffff;"></i> Excluir
+                    </a>
+
+                    <!-- Modal de Exclusão -->
+                    <div class="modal fade" id="exclusaoModal" tabindex="-1" aria-labelledby="exclusaoModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exclusaoModalLabel">Excluir Movimentação</h5>
+                                    <button type="button" class="fechar-modal" data-bs-dismiss="modal"
+                                        aria-label="Fechar">
+                                        <i class="fa-solid fa-circle-xmark"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Tem certeza de que deseja excluir esta movimentação?</p>
+                                    <p class="text-danger"><strong>Atenção:</strong> Ao excluir, a quantidade de
+                                        palhetas movimentadas será estornada ao estoque.</p>
+                                    <div class="mb-3">
+                                        <label for="motivoExclusao" class="form-label">Motivo</label>
+                                        <textarea id="motivoExclusao" class="form-control" rows="3"
+                                            placeholder="Descreva o motivo da ação..." maxlength="50"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" id="confirmarExclusaoBtn"
+                                        class="btn btn-danger">Confirmar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a th:if="${usuario.tipo != 'ADMIN'}" class="btn btn-danger btn-sm"
+                        style="pointer-events: none; color: #ffffff; cursor: not-allowed; background-color: #C0C0C0;">
+                        <i class="fa-solid fa-trash" style="color: #ffffff;"></i> Excluir
+                    </a>
 
 
                     <a href="#" id="btnImprimir" class="btn btn-dark btn-sm" onclick="imprimirFormulario()">
@@ -800,59 +820,68 @@
     </div>
 
     <!-- Modal de aviso 10 minutos -->
-		<div id="modal10Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
-		    <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
-		        <p>Faltam 10 minutos para o fim da sua sessão!</p>
-		        <button onclick="fecharModal('modal10Min')" 
-		                style="background-color: #ffc107; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;" 
-		                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#ffc107'">
-		            OK
-		        </button>
-		    </div>
-		</div>
-		
-		<!-- Modal de aviso 5 minutos -->
-		<div id="modal5Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
-		    <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
-		        <p>Faltam 5 minutos para o fim da sua sessão!</p>
-		        <button onclick="fecharModal('modal5Min')" 
-		                style="background-color: #ffc107; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;" 
-		                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#ffc107'">
-		            OK
-		        </button>
-		    </div>
-		</div>
-		
-		<!-- Modal de aviso 1 minuto -->
-		<div id="modal1Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
-		    <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
-		        <p>Faltam 1 minuto para o fim da sua sessão!</p>
-		        <button onclick="fecharModal('modal1Min')" 
-		                style="background-color: #dc3545; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;" 
-		                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#dc3545'">
-		            OK
-		        </button>
-		    </div>
-		</div>
+    <div id="modal10Min" class="modal"
+        style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-content"
+            style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
+            <p>Faltam 10 minutos para o fim da sua sessão!</p>
+            <button onclick="fecharModal('modal10Min')"
+                style="background-color: #ffc107; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;"
+                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#ffc107'">
+                OK
+            </button>
+        </div>
+    </div>
 
-	<!-- Início do Footer -->
-	<footer class="footer">
-	    <div class="container" style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
-	        <!-- Texto da empresa centralizado -->
-	        <div style="text-align: center;">
-	            <p>&copy; 2025 <a href="https://input.com.vc/" target="_blank">
-				  <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp" alt="Logo Input" style="height: 35px; width: auto; transition: transform 0.3s ease, opacity 0.3s ease;" 
-				  onmouseover="this.style.transform='scale(1.02)';" 
-				  onmouseout="this.style.transform='scale(1)';">
-				</a> </p>
-	            <p>Todos os direitos reservados.</p>
-	        </div>
+    <!-- Modal de aviso 5 minutos -->
+    <div id="modal5Min" class="modal"
+        style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-content"
+            style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
+            <p>Faltam 5 minutos para o fim da sua sessão!</p>
+            <button onclick="fecharModal('modal5Min')"
+                style="background-color: #ffc107; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;"
+                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#ffc107'">
+                OK
+            </button>
+        </div>
+    </div>
 
-	        <!-- Relógio e campo oculto que armazena a horaFim do usuário -->
-	        <div id="relogio" style="font-size: 0px; font-weight: bold; visibility: hidden;"></div>
-	        <input type="hidden" id="horaFim" th:value="${horaFim}" />
-	    </div>
-	</footer>
+    <!-- Modal de aviso 1 minuto -->
+    <div id="modal1Min" class="modal"
+        style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-content"
+            style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
+            <p>Faltam 1 minuto para o fim da sua sessão!</p>
+            <button onclick="fecharModal('modal1Min')"
+                style="background-color: #dc3545; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; width: 55px; text-align: center; display: block; margin: 10px auto;"
+                onmouseover="this.style.backgroundColor='#cf8311'" onmouseout="this.style.backgroundColor='#dc3545'">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <!-- Início do Footer -->
+    <footer class="footer">
+        <div class="container"
+            style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
+            <!-- Texto da empresa centralizado -->
+            <div style="text-align: center;">
+                <p>&copy; 2025 <a href="https://input.com.vc/" target="_blank">
+                        <img src="https://input.com.vc/wp-content/uploads/2024/08/LogoInput-768x314-1.webp"
+                            alt="Logo Input"
+                            style="height: 35px; width: auto; transition: transform 0.3s ease, opacity 0.3s ease;"
+                            onmouseover="this.style.transform='scale(1.02)';"
+                            onmouseout="this.style.transform='scale(1)';">
+                    </a> </p>
+                <p>Todos os direitos reservados.</p>
+            </div>
+
+            <!-- Relógio e campo oculto que armazena a horaFim do usuário -->
+            <div id="relogio" style="font-size: 0px; font-weight: bold; visibility: hidden;"></div>
+            <input type="hidden" id="horaFim" th:value="${horaFim}" />
+        </div>
+    </footer>
     <!-- Fim do Footer -->
 
     <!-- Biblioteca principal do jQuery -->
@@ -933,7 +962,7 @@
                 abrirModalAviso();
             }
         });
-        
+
         function openRemoverModal(link) {
             // Exibe o modal de confirmação
             const modal = new bootstrap.Modal(document.getElementById('removerModal'));
@@ -992,21 +1021,21 @@
                 usuarioResponsavelField.name = 'nome_usuario_responsavel';
                 usuarioResponsavelField.value = document.getElementById('nome_usuario').value; // Pega do input já preenchido
                 form.appendChild(usuarioResponsavelField);
-                
-             // Cria o campo para o botijao (pega do input na tela ou do link)
+
+                // Cria o campo para o botijao (pega do input na tela ou do link)
                 const botijaoField = document.createElement('input');
                 botijaoField.type = 'hidden';
                 botijaoField.name = 'botijao';
                 botijaoField.value = document.getElementById('botijao') ? document.getElementById('botijao').value : link.getAttribute('data-botijao'); // Captura do input ou do atributo data-botijao
                 form.appendChild(botijaoField);
-                
+
                 // Cria o campo para o botijao (pega do input na tela ou do link)
                 const quantidadeField = document.createElement('input');
                 quantidadeField.type = 'hidden';
                 quantidadeField.name = 'quantidade';
                 quantidadeField.value = document.getElementById('quantidade') ? document.getElementById('quantidade').value : link.getAttribute('data-quantidade'); // Captura do input ou do atributo data-botijao
                 form.appendChild(quantidadeField);
-                
+
                 // Envia o formulário
                 document.body.appendChild(form);
                 form.submit();
@@ -1129,6 +1158,7 @@
             const infoAdicional = document.getElementById('info-adicional').value;
             const dataMovimentacao = formatarData(document.getElementById('data_movimentacao').value); // Formatar a data aqui
             const embriao = document.querySelector('input[name="embriao"]:checked').value;
+            const quantidadeEmbriao = document.getElementById('quantidade_embriao').value;
             const profissional = document.querySelector('input[name="profissional"]:checked').value;
             const nomeProfissional = document.getElementById('nome_profissional').value;
             const identificadorProfissional = document.getElementById('identificador_profissional').value;
@@ -1310,6 +1340,10 @@
 				                    <td>${embriao}</td>
 				                </tr>
 				                <tr>
+				                    <td>Quantidade de embrião</td>
+				                    <td>${quantidadeEmbriao}</td>
+				                </tr>
+				                <tr>
 				                    <td>Profissional</td>
 				                    <td>${profissional}</td>
 				                </tr>
@@ -1395,13 +1429,13 @@
         }
 
         setInterval(atualizarRelogio, 1000);
-        
-     	// Função para fechar o modal
+
+        // Função para fechar o modal
         function fecharModal(modalId) {
             document.getElementById(modalId).style.display = "none";
         }
 
-     // Função para verificar o tempo restante e mostrar os avisos
+        // Função para verificar o tempo restante e mostrar os avisos
         function verificarTempoRestante() {
             const horaFim = document.getElementById("horaFim").value;  // Hora fim do usuário
             const horaAtual = new Date();
@@ -1416,7 +1450,7 @@
             // Exibe o modal de 10 minutos quando minutosRestantes for igual a 10
             if (minutosRestantes == 10) {
                 document.getElementById("modal10Min").style.display = "block";  // Exibe o modal de 10 minutos
-            } 
+            }
             // Exibe o modal de 5 minutos quando minutosRestantes for igual a 5
             else if (minutosRestantes == 5) {
                 document.getElementById("modal5Min").style.display = "block";  // Exibe o modal de 5 minutos

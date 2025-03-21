@@ -189,13 +189,23 @@ public class MovimentacaoControle {
             if (movimentacaoOptional.isPresent()) {
                 Movimentacao movimentacao = movimentacaoOptional.get();
 
-                // Obtem o nome do garanhão da movimentação (via propriedade nome_garanhao)
-                String nomeGaranhao = movimentacao.getNome_garanhao();
-                
-                // Obtemos a quantidade de palhetas que foi retirada
-                int quantidade = movimentacao.getQuantidade();
+                System.out.println("USUÁRIO EXCLUIU UMA MOVIMENTAÇÃO");
+                System.out.println("MOVIMENTACÃO EXCLUIDA:");
+                System.out.println("Nome Garanhão: " + movimentacao.getNome_garanhao());
+                System.out.println("Botijão: " + movimentacao.getBotijao());
+                System.out.println("Caneca: " + movimentacao.getCaneca());
+                System.out.println("Palheta: " + movimentacao.getCor_palheta());
+                System.out.println("Quantidade Movimentada: " + movimentacao.getQuantidade());
+                System.out.println("Destino: " + movimentacao.getDestino());
+                System.out.println("Endereco: " + movimentacao.getEndereco());
+                System.out.println("Embriao: " + movimentacao.getEmbriao());
+                System.out.println("Profissional: " + movimentacao.getProfissional());
+                System.out.println("Nome: " + movimentacao.getNome_profissional());
+                System.out.println("Documento: " + movimentacao.getIdentificador_profissional());
+                System.out.println("Data da movimentação: " + movimentacao.getData_movimentacao());
 
-                // Obtemos a quantidade de palhetas que foi retirada
+                // Obtemos o nome do garanhão e a quantidade de palhetas antes da exclusão
+                String nomeGaranhao = movimentacao.getNome_garanhao();
                 int quantidadePalhetasRemovidas = movimentacao.getQuantidade();
 
                 // Zera a quantidade de palhetas na movimentação
@@ -205,17 +215,24 @@ public class MovimentacaoControle {
                 // Atualiza o saldo de palhetas do garanhão associado
                 Garanhao garanhao = movimentacao.getGaranhao();  // Obtém o Garanhão associado à movimentação
 
+                // Exibe os dados do garanhão antes de ajustar o saldo
+                System.out.println("Saldo anterior de palhetas do Garanhão: " + garanhao.getSaldo_atual_palhetas());
+
                 // Ajusta o saldo de palhetas do garanhão (somando a quantidade de volta)
                 garanhao.ajustarSaldoAtual(quantidadePalhetasRemovidas);  // Adiciona de volta ao saldo do garanhão
                 garanhaoRepositorio.save(garanhao);  // Salva o garanhão com o saldo atualizado
 
+                // Exibe o novo saldo de palhetas do garanhão após o ajuste
+                System.out.println("Novo saldo de palhetas do Garanhão: " + garanhao.getSaldo_atual_palhetas());
+
+                // Cria uma entrada na lixeira para armazenar a exclusão
                 Lixeira lixeira = new Lixeira(
-                	    movimentacao.getId_movimentacao(), 
-                	    motivoExclusao, 
-                	    nomeGaranhao,
-                	    quantidade,
-                	    usuario.getNome_usuario() // Nome do usuário responsável correto
-                	);
+                        movimentacao.getId_movimentacao(), 
+                        motivoExclusao, 
+                        nomeGaranhao,
+                        quantidadePalhetasRemovidas,
+                        usuario.getNome_usuario() // Nome do usuário responsável correto
+                );
 
                 lixeiraRepositorio.save(lixeira);
 
@@ -223,20 +240,25 @@ public class MovimentacaoControle {
                 movimentacaoRepositorio.deleteById(idMovimentacao);
 
                 // Passa a movimentação para o modelo
-                model.addAttribute("remover", movimentacao);  // Adiciona a nome do garanhão à variável "remover" no modelo
+                model.addAttribute("remover", movimentacao);  // Adiciona o nome do garanhão à variável "remover" no modelo
 
                 // Adiciona a mensagem de sucesso
                 model.addAttribute("message", "Movimentação excluída com sucesso e quantidade de palhetas atualizada!");
+                System.out.println("STATUS DA EXCLUSÃO");
+                System.out.println("Movimentação excluída com sucesso e quantidade de palhetas atualizada!");
                 return "administrativo/movimentacoes/remover";
             } else {
                 model.addAttribute("message", "Movimentação não encontrada!");
+                System.out.println("Movimentação não encontrada!");
                 return "administrativo/movimentacoes/remover";
             }
         } catch (Exception e) {
             model.addAttribute("message", "Erro ao remover a movimentação: " + e.getMessage());
+            System.out.println("Erro ao remover a movimentação: " + e.getMessage());
             return "administrativo/movimentacoes/remover";
         }
     }
+
 
     /*@GetMapping("/removerMovimentacao/{id_movimentacao}")
     public String remover(@PathVariable("id_movimentacao") Long id_movimentacao, Model model, HttpSession session) {
@@ -307,7 +329,7 @@ public class MovimentacaoControle {
         return mv;
     }
     
-    @PostMapping("/administrativo/movimentacoes/lixeira/remover/{id}")
+    /*@PostMapping("/administrativo/movimentacoes/lixeira/remover/{id}")
     public String removerMovimentacaoDaLixeira(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         try {
             Optional<Lixeira> lixeira = lixeiraRepositorio.findById(id);
@@ -327,7 +349,7 @@ public class MovimentacaoControle {
         }
         // Redireciona para a lista da lixeira
         return "redirect:/administrativo/movimentacoes/lixeira";
-    }
+    }*/
 
     @PostMapping("/salvarMovimentacao")
     public ModelAndView salvarMovimentacao(Movimentacao movimentacao) {
@@ -368,9 +390,25 @@ public class MovimentacaoControle {
         // Salvar movimentação no banco
         movimentacaoRepositorio.save(movimentacao);
 
+        // 🖨️ Exibir os valores no terminal
+        System.out.println("USUÁRIO FEZ UMA MOVIMENTAÇÃO");
+        System.out.println("Movimentação de Palhetas:");
+        System.out.println("Nome Garanhão: " + garanhao.getNome_garanhao());
+        System.out.println("Botijão: " + garanhao.getBotijao());
+        System.out.println("Caneca: " + garanhao.getCaneca());
+        System.out.println("Palheta: " + garanhao.getCor_palheta());
+        System.out.println("Quantidade Movimentada: " + movimentacao.getQuantidade());
+        System.out.println("Destino: " + movimentacao.getDestino()); 
+        System.out.println("Endereco: " + movimentacao.getEndereco()); 
+        System.out.println("Satus do Embrião: " + movimentacao.getEmbriao());
+        System.out.println("Quantidade de Embrião: " + movimentacao.getQuantidade_embriao());
+        System.out.println("Profissional: " + movimentacao.getProfissional());
+        System.out.println("Nome: " + movimentacao.getNome_profissional());
+        System.out.println("Documento: " + movimentacao.getIdentificador_profissional());
+        System.out.println("Data da movimentação: " + movimentacao.getData_movimentacao());
+
         return new ModelAndView("redirect:/administrativo/movimentacoes/listar");
     }
-
     
     @Transactional
     @PostMapping("/administrativo/movimentacoes/editarMovimentacao")
@@ -388,10 +426,27 @@ public class MovimentacaoControle {
             if (movimentacaoExistenteOpt.isPresent()) {
                 Movimentacao movimentacaoExistente = movimentacaoExistenteOpt.get();
 
+                // Exibir os dados antigos antes da alteração
+                System.out.println("USUÁRIO FEZ UMA EDIÇÃO NA MOVIMENTAÇÃO");
+                System.out.println("Dados Antigos da Movimentação:");
+                System.out.println("Nome Garanhão: " + movimentacaoExistente.getGaranhao().getNome_garanhao());
+                System.out.println("Botijão: " + movimentacaoExistente.getGaranhao().getBotijao());
+                System.out.println("Caneca: " + movimentacaoExistente.getGaranhao().getCaneca());
+                System.out.println("Palheta: " + movimentacaoExistente.getGaranhao().getCor_palheta());
+                System.out.println("Quantidade Movimentada: " + movimentacaoExistente.getQuantidade());
+                System.out.println("Destino: " + movimentacaoExistente.getDestino());
+                System.out.println("Endereco: " + movimentacaoExistente.getEndereco());
+                System.out.println("Status do embrião: " + movimentacaoExistente.getEmbriao());
+                System.out.println("Quantidade de Embrião: " + movimentacaoExistente.getQuantidade_embriao());
+                System.out.println("Profissional: " + movimentacaoExistente.getNome_profissional());
+                System.out.println("Documento: " + movimentacaoExistente.getIdentificador_profissional());
+                System.out.println("Data da movimentação: " + movimentacaoExistente.getData_movimentacao());
+
                 // Obter o garanhão associado à movimentação
                 Garanhao garanhao = movimentacaoExistente.getGaranhao();
                 if (garanhao == null) {
                     redirectAttributes.addFlashAttribute("mensagemErro", "Garanhão associado à movimentação não encontrado.");
+                    System.out.println("Garanhão associado à movimentação não encontrado.");
                     return "redirect:/administrativo/movimentacoes/listar";
                 }
 
@@ -405,6 +460,7 @@ public class MovimentacaoControle {
                 if (novoSaldo < 0) {
                     // Se o saldo for insuficiente
                     redirectAttributes.addFlashAttribute("mensagemErro", "Saldo insuficiente para ajustar a movimentação.");
+                    System.out.println("Saldo insuficiente para ajustar a movimentação.");
                     return "redirect:/administrativo/movimentacoes/listar";
                 }
 
@@ -417,12 +473,29 @@ public class MovimentacaoControle {
                 movimentacaoExistente.setIdentificador_profissional(movimentacao.getIdentificador_profissional());
                 movimentacaoExistente.setNome_profissional(movimentacao.getNome_profissional());
                 movimentacaoExistente.setEmbriao(movimentacao.getEmbriao());
+                movimentacaoExistente.setQuantidade_embriao(movimentacao.getQuantidade_embriao());
                 movimentacaoExistente.setData_movimentacao(movimentacao.getData_movimentacao());
 
+                
                 // Atualiza o destino apenas se o usuário for ADMIN
                 if (usuario.getTipo().equals("ADMIN")) {
                     movimentacaoExistente.setDestino(movimentacao.getDestino());
                 }
+
+                // Exibir os novos dados após a alteração
+                System.out.println("Novos Dados da Movimentação:");
+                System.out.println("Nome Garanhão: " + movimentacaoExistente.getGaranhao().getNome_garanhao());
+                System.out.println("Botijão: " + movimentacaoExistente.getGaranhao().getBotijao());
+                System.out.println("Caneca: " + movimentacaoExistente.getGaranhao().getCaneca());
+                System.out.println("Palheta: " + movimentacaoExistente.getGaranhao().getCor_palheta());
+                System.out.println("Quantidade Movimentada: " + movimentacaoExistente.getQuantidade());
+                System.out.println("Destino: " + movimentacaoExistente.getDestino());
+                System.out.println("Endereco: " + movimentacaoExistente.getEndereco());
+                System.out.println("Status do embrião: " + movimentacaoExistente.getEmbriao());
+                System.out.println("Quantidade de Embrião: " + movimentacaoExistente.getQuantidade_embriao());
+                System.out.println("Profissional: " + movimentacaoExistente.getNome_profissional());
+                System.out.println("Documento: " + movimentacaoExistente.getIdentificador_profissional());
+                System.out.println("Data da movimentação: " + movimentacaoExistente.getData_movimentacao());
 
                 // Salvar as atualizações no banco de dados
                 movimentacaoRepositorio.save(movimentacaoExistente);
@@ -430,15 +503,18 @@ public class MovimentacaoControle {
 
                 // Mensagem de sucesso
                 redirectAttributes.addFlashAttribute("mensagemSucesso", "Movimentação atualizada com sucesso.");
+                System.out.println("Movimentação atualizada com sucesso.");
                 return "redirect:/administrativo/movimentacoes/listar"; // Redireciona para a lista de movimentações
             } else {
                 // Caso a movimentação não seja encontrada
                 redirectAttributes.addFlashAttribute("mensagemErro", "Movimentação não encontrada.");
+                System.out.println("Movimentação não encontrada.");
                 return "redirect:/administrativo/movimentacoes/listar";
             }
         } catch (Exception e) {
             System.out.println("Erro ao salvar movimentação: " + e.getMessage());
             redirectAttributes.addFlashAttribute("mensagemErro", "Erro ao salvar movimentação.");
+            System.out.println("Erro ao salvar movimentação.");
             return "redirect:/administrativo/movimentacoes/listar";
         }
     }
