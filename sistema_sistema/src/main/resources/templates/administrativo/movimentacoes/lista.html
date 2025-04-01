@@ -45,19 +45,28 @@
             font-family: 'Arial, sans-serif';
         }
 
-        /*fundo secundario*/
-        .form-container {
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-top: 10px;
-            margin-bottom: 10px;
-            max-width: 1030px;
-            width: 100%;
-            border-top: 4px solid #808080;
-            border-bottom: 4px solid #808080;
-        }
+		/* Container principal do form (não afeta o navbar) */
+		.form-main-container {
+		    max-width: 1600px; /* ou o tamanho desejado */
+		    width: 100%;
+		    padding: 0 15px;
+		    margin: 0 auto; /* centraliza */
+		}
+		
+		/* Ajuste o form-container para ocupar mais espaço */
+		.form-container {
+		    background: #fff;
+		    padding: 30px;
+		    border-radius: 8px;
+		    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		    margin-top: 10px;
+		    margin-bottom: 10px;
+		    max-width: 100%; /* Ocupa a largura máxima do container pai */
+		    width: 100%;
+		    border-top: 4px solid #808080;
+		    border-bottom: 4px solid #808080;
+		    height: 641px;
+		}
 
         /*titulo*/
         h1 {
@@ -172,11 +181,9 @@
             color: #cf8311;
         }
 
+
         /*cor cabeçalho tabela*/
-        table.dataTable thead>tr>th.dt-orderable-asc,
-        table.dataTable thead>tr>th.dt-orderable-desc,
-        table.dataTable thead>tr>td.dt-orderable-asc,
-        table.dataTable thead>tr>td.dt-orderable-desc {
+        .table thead th {
             cursor: pointer;
             background-color: #1b1e21;
             color: #cf8311;
@@ -359,11 +366,9 @@
             text-align: center;
             padding: 20px 0;
             font-family: 'Roboto', sans-serif;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 -6px 15px rgba(0, 0, 0, 0.3);
             position: relative;
-            /* Deixe a posição como 'relative' para que o footer fique abaixo do conteúdo */
             margin-top: auto;
-            /* Isso vai empurrar o footer para o final da página */
             transition: background-color 0.5s ease, box-shadow 0.5s ease;
             border-style: solid;
             border-width: 4px 0 0 0;
@@ -396,6 +401,106 @@
 	        height: 41px;
 	        margin-left: 83px;
 	    }
+	    
+	    .filter-container {
+		    display: flex;
+		    gap: 10px;
+		    margin-bottom: 10px;
+		}
+		
+		.filter-container label {
+		    font-weight: bold;
+		}
+		
+		.table-container {
+		    max-height: 373px; /* Ajuste conforme necessário */
+		    overflow-y: auto;  /* Para permitir o scroll vertical */
+		    overflow-x: auto;  /* Para permitir o scroll horizontal */
+		    border: 1px solid #ddd;
+		    padding: 0px;
+		}
+		
+		#tabela thead th {
+		    position: sticky;
+		    top: 0;
+		    z-index: 1; /* Garante que o cabeçalho fique sobre o conteúdo */
+		    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para destacar o cabeçalho */
+		}
+
+		
+		#filtroDatas {
+		    width: 45%;
+		    display: flex;
+		    justify-content: center;
+		    margin-top: 0px;
+		}
+		
+		#filtroDatas .d-flex {
+		    align-items: center;
+		}
+		
+		#filtroDatas input {
+		    margin: 0 10px;  /* Adiciona espaço entre os inputs */
+		    width: 200px;  /* Ajuste a largura conforme necessário */
+		}
+		
+		#filtroDatas h4 {
+		    font-weight: bold;
+		    margin-right: 10px;
+		    font-size: 16px;
+		    margin-top: 10px;
+		}
+		
+		.mb-3, .my-3 {
+		     margin-bottom: 0rem !important;
+		}
+		
+
+		
+		#filtro {
+		    width: 250px;  /* Largura fixa em pixels */
+		    padding: 8px;
+		    font-size: 16px;
+		    border: 1px solid #ccc;
+		    border-radius: 5px;
+		    margin-left: 10px;
+		}
+	
+		/* Estilo para os itens dentro do dropdown */
+		.checkbox-item-campo {
+		    display: flex; /* Cria um layout flexível */
+		    align-items: center; /* Alinha os itens verticalmente */
+		    justify-content: flex-start; /* Garante que o conteúdo seja alinhado à esquerda */
+		}
+		
+		/* Estilo para o texto (span) para ficar à esquerda do checkbox */
+		.checkbox-item-campo span {
+		    margin-left: 10px; /* Dá um pequeno espaço entre o checkbox e o texto */
+		    text-align: left; /* Alinha o texto à esquerda dentro do span */
+		    color:#ffffff;
+		}
+		
+		/* Estilo para a lista de itens do dropdown */
+		.dropdown-menu-campo {
+		    width: 250px;
+		    margin-left:-35px /* Altere o valor conforme necessário para aumentar a largura */
+		}
+		
+		/* submenu com o nome de usuário e administrador */
+        .dropdown-menu-campo {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            padding: 2px;
+            border-radius: 0.5rem;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+           
+        }
+
+        .dropdown:hover .dropdown-menu-campo {
+            display: block;
+        }
        
     </style>
 
@@ -476,8 +581,8 @@
     </nav>
 
 
-    <div class="container d-flex justify-content-center align-items-center">
-        <div class="form-container" style="width: 200%; max-width: 1500px;">
+        <div class="form-main-container d-flex justify-content-center align-items-center">
+    	<div class="form-container">
 
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <a href="/home" class="custom-link">
@@ -486,8 +591,56 @@
                 <h1 class="m-0 text-center flex-grow-1">Lista de Movimentações</h1>
                 <div style="width: 100px;"></div>
             </div>
+            
+            <div class="custom-divider"></div>
+            
+            <!-- Botões de Ação -->
+			<div class="d-flex justify-content-between align-items-center mb-3">
+			    <div>
+			    	<button id="btnRemoverFiltros" class="btn btn-light btn-sm text-white">Remover Filtros</button>
+			        <button id="btnFiltrarDatas" class="btn btn-dark btn-sm">Filtrar por Datas</button>
+			        
+			    </div>
+			    
+			    <!-- Filtro de datas -->
+				<div id="filtroDatas" class="d-none mb-3">
+				    <div class="d-flex justify-content-center">
+				        <h4>Data inicial:</h4><input type="date" id="dataInicio" class="form-control" placeholder="Data Inicial"> 
+				        <h4>Data final:</h4><input type="date" id="dataFinal" class="form-control" placeholder="Data Final">
+				    </div>
+				</div>
+			
+			    <div class="form-inline">
+				    <!-- Dropdown para selecionar os campos a pesquisar -->
+				    <div class="dropdown ml-3">
+				        <button class="btn btn-light btn-sm text-white dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+				            Selecionar Campos
+				        </button>
+				        <div class="dropdown-menu-campo" aria-labelledby="dropdownMenuButton" style="margin-top:5px;">
+				            <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoId" checked><span>ID</span></label></div>
+				            <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoNomeGaranhao" checked><span>Garanhão</span></label></div>
+				            <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoBotijao" checked><span>Botijão</span></label></div>
+				            <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoCaneca" checked><span>Caneca</span></label></div>
+				            <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoCor" checked><span>Cor</span></label></div>
+				            <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoData" checked><span>Data da Movimentação</span></label></div>
+				            <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoQuantidade" checked><span>Quantidade</span></label></div>
+				            <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoTipoUso" checked><span>Tipo de uso</span></label></div>
+				            <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoDestino" checked><span>Destino</span></label></div>
+				            <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoProfissional" checked><span>Profissional</span></label></div>
+				            <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoDocumento" checked><span>Documento</span></label></div>
+				            <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoResponsavel" checked><span>Responsável</span></label></div>
+				            <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoEmbriao" checked><span>Embrião</span></label></div>
+				            <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoQuantidadeEmbriao" checked><span>Quantidade de embrião</span></label></div>
+				        </div>
+				    </div>
+				
+				    <input type="text" id="filtro" placeholder="Pesquisar..." class="form-control ml-3" style="width: 50%;"> <!-- 50% da largura -->
+				</div>
+
+			</div>
 
             <div class="custom-divider"></div>
+
             <div class="table-container">
                 <table class="table table-striped" id="tabela">
                     <thead>
@@ -663,180 +816,302 @@
     <!-- Fim do Footer -->
 
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 
         <script>
-            $(document).ready(function () {
-                $('#tabela').DataTable({
-                    language: { url: 'https://cdn.datatables.net/plug-ins/2.1.8/i18n/pt-BR.json' }
-                });
+        
+     // Recarregar a página para remover os filtros
+        document.getElementById("btnRemoverFiltros").addEventListener("click", function () {
+            location.reload(); // Recarrega a página para limpar os filtros
+        });
+        
+        document.getElementById('btnFiltrarDatas').addEventListener('click', function() {
+            var filtroDatas = document.getElementById('filtroDatas');
+            filtroDatas.classList.toggle('d-none');
+        });
+
+        document.getElementById("dataInicio").addEventListener("input", filtrarTabela);
+        document.getElementById("dataFinal").addEventListener("input", filtrarTabela);
+        document.getElementById("filtro").addEventListener("input", filtrarTabela);
+
+        function filtrarTabela() {
+            let filtro = document.getElementById("filtro").value.toLowerCase();
+            let dataInicio = document.getElementById("dataInicio").value;
+            let dataFinal = document.getElementById("dataFinal").value;
+
+            let inicio = dataInicio ? new Date(dataInicio + 'T00:00:00') : null;
+            let fim = dataFinal ? new Date(dataFinal + 'T23:59:59.999') : null;
+
+            let linhas = document.querySelectorAll("#tabela tbody tr");
+
+            linhas.forEach(linha => {
+                let mostrarLinha = true;
+                
+                // Verificação de filtro de texto
+                if (filtro) {
+                    let passaFiltroTexto = false;
+
+                    // Obter os valores de todas as colunas
+                    let colunaId = linha.querySelector("td:nth-child(1) a").textContent.toLowerCase();
+                    let colunaGaranhao = linha.querySelector("td:nth-child(2) a").textContent.toLowerCase();
+                    let colunaBotijao = linha.querySelector("td:nth-child(3) a").textContent.toLowerCase();
+                    let colunaCaneca = linha.querySelector("td:nth-child(4) a").textContent.toLowerCase();
+                    let colunaPalheta = linha.querySelector("td:nth-child(5) a").textContent.toLowerCase();
+                    let colunaQuantidade = linha.querySelector("td:nth-child(6) a").textContent.toLowerCase();
+                    let colunaData = linha.querySelector("td:nth-child(7) a").textContent.trim().toLowerCase();
+                    let colunaTipoUso = linha.querySelector("td:nth-child(8) a").textContent.toLowerCase();
+                    let colunaDestino = linha.querySelector("td:nth-child(9) a").textContent.toLowerCase();
+                    let colunaProfissional = linha.querySelector("td:nth-child(10) a").textContent.toLowerCase();
+                    let colunaDocumento = linha.querySelector("td:nth-child(11) a").textContent.toLowerCase();
+                    let colunaResponsavel = linha.querySelector("td:nth-child(12) a").textContent.toLowerCase();
+                    let colunaEmbriao = linha.querySelector("td:nth-child(13) a").textContent.toLowerCase();
+                    let colunaQuantidadeEmbriao = linha.querySelector("td:nth-child(14) a").textContent.toLowerCase();
+
+                    // Verificar cada campo marcado para pesquisa
+                    if (document.getElementById("campoId").checked && colunaId.includes(filtro)) passaFiltroTexto = true;
+                    if (document.getElementById("campoNomeGaranhao").checked && colunaGaranhao.includes(filtro)) passaFiltroTexto = true;
+                    if (document.getElementById("campoBotijao").checked && colunaBotijao.includes(filtro)) passaFiltroTexto = true;
+                    if (document.getElementById("campoCaneca").checked && colunaCaneca.includes(filtro)) passaFiltroTexto = true;
+                    if (document.getElementById("campoCor").checked && colunaPalheta.includes(filtro)) passaFiltroTexto = true;
+                    if (document.getElementById("campoQuantidade").checked && colunaQuantidade.includes(filtro)) passaFiltroTexto = true;
+                    if (document.getElementById("campoData").checked && colunaData.includes(filtro)) passaFiltroTexto = true;
+                    if (document.getElementById("campoTipoUso").checked && colunaTipoUso.includes(filtro)) passaFiltroTexto = true;
+                    if (document.getElementById("campoDestino").checked && colunaDestino.includes(filtro)) passaFiltroTexto = true;
+                    if (document.getElementById("campoProfissional").checked && colunaProfissional.includes(filtro)) passaFiltroTexto = true;
+                    if (document.getElementById("campoDocumento").checked && colunaDocumento.includes(filtro)) passaFiltroTexto = true;
+                    if (document.getElementById("campoResponsavel").checked && colunaResponsavel.includes(filtro)) passaFiltroTexto = true;
+                    if (document.getElementById("campoEmbriao").checked && colunaEmbriao.includes(filtro)) passaFiltroTexto = true;
+                    if (document.getElementById("campoQuantidadeEmbriao").checked && colunaQuantidadeEmbriao.includes(filtro)) passaFiltroTexto = true;
+
+                    if (!passaFiltroTexto) {
+                        mostrarLinha = false;
+                    }
+                }
+
+                // Verificação de filtro de data
+                if (mostrarLinha && (inicio || fim)) {
+                    let colunaDataText = linha.querySelector("td:nth-child(7) a").textContent.trim();
+                    let partes = colunaDataText.split("/");
+                    let dataStr = `${partes[2]}-${partes[1].padStart(2, '0')}-${partes[0].padStart(2, '0')}`;
+                    let dataConvertida = new Date(dataStr + 'T12:00:00');
+
+                    if (inicio && dataConvertida < inicio) {
+                        mostrarLinha = false;
+                    }
+                    if (fim && dataConvertida > fim) {
+                        mostrarLinha = false;
+                    }
+                }
+
+                linha.style.display = mostrarLinha ? "" : "none";
             });
-            document.getElementById('btnImprimir').addEventListener('click', function (e) {
-                e.preventDefault(); // Evita o comportamento padrão do link
+        }
 
-                // Clona a tabela original
-                const tabela = document.getElementById('tabela');
-                const linhas = Array.from(tabela.querySelectorAll('tbody tr')); // Todas as linhas da tabela
+     // Adicionar evento para o botão de remover filtros
+        document.getElementById('btnRemoverFiltros').addEventListener('click', function() {
+            // Limpar os campos de filtro
+            document.getElementById("filtro").value = "";
+            document.getElementById("dataInicio").value = "";
+            document.getElementById("dataFinal").value = "";
+            
+            // Mostrar todas as linhas
+            let linhas = document.querySelectorAll("#tabela tbody tr");
+            linhas.forEach(linha => {
+                linha.style.display = "";
+            });
+            
+            // Ocultar o filtro de datas se estiver visível
+            document.getElementById("filtroDatas").classList.add("d-none");
+        });
 
-                // Configuração de itens por página
-                const maxItensPorPagina = 16; // Número máximo de itens por página
-                const paginas = []; // Array para armazenar as tabelas divididas
+        document.getElementById('btnImprimir').addEventListener('click', function (e) {
+            e.preventDefault(); // Evita o comportamento padrão do link
 
+            // Clona a tabela original
+            const tabela = document.getElementById('tabela');
+            // Pega apenas as linhas visíveis (que não estão com display:none)
+            const linhasVisiveis = Array.from(tabela.querySelectorAll('tbody tr')).filter(tr => 
+                tr.style.display !== 'none'
+            );
+
+            // Configuração de itens por página
+            const maxItensPorPagina = 14; // Número máximo de itens por página
+            const paginas = []; // Array para armazenar as tabelas divididas
+
+            // Se não houver linhas ou apenas uma página necessária
+            if (linhasVisiveis.length <= maxItensPorPagina) {
+                const novaTabela = document.createElement('table');
+                novaTabela.innerHTML = `
+                    <thead>${tabela.querySelector('thead').innerHTML}</thead>
+                    <tbody></tbody>
+                `;
+                const tbody = novaTabela.querySelector('tbody');
+
+                // Clona as linhas e processa os links para transformá-los em texto
+                linhasVisiveis.forEach(linha => {
+                    const linhaClonada = linha.cloneNode(true);
+                    const links = linhaClonada.querySelectorAll('a');
+                    links.forEach(link => {
+                        const texto = document.createTextNode(link.textContent);
+                        link.parentNode.replaceChild(texto, link);
+                    });
+                    tbody.appendChild(linhaClonada);
+                });
+
+                paginas.push(novaTabela);
+            } else {
                 // Divide as linhas em lotes de no máximo `maxItensPorPagina`
-                for (let i = 0; i < linhas.length; i += maxItensPorPagina) {
+                for (let i = 0; i < linhasVisiveis.length; i += maxItensPorPagina) {
                     const novaTabela = document.createElement('table');
                     novaTabela.innerHTML = `
-	            <thead>${tabela.querySelector('thead').innerHTML}</thead>
-	            <tbody></tbody>
-	        `;
+                        <thead>${tabela.querySelector('thead').innerHTML}</thead>
+                        <tbody></tbody>
+                    `;
                     const tbody = novaTabela.querySelector('tbody');
 
                     // Clona as linhas e processa os links para transformá-los em texto
-                    linhas.slice(i, i + maxItensPorPagina).forEach(linha => {
+                    linhasVisiveis.slice(i, i + maxItensPorPagina).forEach(linha => {
                         const linhaClonada = linha.cloneNode(true);
-                        const links = linhaClonada.querySelectorAll('a'); // Seleciona todos os links dentro da linha clonada
+                        const links = linhaClonada.querySelectorAll('a');
                         links.forEach(link => {
-                            const texto = document.createTextNode(link.textContent); // Obtém o texto do link
-                            link.parentNode.replaceChild(texto, link); // Substitui o link pelo texto puro
+                            const texto = document.createTextNode(link.textContent);
+                            link.parentNode.replaceChild(texto, link);
                         });
                         tbody.appendChild(linhaClonada);
                     });
 
-                    paginas.push(novaTabela); // Adiciona a tabela dividida no array de páginas
+                    paginas.push(novaTabela);
                 }
+            }
 
-                // Cria a janela para impressão
-                const janelaImpressao = window.open('', '', 'width=800,height=600');
-                janelaImpressao.document.write(`
-		<html>
-		<head>
-		    <title>Impressão - Haras Rosa Mystica</title>
-		    <style>
-		        /* Estilo geral */
-		        body {
-		            font-family: 'Arial', sans-serif;
-		            margin: 0;
-		            padding: 0;
-		            color: #000;
-		            background-color: #fff;
-		        }
+            // Cria a janela para impressão
+            const janelaImpressao = window.open('', '', 'width=800,height=600');
+            janelaImpressao.document.write(`
+                <html>
+                <head>
+                    <title>Impressão - Haras Rosa Mystica</title>
+                    <style>
+                        /* Estilo geral */
+                        body {
+                            font-family: 'Arial', sans-serif;
+                            margin: 0;
+                            padding: 0;
+                            color: #000;
+                            background-color: #fff;
+                        }
 
-		        .header {
-		            display: flex;
-		            align-items: center;
-		            justify-content: space-between;
-		            padding: 20px;
-		            border-bottom: 1px solid #000;
-		        }
+                        .header {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            padding: 20px;
+                            border-bottom: 1px solid #000;
+                        }
 
-		        .header-img img {
-		            width: 120px;
-		            height: auto;
-		        }
+                        .header-img img {
+                            width: 120px;
+                            height: auto;
+                        }
 
-		        .header-title {
-		            font-size: 28px;
-		            font-weight: bold;
-		            text-transform: uppercase;
-		            color: #000;
-		            margin: 0 20px;
-		            text-align: center;
-		            flex-grow: 1;
-		        }
+                        .header-title {
+                            font-size: 28px;
+                            font-weight: bold;
+                            text-transform: uppercase;
+                            color: #000;
+                            margin: 0 20px;
+                            text-align: center;
+                            flex-grow: 1;
+                        }
 
-		        table {
-		            width: 500px;
-		            border-collapse: collapse;
-		            margin: 20px auto;
-		            font-size: 14px; /* Tamanho consistente */
-		            color: #000;
-		        }
+                        table {
+                            width: 500px;
+                            border-collapse: collapse;
+                            margin: 20px auto;
+                            font-size: 14px;
+                            color: #000;
+                        }
 
-		        th, td {
-		            border: 1px solid #000;
-		            padding: 8px; /* Consistência com o CSS inicial */
-		            text-align: left;
-		        }
+                        th, td {
+                            border: 1px solid #000;
+                            padding: 8px;
+                            text-align: left;
+                        }
 
-		        th {
-		            font-weight: bold;
-		            text-transform: uppercase;
-		        }
+                        th {
+                            font-weight: bold;
+                            text-transform: uppercase;
+                        }
 
-		        .signature {
-		            display: flex;
-		            justify-content: space-between;
-		            align-items: center;
-		            gap: 20px;
-		            font-size: 12px; /* Ajustado para consistência */
-		        }
+                        .signature {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            gap: 20px;
+                            font-size: 12px;
+                        }
 
-		        .signature-block .label {
-		            text-align: center;
-		        }
+                        .signature-block .label {
+                            text-align: center;
+                        }
 
-		        .label {
-		            margin-bottom: 20px;
-		        }
+                        .label {
+                            margin-bottom: 20px;
+                        }
 
-		        .footer {
-		            text-align: center;
-		            font-size: 12px; /* Consistência de fonte */
-		            color: #000;
-		            padding: 10px 0;
-		            border-top: 1px solid #000;
-		            position: relative;
-		        }
+                        .footer {
+                            text-align: center;
+                            font-size: 12px;
+                            color: #000;
+                            padding: 10px 0;
+                            border-top: 1px solid #000;
+                            position: relative;
+                        }
 
-		        @media print {
-		            /* Definindo orientação paisagem */
-		            @page {
-		                size: landscape;
-		            }
+                        @media print {
+                            @page {
+                                size: landscape;
+                            }
 
-		            .footer {
-		                position: fixed;
-		                bottom: 0;
-		                width: 100%;
-		                border: none;
-		            }
+                            .footer {
+                                position: fixed;
+                                bottom: 0;
+                                width: 100%;
+                                border: none;
+                            }
 
-		            .header, .content {
-		                page-break-inside: avoid;
-		            }
-		        }
-		    </style>
-		</head>
-		<body>
-		    <!-- Adicionando conteúdo dinâmico -->
-		    ${paginas.map((tabela, index) => `
-		        <div class="header">
-		            <div class="header-img">
-		            	<img src="https://www.harasrosamystica.com.br/wp-content/uploads/2024/07/logo-header-novo.webp" alt="Logo Haras Rosa Mystica">
-		            </div>
-		            <h2 class="header-title">Lista de Movimentações - Página ${index + 1}</h2>
-		        </div>
-		        <div class="content">
-		            ${tabela.outerHTML}
-		        </div>
-		        <div class="footer">
-		            <div class="signature">
-		            </div>
-		            <div class="footer-text">
-		                © 2025 Haras Rosa Mystica - Todos os direitos reservados.
-		            </div>
-		        </div>
-		        ${index < paginas.length - 1 ? '<div style="page-break-after: always;"></div>' : ''}
-		    `).join('')}
-		</body>
-		</html>
-
-	    `);
-                janelaImpressao.document.close();
-                janelaImpressao.focus();
-                janelaImpressao.print();
-                janelaImpressao.close();
-            });
+                            .header, .content {
+                                page-break-inside: avoid;
+                            }
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${paginas.map((tabela, index) => `
+                        <div class="header">
+                            <div class="header-img">
+                                <img src="https://www.harasrosamystica.com.br/wp-content/uploads/2024/07/logo-header-novo.webp" alt="Logo Haras Rosa Mystica">
+                            </div>
+                            <h2 class="header-title">Lista de Movimentações ${paginas.length > 1 ? `- Página ${index + 1}` : ''}</h2>
+                        </div>
+                        <div class="content">
+                            ${tabela.outerHTML}
+                        </div>
+                        <div class="footer">
+                            <div class="signature">
+                            </div>
+                            <div class="footer-text">
+                                © 2025 Haras Rosa Mystica - Todos os direitos reservados.
+                            </div>
+                        </div>
+                        ${index < paginas.length - 1 ? '<div style="page-break-after: always;"></div>' : ''}
+                    `).join('')}
+                </body>
+                </html>
+            `);
+            janelaImpressao.document.close();
+            janelaImpressao.focus();
+            janelaImpressao.print();
+            janelaImpressao.close();
+        });
 
             function atualizarRelogio() {
                 const agora = new Date();

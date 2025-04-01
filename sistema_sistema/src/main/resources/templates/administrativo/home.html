@@ -45,6 +45,17 @@
             pointer-events: none;
             font-family: 'Arial, sans-serif';
         }
+        
+        .form-container {
+		    background: #fff;
+		    padding: 30px;
+		    border-radius: 8px;
+		    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		    max-width: 500px; /* Defina um tamanho máximo para não ocupar toda a tela */
+		    width: 100%;
+		    border-top: 4px solid #808080;
+		    border-bottom: 4px solid #808080;
+		}
 
         /*botões de cadastros e listas*/
         .card {
@@ -85,7 +96,7 @@
             font-family: "Asar", Sans-serif;
             margin-top: 10px;
             color: #cf8311;
-            font-size: 30px;
+            font-size: 30px;	
             margin: 0px;
         }
 
@@ -124,8 +135,8 @@
             font-weight: 300;
             font-family: "Asar", Sans-serif;
             color: #495057;
-            margin-top: 40px;
-            margin-bottom: 40px;
+            margin-top: 70px;
+            margin-bottom: 70px;
         }
 
         /*fundo secundario*/
@@ -366,11 +377,9 @@
             text-align: center;
             padding: 20px 0;
             font-family: 'Roboto', sans-serif;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 -6px 15px rgba(0, 0, 0, 0.3);
             position: relative;
-            /* Deixe a posição como 'relative' para que o footer fique abaixo do conteúdo */
             margin-top: auto;
-            /* Isso vai empurrar o footer para o final da página */
             transition: background-color 0.5s ease, box-shadow 0.5s ease;
             border-style: solid;
             border-width: 4px 0 0 0;
@@ -462,6 +471,34 @@
 		    text-align: center;
 		    font-size: 1.2rem;
 		    font-weight: 500;
+		}
+		
+		/* Container principal do form (não afeta o navbar) */
+		.form-main-container {
+		    max-width: 1600px; /* ou o tamanho desejado */
+		    width: 100%;
+		    padding: 0 15px;
+		    margin: 0 auto; /* centraliza */
+		}
+		
+		.form-container {
+		    background: #fff;
+		    padding: 30px;
+		    border-radius: 8px;
+		    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		    margin: 10px auto;
+		    max-width: 1100px;  /* Mantém a largura atual */
+		    width: 100%;
+		    border-top: 4px solid #808080;
+		    border-bottom: 4px solid #808080;
+		    min-height: 641px;  /* Altura mínima (ajuste conforme necessidade) */
+		    height: auto;       /* Cresce conforme o conteúdo */
+		}
+		
+		.ml-auto, .mx-auto {
+		    margin-left: auto !important;
+		    margin-right: auto !important;
+		    
 		}
 
 
@@ -612,65 +649,63 @@
         </div>
     </nav>
 
-    <div class="container-fluid" style="width: 900px; height: auto;">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8">
+    <div class="form-main-container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="form-container w-100">
+        <div class="col-12 col-md-10 col-lg-8 mx-auto">
 
-                <div class="text-center mb-4">
-                    <h1 class="lead-title">Bem-vindo ao Sistema de Controle de Sêmen</h1>
-                    <p class="lead">Acesse os cadastros e listas abaixo para gerenciar os registros.</p>
-                </div>
+            <div class="text-center mb-4">
+                <h1 class="lead-title">Bem-vindo ao Sistema de Controle de Sêmen</h1>
+                <p class="lead">Acesse os cadastros e listas abaixo para gerenciar os registros.</p>
+            </div>
 
-                <div class="row">
+            <div class="row justify-content-center">
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header text-center bg-primary text-white">
+                            <h2>Cadastros</h2>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <a th:if="${usuario.tipo == 'ADMIN'}" href="/administrativo/garanhoes/cadastro"
+                                    class="list-group-item list-group-item-action">
+                                    <i class="fa-solid fa-arrow-right"></i> Efetuar Cadastro de Sêmen
+                                </a>
 
-                    <div class="col-md-6 mb-4">
-                        <div class="card shadow-sm">
-                            <div class="card-header text-center bg-primary text-white">
-                                <h2>Cadastros</h2>
-                            </div>
-                            <div class="card-body">
-                                <ul class="list-group">
-
-                                    <a th:if="${usuario.tipo == 'ADMIN'}" href="/administrativo/garanhoes/cadastro"
-                                        class="list-group-item list-group-item-action">
-                                        <i class="fa-solid fa-arrow-right"></i> Efetuar Cadastro de Sêmen
-                                    </a>
-
-                                    <a href="/administrativo/movimentacoes/cadastro"
-                                        class="list-group-item list-group-item-action">
-                                        <i class="fa-solid fa-arrow-right"></i> Efetuar Movimentação
-                                    </a>
-                                </ul>
-                            </div>
+                                <a href="/administrativo/movimentacoes/cadastro"
+                                    class="list-group-item list-group-item-action">
+                                    <i class="fa-solid fa-arrow-right"></i> Efetuar Movimentação
+                                </a>
+                            </ul>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-md-6 mb-4">
-                        <div class="card shadow-sm">
-                            <div class="card-header text-center bg-success text-white">
-                                <h2>Listas</h2>
-                            </div>
-                            <div class="card-body">
-                                <ul class="list-group">
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header text-center bg-success text-white">
+                            <h2>Listas</h2>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <a href="/administrativo/garanhoes/listar"
+                                    class="list-group-item list-group-item-action">
+                                    <i class="fa-solid fa-list"></i> Lista de Sêmen
+                                </a>
 
-                                    <a href="/administrativo/garanhoes/listar"
-                                        class="list-group-item list-group-item-action">
-                                        <i class="fa-solid fa-list"></i> Lista de Sêmen
-                                    </a>
-
-                                    <a href="/administrativo/movimentacoes/listar"
-                                        class="list-group-item list-group-item-action">
-                                        <i class="fa-solid fa-list"></i> Lista de Movimentações
-                                    </a>
-                                 
-                                </ul>
-                            </div>
+                                <a href="/administrativo/movimentacoes/listar"
+                                    class="list-group-item list-group-item-action">
+                                    <i class="fa-solid fa-list"></i> Lista de Movimentações
+                                </a>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
+</div>
+
     
 		<!-- Modal de aviso 10 minutos -->
 		<div id="modal10Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
