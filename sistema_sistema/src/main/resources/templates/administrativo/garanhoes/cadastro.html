@@ -536,8 +536,7 @@
 		    display: flex;
 		    -ms-flex-wrap: wrap;
 		    flex-wrap: wrap;
-		    margin-top: 41px;
-		    margin-bottom: 40px;
+		    
 		}
 		
 		.mb-3, .my-3 {
@@ -604,15 +603,7 @@
                             <i class="fa-solid fa-circle"
                                 style="color: #363636; font-size: 12px; margin-left: 15px;"></i>
                         </a>
-                        <a class="dropdown-item" href="/ajuda"
-                            style="display: flex; align-items: center; justify-content: space-between;">
-                            <span style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; 
-						           cursor: pointer; transition: all 0.3s ease;">
-                                Manual
-                            </span>
-                            <i class="fa-solid fa-circle"
-                                style="color: #363636; font-size: 12px; margin-left: 15px;"></i>
-                        </a>
+                        
                     </div>
                 </div>
 
@@ -635,12 +626,14 @@
                 </div>
 
                 <div class="custom-divider"></div>
-                <div class="row">
+                <div class="row justify-content-center">
                     <div class="col-md-6 mb-3">
                         <label>Garanhão</label>
                         <input type="text" required th:field="*{nome_garanhao}" class="form-control" placeholder="Nome"
                             maxlength="40" />
                     </div>
+                    </div>
+                    <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="CorPalhetaSelect">Palheta</label>
                         <select id="CorPalhetaSelect" required th:field="*{cor_palheta}" class="form-control select2"
@@ -819,6 +812,11 @@
 					</div>
 
                     <!-- Campo Modalidade com Input + Datalist -->
+                    <div class="col-md-6 mb-3">
+
+                        
+                    </div>
+                    
                     <div class="col-md-6 mb-3">
                         <label for="modalidadeSelect">Modalidade</label>
                         <select id="modalidadeSelect" required th:field="*{modalidade}" class="form-control select2">
