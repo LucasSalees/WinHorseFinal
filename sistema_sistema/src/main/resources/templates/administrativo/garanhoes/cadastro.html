@@ -898,7 +898,92 @@
                 </div>
             </div>
         </div>
+    </div> 
+    
+    <!-- Modal para Excluir Cor -->
+<div class="modal fade" id="modalExcluirCor" tabindex="-1" aria-labelledby="modalExcluirCorLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalExcluirCorLabel">Excluir Cor</h5>
+                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select id="selectExcluirCor" class="form-control">
+                    <option value="">Selecione uma cor para excluir</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger"
+                    onclick="confirmarExcluirCor()">Excluir</button>
+            </div>
+        </div>
     </div>
+</div>
+
+<!-- Modal Dinâmico -->
+<div class="modal fade" id="modalMensagem" tabindex="-1" aria-labelledby="modalMensagemLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalMensagemLabel">Aviso</h5>
+                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalMensagemTexto">
+                <!-- Mensagem será inserida via JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnFecharModalMensagem">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Aviso Caneca -->
+<div class="modal fade" id="canecaModal" tabindex="-1" aria-labelledby="canecaModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="canecaModalLabel">Aviso</h5>
+                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Números negativos não são permitidos.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Aviso Saldo Atual -->
+<div class="modal fade" id="saldoAtualModal" tabindex="-1" aria-labelledby="saldoAtualModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="saldoAtualModalLabel">Aviso</h5>
+                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Números negativos não são permitidos.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
     <!-- Modal de aviso 10 minutos -->
