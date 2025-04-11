@@ -725,43 +725,52 @@
         <nav class="dashboard-nav">
             <!-- Seção de Cadastros -->
             <div class="mb-4">
-                <h2 class="lead text-center shadow-text">
-				    <i class="fas fa-edit me-2"></i>Auxiliares
-				</h2>
+		    <div class="row justify-content-center">
+		        <!-- Coluna da esquerda -->
+		        <div class="col-md-6 d-flex flex-column">
+		            <h2 class="lead text-center shadow-text">
+		                <i class="fas fa-edit me-2"></i>Auxiliares
+		            </h2>
+		
+		            <div class="d-flex justify-content-center mt-3 flex-grow-1">
+		                <div class="col-auto" style="max-width: 300px; min-width: 300px;">
+		                    <a href="/administrativo/garanhoes/listar" class="nav-item bg-white p-3 rounded shadow-cantos d-block text-decoration-none h-100">
+		                        <div class="text-center d-flex flex-column justify-content-center h-100">
+		                            <div class="icon-bg-lg bg-info text-white rounded-circle mx-auto mb-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+		                                <i class="fas fa-horse"></i>
+		                            </div>
+		                            <h3 class="h6 fw-bold mb-1 text-dark">Cadastro de Animais</h3>
+		                            <p class="small text-muted mb-0">Controle de entrada</p>
+		                        </div>
+		                    </a>
+		                </div>
+		            </div>
+		        </div>
+		
+		        <!-- Coluna da direita -->
+		        <div class="col-md-6 d-flex flex-column">
+		            <h2 class="lead text-center shadow-text">
+		                <i class="fas fa-exchange-alt me-2"></i>Movimentação
+		            </h2>
+		
+		            <div class="d-flex justify-content-center mt-3 flex-grow-1">
+		                <div class="col-auto" style="max-width: 300px; min-width: 300px;">
+		                    <a href="/administrativo/movimentacoes/cadastro" class="nav-item bg-white p-4 rounded shadow-cantos d-block text-decoration-none text-center h-100">
+		                        <div class="d-flex flex-column justify-content-center h-100">
+		                            <div class="icon-bg bg-success text-white rounded-circle mx-auto mb-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+		                                <i class="fas fa-exchange-alt"></i>
+		                            </div>
+		                            <h3 class="h6 fw-bold mb-1 text-dark">Registrar Movimentação</h3>
+		                            <p class="small text-muted mb-0">Controle de saída</p>
+		                        </div>
+		                    </a>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 
-                <div class="row g-3 justify-content-center">
-				    <!-- Cadastro de Sêmen -->
-				    <div class="row g-3 justify-content-center">
-				    <!-- Cadastro de Sêmen -->
-				    <div th:if="${usuario.tipo == 'ADMIN'}" class="col-auto" style="max-width: 300px; min-width: 300px;">
-					    <a href="/administrativo/garanhoes/cadastro"
-					       class="nav-item bg-white p-4 rounded shadow-cantos d-block text-decoration-none text-center h-100">
-					        <div>
-					            <div class="icon-bg bg-primary text-white rounded-circle mx-auto mb-3"
-					                 style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
-					                <i class="fas fa-vial"></i>
-					            </div>
-					            <h3 class="h6 fw-bold mb-1 text-dark">Novo Registro de Sêmen</h3>
-					            <p class="small text-muted mb-0">Cadastre novas amostras no sistema</p>
-					        </div>
-					    </a>
-					</div>
 
-				
-				    <!-- Movimentação -->
-				    <div class="col-auto" style="max-width: 300px; min-width: 300px;">
-				        <a href="/administrativo/movimentacoes/cadastro" class="nav-item bg-white p-4 rounded shadow-cantos d-block text-decoration-none text-center h-100">
-				            <div>
-				                <div class="icon-bg bg-success text-white rounded-circle mx-auto mb-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
-				                    <i class="fas fa-exchange-alt"></i>
-				                </div>
-				                <h3 class="h6 fw-bold mb-1 text-dark">Registrar Movimentação</h3>
-				                <p class="small text-muted mb-0">Controle de entrada e saída</p>
-				            </div>
-				        </a>
-				    </div>
-				</div>
-            </div>
 
             <!-- Seção de Relatórios -->
             <div class="mb-4">
@@ -770,17 +779,7 @@
                 </h2>
                 <div class="d-flex justify-content-center flex-wrap gap-3">
                     <!-- Lista de Sêmen -->
-                    <div style="flex: 1 1 18%; min-width: 180px; margin-right: 15px;">
-                        <a href="/administrativo/garanhoes/listar" class="nav-item bg-white p-3 rounded shadow-cantos d-block text-decoration-none h-100">
-                            <div class="text-center">
-                                <div class="icon-bg-lg bg-info text-white rounded-circle mx-auto mb-2">
-                                    <i class="fas fa-list"></i>
-                                </div>
-                                <h3 class="h6 fw-bold mb-1 text-dark">Estoque</h3>
-                                <p class="small text-muted mb-0">Todas as amostras</p>
-                            </div>
-                        </a>
-                    </div>
+                    
 
                     <!-- Por Data -->
                     <div style="flex: 1 1 18%; min-width: 180px; margin-right: 15px;">
