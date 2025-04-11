@@ -31,7 +31,10 @@
     <style>
         body {
             font-family: "Asar", Sans-serif;
-            background-color: #C0C0C0;
+            background-color: #ffffff;
+            height: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         /*marca d'agua*/
@@ -46,27 +49,29 @@
         }
 
         /* Container principal do form (não afeta o navbar) */
-		.form-main-container {
-		    max-width: 1600px; /* ou o tamanho desejado */
-		    width: 100%;
-		    padding: 0 15px;
-		    margin: 0 auto; /* centraliza */
-		}
-		
-		/* Ajuste o form-container para ocupar mais espaço */
-		.form-container {
-		    background: #fff;
-		    padding: 30px;
-		    border-radius: 8px;
-		    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-		    margin-top: 10px;
-		    margin-bottom: 10px;
-		    max-width: 100%; /* Ocupa a largura máxima do container pai */
-		    width: 100%;
-		    border-top: 4px solid #808080;
-		    border-bottom: 4px solid #808080;
-		    height: 641px;
-		}
+        .form-main-container {
+            max-width: 1600px;
+            /* ou o tamanho desejado */
+            width: 100%;
+            padding: 0 15px;
+            margin: 0 auto;
+            /* centraliza */
+            flex: 1;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+
+        .form-container {
+            padding: 10px;
+            /* margin-top: 10px; */
+            /* margin-bottom: 10px; */
+            max-width: 100%;
+            width: 1550px;
+            height: auto;
+        }
 
         /*titulo*/
         h1 {
@@ -155,8 +160,7 @@
 
 
         /*link tabela garanhão*/
-        .text-center a {
-            display: block;
+        .text-left a {
             text-decoration: none;
             color: inherit;
             transition: background-color 0.3s ease;
@@ -181,9 +185,7 @@
             color: #cf8311;
         }
 
-        /*cor cabeçalho tabela*/
-        .table thead th {
-            cursor: pointer;
+        .table thead th{
             background-color: #1b1e21;
             color: #cf8311;
         }
@@ -367,9 +369,7 @@
             font-family: 'Roboto', sans-serif;
             box-shadow: 0 -6px 15px rgba(0, 0, 0, 0.3);
             position: relative;
-            /* Deixe a posição como 'relative' para que o footer fique abaixo do conteúdo */
             margin-top: auto;
-            /* Isso vai empurrar o footer para o final da página */
             transition: background-color 0.5s ease, box-shadow 0.5s ease;
             border-style: solid;
             border-width: 4px 0 0 0;
@@ -397,14 +397,10 @@
             animation: gradientFooterAnimation 8s ease infinite;
         }
         
-        .btn-custom {
-	        width: 267px; 
-	        height: 41px;
-	        margin-left: 30px;
+		.btn-custom {
+		    width: 267px;
+		    height: 41px;
 		}
-		
-		
-		
 
 	    .filter-container {
 		    display: flex;
@@ -431,6 +427,7 @@
 		    z-index: 1; /* Garante que o cabeçalho fique sobre o conteúdo */
 		    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para destacar o cabeçalho */
 		}
+
 		
 		#filtroDatas {
 		    width: 45%;
@@ -444,8 +441,8 @@
 		}
 		
 		#filtroDatas input {
-		    margin: 0 10px;  /* Adiciona espaço entre os inputs */
-		    width: 200px;  /* Ajuste a largura conforme necessário */
+		    margin: 0 5px;  /* Adiciona espaço entre os inputs */
+		    width: 140px;  /* Ajuste a largura conforme necessário */
 		}
 		
 		#filtroDatas h4 {
@@ -459,10 +456,8 @@
 		     margin-bottom: 0rem !important;
 		}
 		
-
-		
 		#filtro {
-		    width: 250px;  /* Largura fixa em pixels */
+		    width: 145px;  /* Largura fixa em pixels */
 		    padding: 8px;
 		    font-size: 16px;
 		    border: 1px solid #ccc;
@@ -503,8 +498,196 @@
         }
 
         .dropdown:hover .dropdown-menu-campo {
-            display: block;
+              display: none;
         }
+        
+        
+                .row {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: 100px;
+            margin-left: 100px;
+        }
+
+
+
+        .footer {
+            font-size: 1rem;
+            width: 100%;
+            background-color: #000000C4;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            font-family: 'Roboto', sans-serif;
+            box-shadow: 0 -6px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: background-color 0.5s ease, box-shadow 0.5s ease;
+            border-style: solid;
+            border-width: 4px 0 0 0;
+            border-color: #fc0;
+            /* Garante que o footer vai para o fundo */
+        }
+
+        .shadow-cantos {
+            box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.15);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .shadow-text {
+            text-shadow: 6px 6px 12px rgba(0, 0, 0, 0.25);
+            transition: text-shadow 0.3s ease;
+        }
+
+        /* Definindo o tamanho do select2 */
+        .select2-container--default .select2-selection--single {
+            width: 100%;
+            /* Largura de 397px */
+            height: 38px;
+            /* Altura de 38px */
+            border: 1px solid #ced4da;
+            box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.15);
+            transition: box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Estilo do texto dentro do select2 */
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #444;
+            line-height: 28px;
+            /* Pode ajustar a altura da linha conforme necessário */
+            display: block;
+            padding-left: 8px;
+            padding-right: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .custom-header {
+		    background-color: #f4f4f4;
+		    padding: 10px 20px;
+		    border-radius: 5px;
+		    width: 100%;              /* Ocupa 100% do espaço disponível */
+		    max-width: 1555px;        /* Mas não ultrapassa 1555px */
+		    margin: 20px auto;        /* Centraliza horizontalmente */
+		    box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.15);
+		    transition: box-shadow 0.3s ease;
+		}
+
+
+
+        .custom-link {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 3px 3px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin-left: 0px;
+        }
+
+        .custom-link:hover {
+            color: #cf8311;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Customizando o título */
+        .custom-header h1 {
+            font-size: 24px;
+            /* Tamanho da fonte */
+            font-weight: bold;
+        }
+
+        /* Ajuste no ícone */
+        .custom-header i.fa-circle-left {
+            margin-right: 5px;
+            /* Espaço à direita do ícone */
+            margin-left: 5px;
+            /* Espaço à direita do ícone */
+            margin-top: 5px;
+            /* Espaço à direita do ícone */
+            margin-bottom: 5px;
+            /* Espaço à direita do ícone */
+        }
+
+        .custom-header i.fa-horse-head {
+            color: #cf8311;
+            /* Cor do ícone */
+        }
+
+		.custom-button-container {
+		    background-color: #f4f4f4;
+		    padding: 10px 20px;
+		    box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.15);
+		    transition: box-shadow 0.3s ease;
+		    border-radius: 5px;
+		    width: 100%;               /* Responsivo */
+		    max-width: 1555px;         /* Largura máxima */
+		    margin: 20px auto;         /* Centraliza */
+		    display: flex;             /* Flexbox */
+		    justify-content: flex-end; /* Alinha conteúdo à direita */
+		}
+
+
+        .custom-button-container .btn {
+            
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .custom-button-container .btn:hover {
+            background-color: #cf8311;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        
+        
+        /* Manter a custom-button-container-header do jeito que está */
+		.custom-button-container-header {
+		    background-color: #f4f4f4;
+		    padding: 10px 10px;
+		    box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.15);
+		    transition: box-shadow 0.3s ease;
+		    border-radius: 5px;
+		    width: 100%;               /* Responsivo */
+		    max-width: 1555px;         /* Largura máxima */
+		    margin: 20px auto;
+		    display: flex;
+		    justify-content: space-between; /* Distribui os elementos ao longo do container */
+		    position: relative; /* Necessário para o posicionamento absoluto do filtro de datas */
+		}
+		
+		/* Manter os botões à esquerda e dar um espaço controlado */
+		.custom-button-container-header .botoes {
+		    display: flex;
+		    justify-content: flex-start; /* Alinha os botões à esquerda */
+		    gap: 10px;
+		    width: auto;
+		    
+		}
+		
+		/* Estilo dos botões */
+		.custom-button-container-header .btn {
+		    color: #ffffff;
+		    padding: 10px 10px;
+		    border-radius: 5px;
+		    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		    font-size: 16px;
+		    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+		}
+		
+		.custom-button-container-header .btn:hover {
+		    background-color: #cf8311;
+		    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+		}
 		
     </style>
 
@@ -575,80 +758,94 @@
             </div>
         </div>
     </nav>
-
-    <div class="form-main-container d-flex justify-content-center align-items-center">
+    
+    <div class="custom-header d-flex align-items-center justify-content-between mb-4">
+			    <a href="javascript:history.back()" class="custom-link">
+			        <i class="fa-solid fa-circle-left"></i>
+			    </a>
+			    <h1 class="m-0 text-center shadow-text flex-grow-1 fw-bold" style="color: #333;">
+			        <i class="fa-solid fa-horse-head me-2" style="color: #cf8311;"></i> Valores
+			    </h1>
+			    <div style="width: 34px;"></div> <!-- Espaço equivalente ao ícone -->
+			</div>
+			
+			    <div class="form-main-container d-flex justify-content-center align-items-center">
     	<div class="form-container">
 
-            <div class="d-flex align-items-center justify-content-between mb-3">
-                <a href="/administrativo/garanhoes/listar" class="custom-link">
-                    <i class="fa-solid fa-circle-left"></i>
-                </a>
-                <h1 class="m-0 text-center flex-grow-1">Lista de valores</h1>
-                <div style="width: 100px;"></div>
-            </div>
-            
-            <div class="custom-divider"></div>
-            
-           <div class="d-flex justify-content-between align-items-center mb-3">
-			    <div>
+            <div class="custom-button-container-header">
+			    <div class="botoes">
 			        <button id="btnRemoverFiltros" class="btn btn-light btn-sm text-white">Remover Filtros</button>
+			        
+			    </div>
+			
+			    <!-- Filtro de datas -->
+			    <div id="filtroDatas" class="d-none mb-3">
+			        <div class="d-flex justify-content-center">
+			            <h4>Data inicial:</h4><input type="date" id="dataInicio" class="form-control" placeholder="Data Inicial"> 
+			            <h4>Data final:</h4><input type="date" id="dataFinal" class="form-control" placeholder="Data Final">
+			        </div>
 			    </div>
 			
 			    <div class="form-inline">
 			        <!-- Dropdown para selecionar os campos a pesquisar -->
-			        <div class="dropdown ml-3">
-			            <button class="btn btn-light btn-sm text-white dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-			                Selecionar Campos
-			            </button>
-			            <div class="dropdown-menu-campo" aria-labelledby="dropdownMenuButton" style="margin-top:5px;">
-			                <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoId" checked><span>ID</span></label></div>
-			                <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoNomeGaranhao" checked><span>Garanhão</span></label></div>
-			                <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoValor" checked><span>Valor</span></label></div>
-			                <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoMoeda" checked><span>Moeda</span></label></div>
-			                <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" id="campoModalidade" checked><span>Modalidade</span></label></div>
-			            </div>
-			        </div>
+					<div class="dropdown ml-3">
+					    <button class="btn btn-light btn-sm text-white dropdown-toggle" type="button" id="dropdownMenuButton">
+					        Selecionar Campos
+					    </button>
+					    <div class="dropdown-menu-campo" aria-labelledby="dropdownMenuButton" style="margin-top:5px; display: none;">
+					        <div>
+					            <label class="dropdown-item checkbox-item-campo">
+					                <input type="checkbox" id="selecionarTodos"> <span>Selecionar Todos</span>
+					            </label>
+					        </div>
+					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoId" checked><span>ID</span></label></div>
+						    <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoNomeGaranhao" checked><span>Garanhão</span></label></div>
+						    <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoValor" checked><span>Valor</span></label></div>
+						    <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoMoeda" checked><span>Moeda</span></label></div>
+						    <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoModalidade" checked><span>Modalidade</span></label></div>
+					    </div>
+					</div>
+
 			
-			        <input type="text" id="filtro" placeholder="Pesquisar...">
+			        <input type="text" id="filtro" placeholder="Pesquisar..."> <!-- 50% da largura -->
 			    </div>
 			</div>
 
 			
-			<div class="custom-divider"></div>
             
             <div class="table-container">
             
                 <table class="table table-striped" id="tabela">
                     <thead>
                         <tr>
-                            <th class="text-center">ID</th>
-                            <th class="text-center">Garanhão</th>
-                            <th class="text-center">Valor</th>
-                            <th class="text-center">Moeda</th>
-                            <th class="text-center">Modalidade</th>
+                            <th class="text-left" style="cursor: pointer; justify-content: center; align-items: center; gap: 5px; max-width: 50px; min-width: 50px;">ID</th>
+                            <th class="text-left" style="cursor: pointer; justify-content: center; align-items: center; gap: 5px; max-width: 270px; min-width: 270px;">Garanhão</th>
+                            <th class="text-left" style="cursor: pointer; justify-content: center; align-items: center; gap: 5px; max-width: 200px; min-width: 200px;">Valor</th>
+                            <th class="text-left" style="cursor: pointer; justify-content: center; align-items: center; gap: 5px; max-width: 200px; min-width: 200px;">Moeda</th>
+                            <th class="text-left" style="cursor: pointer; justify-content: center; align-items: center; gap: 5px; max-width: 200px; min-width: 200px;">Modalidade</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="garanhao : ${listaGaranhoes}">
 
-                            <td class="text-center">
+                            <td class="text-left">
                                 <a th:href="@{/administrativo/garanhoes/eventoValor/editarValor/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
                                     th:text="${garanhao.id_garanhao}" class="row-link"></a>
                             </td>
 
-                            <td class="text-center">
+                            <td class="text-left">
                                 <a th:href="@{/administrativo/garanhoes/eventoValor/editarValor/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
                                     th:text="${garanhao.nome_garanhao}" class="row-link"></a>
                             </td>
-                            <td class="text-center">
+                            <td class="text-left">
                                 <a th:href="@{/administrativo/garanhoes/eventoValor/editarValor/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
                                     th:text="${garanhao.valor}" class="row-link"></a>
                             </td>
-                            <td class="text-center">
+                            <td class="text-left">
                                 <a th:href="@{/administrativo/garanhoes/eventoValor/editarValor/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
                                     th:text="${garanhao.moeda}" class="row-link"></a>
                             </td>
-                            <td class="text-center">
+                            <td class="text-left">
                                 <a th:href="@{/administrativo/garanhoes/eventoValor/editarValor/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
                                     th:text="${garanhao.modalidade}" class="row-link"></a>
                             </td>
@@ -658,30 +855,30 @@
 			
             </div>
             
-            <div class="custom-divider"></div>
-            <div class="row mt-3">
-                <div class="col text-left">
+				<div class="custom-button-container">
+                    <div class="col text-left">
                     <a href="#" id="btnImprimir" class="btn btn-light btn-sm text-white">
                         <i class="fa-solid fa-print"></i> Imprimir
                     </a>
-                </div>
-                <div class="col text-right">
+                	</div>
 
-                    <a th:if="${usuario.tipo == 'ADMIN'}" href="/administrativo/garanhoes/cadastro">
-                        <button type="button" class="btn btn-dark btn-sm">
-                            <i class="fa-solid fa-plus"></i> <i class="fa-solid fa-horse-head"></i> Cadastrar
-                        </button>
-                    </a>
-
-                    <a th:if="${usuario.tipo != 'ADMIN'}" style="pointer-events: none; text-decoration: none;">
-                        <button type="button" class="btn btn-dark btn-sm"
-                            style="pointer-events: none; color: #ffffff; cursor: not-allowed; background-color: #C0C0C0;">
-                            <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
-                            <i class="fa-solid fa-horse-head" style="color: #ffffff;"></i> Cadastrar
-                        </button>
-                    </a>
+                
+	                <div class="col text-right">
+	                    <a th:if="${usuario.tipo == 'ADMIN'}" href="/administrativo/garanhoes/cadastro">
+	                        <button type="button" class="btn btn-light btn-sm text-white">
+	                            <i class="fa-solid fa-plus"></i> <i class="fa-solid fa-horse-head"></i> Cadastrar
+	                        </button>
+	                    </a>
+	
+	                    <a th:if="${usuario.tipo != 'ADMIN'}" style="pointer-events: none; text-decoration: none;">
+	                        <button type="button" class="btn btn-dark btn-sm"
+	                            style="pointer-events: none; color: #ffffff; cursor: not-allowed; background-color: #C0C0C0;">
+	                            <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+	                            <i class="fa-solid fa-horse-head" style="color: #ffffff;"></i> Cadastrar
+	                        </button>
+	                    </a>
+	                </div>
                 </div>
-            </div>
         </div>
     </div>
 
@@ -731,7 +928,7 @@
 				  onmouseover="this.style.transform='scale(1.02)';" 
 				  onmouseout="this.style.transform='scale(1)';">
 				</a> </p>
-	            <p>Todos os direitos reservados.</p>
+	            
 	        </div>
 
 	        <!-- Relógio e campo oculto que armazena a horaFim do usuário -->
@@ -744,6 +941,35 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <script>
+    
+    document.getElementById("dropdownMenuButton").addEventListener("click", function() {
+        // Seleciona o dropdown menu
+        var dropdownMenu = document.querySelector(".dropdown-menu-campo");
+        
+        // Alterna a visibilidade do dropdown (exibe ou esconde)
+        dropdownMenu.style.display = (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") ? "block" : "none";
+    });
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        // Função para selecionar ou desmarcar todos os checkboxes
+        document.getElementById("selecionarTodos").addEventListener("change", function() {
+            let checkboxes = document.querySelectorAll(".campoCheckbox");
+            checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+        });
+
+        // Se algum checkbox for desmarcado, desmarca "Selecionar Todos"
+        document.querySelectorAll(".campoCheckbox").forEach(checkbox => {
+            checkbox.addEventListener("change", function() {
+                let selecionarTodos = document.getElementById("selecionarTodos");
+                let checkboxes = document.querySelectorAll(".campoCheckbox");
+                // Atualiza o "Selecionar Todos" baseado no estado dos checkboxes individuais
+                selecionarTodos.checked = [...checkboxes].every(cb => cb.checked);
+                // Se algum checkbox não estiver marcado, o "Selecionar Todos" deve ser desmarcado
+                selecionarTodos.indeterminate = ![...checkboxes].every(cb => cb.checked) && [...checkboxes].some(cb => cb.checked);
+            });
+        });
+    });
+
     
  // Recarregar a página para remover os filtros
     document.getElementById("btnRemoverFiltros").addEventListener("click", function () {
@@ -790,7 +1016,7 @@
         );
 
         // Configuração de itens por página
-        const maxItensPorPagina = 14;
+        const maxItensPorPagina = 44;
         const paginas = [];
 
         // Verifica se precisa de paginação ou se cabe tudo em uma página
@@ -845,95 +1071,115 @@
                 <head>
                     <title>Impressão - Haras Rosa Mystica</title>
                     <style>
-                        /* Estilo geral */
-                        body {
-                            font-family: 'Arial', sans-serif;
-                            margin: 0;
-                            padding: 0;
-                            color: #000;
-                            background-color: #fff;
-                        }
+                    /* Estilo geral */
+                    body {
+                        font-family: 'Arial', sans-serif;
+                        margin: 0;
+                        padding: 0;
+                        color: #000;
+                        background-color: #fff;
+                    }
 
-                        .header {
-                            display: flex;
-                            align-items: center;
-                            justify-content: space-between;
-                            padding: 20px;
-                            border-bottom: 1px solid #000;
-                        }
+                    .header {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 20px;
+                        border-bottom: 1px solid #000;
+                    }
 
-                        .header-img img {
-                            width: 120px;
-                            height: auto;
-                        }
+                    .header-img img {
+                        width: 120px;
+                        height: auto;
+                    }
 
-                        .header-title {
-                            font-size: 28px;
-                            font-weight: bold;
-                            text-transform: uppercase;
-                            color: #000;
-                            margin: 0 20px;
-                            text-align: center;
-                            flex-grow: 1;
-                        }
+                    .header-title {
+                        font-size: 28px;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                        color: #000;
+                        margin: 0 20px;
+                        text-align: center;
+                        flex-grow: 1;
+                    }
 
-                        table {
-                            width: 100%;
-                            border-collapse: collapse;
-                            margin: 20px auto;
-                            font-size: 14px;
-                            color: #000;
-                        }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin: 20px auto;
+                        font-size: 14px;
+                        color: #000;
+                    }
 
-                        th, td {
-                            border: 1px solid #000;
-                            padding: 8px;
-                            text-align: left;
-                        }
+                    th, td {
+                        border: 1px solid #000;
+                        padding: 8px;
+                        text-align: left;
+                    }
 
-                        th {
-                            font-weight: bold;
-                            text-transform: uppercase;
-                        }
+                    th {
+                        font-weight: bold;
+                        text-transform: uppercase;
+                    }
 
-                        .signature {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            gap: 20px;
-                            font-size: 12px;
-                        }
+                    .signature {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        gap: 20px;
+                        font-size: 12px;
+                    }
 
-                        .signature-block .label {
-                            text-align: center;
-                        }
+                    .signature-block .label {
+                        text-align: center;
+                    }
 
-                        .label {
-                            margin-bottom: 20px;
+                    .label {
+                        margin-bottom: 20px;
+                    }
+
+                    .footer {
+                        text-align: center;
+                        font-size: 12px;
+                        color: #000;
+                        padding: 10px 0;
+                        border-top: 1px solid #000;
+                        position: relative;
+                    }
+                    
+                    table {
+                        width: 100% !important;
+                        table-layout: fixed;
+                        border-collapse: collapse;
+                    }
+
+                    th, td {
+                        border: 1px solid #000;
+                        padding: 4px;
+                        word-wrap: break-word;
+                        font-size: 10px;
+                    }
+
+                    /* Força a impressão no formato retrato */
+                    @media print {
+                        @page {
+                            size: A4 portrait; /* Define o formato da página como retrato */
+                           
                         }
 
                         .footer {
-                            text-align: center;
-                            font-size: 12px;
-                            color: #000;
-                            padding: 10px 0;
-                            border-top: 1px solid #000;
-                            position: relative;
+                            position: fixed;
+                            bottom: 0;
+                            width: 100%;
+                            border: none;
                         }
 
-                        @media print {
-                            .footer {
-                                position: fixed;
-                                bottom: 0;
-                                width: 100%;
-                                border: none;
-                            }
-
-                            .header, .content {
-                                page-break-inside: avoid;
-                            }
+                        .header, .content {
+                            page-break-inside: avoid;
                         }
-                    </style>
+                    }
+                </style>
+
                 </head>
                 <body>
         `);

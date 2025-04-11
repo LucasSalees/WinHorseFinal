@@ -80,9 +80,105 @@ public class MovimentacaoControle {
     }
 
     // Listagem de todas as movimentações
-    @GetMapping("/administrativo/movimentacoes/listar")
-    public ModelAndView listarMovimentacoes(HttpSession session,  Model model) {
-        ModelAndView mv = new ModelAndView("administrativo/movimentacoes/lista");
+    @GetMapping("/administrativo/movimentacoes/listarData")
+    public ModelAndView listarMovimentacoesData(HttpSession session,  Model model) {
+        ModelAndView mv = new ModelAndView("administrativo/movimentacoes/listaData");
+
+        // Verifica se o usuário está logado
+        if (session.getAttribute("usuarioLogado") == null) {
+            // Redireciona para o login se o usuário não estiver logado
+            mv.setViewName("redirect:/login");
+            return mv;
+        }
+
+        // Obtém o usuário logado da sessão
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
+        
+        mv.addObject("usuario", usuario); // Adiciona o usuário ao modelo
+
+        // Lista de movimentações para exibir na página
+        List<Movimentacao> listaMovimentacoes = movimentacaoRepositorio.findAll();
+        mv.addObject("listaMovimentacoes", listaMovimentacoes);
+
+        return mv;
+    }
+    
+    // Listagem de todas as movimentações
+    @GetMapping("/administrativo/movimentacoes/listarGaranhoes")
+    public ModelAndView listarMovimentacoesGaranhoes(HttpSession session,  Model model) {
+        ModelAndView mv = new ModelAndView("administrativo/movimentacoes/listaGaranhoes");
+
+        // Verifica se o usuário está logado
+        if (session.getAttribute("usuarioLogado") == null) {
+            // Redireciona para o login se o usuário não estiver logado
+            mv.setViewName("redirect:/login");
+            return mv;
+        }
+
+        // Obtém o usuário logado da sessão
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
+        
+        mv.addObject("usuario", usuario); // Adiciona o usuário ao modelo
+
+        // Lista de movimentações para exibir na página
+        List<Movimentacao> listaMovimentacoes = movimentacaoRepositorio.findAll();
+        mv.addObject("listaMovimentacoes", listaMovimentacoes);
+
+        return mv;
+    }
+    
+    // Listagem de todas as movimentações
+    @GetMapping("/administrativo/movimentacoes/listarDestinos")
+    public ModelAndView listarMovimentacoesDestinos(HttpSession session,  Model model) {
+        ModelAndView mv = new ModelAndView("administrativo/movimentacoes/listaDestinos");
+
+        // Verifica se o usuário está logado
+        if (session.getAttribute("usuarioLogado") == null) {
+            // Redireciona para o login se o usuário não estiver logado
+            mv.setViewName("redirect:/login");
+            return mv;
+        }
+
+        // Obtém o usuário logado da sessão
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        System.out.println("Hora Fim do Usuário: " + usuario.getHoraFim()); // Verifica se o valor existe
+
+        if (usuario.getHoraFim() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            model.addAttribute("horaFim", usuario.getHoraFim().format(formatter));
+        } else {
+            model.addAttribute("horaFim", ""); // Evita erro caso seja null
+        }
+        
+        mv.addObject("usuario", usuario); // Adiciona o usuário ao modelo
+
+        // Lista de movimentações para exibir na página
+        List<Movimentacao> listaMovimentacoes = movimentacaoRepositorio.findAll();
+        mv.addObject("listaMovimentacoes", listaMovimentacoes);
+
+        return mv;
+    }
+    
+    // Listagem de todas as movimentações
+    @GetMapping("/administrativo/movimentacoes/listarProfissionais")
+    public ModelAndView listarMovimentacoesProfissionais(HttpSession session,  Model model) {
+        ModelAndView mv = new ModelAndView("administrativo/movimentacoes/listaProfissionais");
 
         // Verifica se o usuário está logado
         if (session.getAttribute("usuarioLogado") == null) {
@@ -156,7 +252,7 @@ public class MovimentacaoControle {
         }
 
         // Caso não encontre a movimentação, redireciona para a lista de movimentações
-        return "redirect:/administrativo/movimentacoes/listar";
+        return "redirect:/administrativo/movimentacoes/listarData";
     }
 
     
@@ -407,7 +503,7 @@ public class MovimentacaoControle {
         System.out.println("Documento: " + movimentacao.getIdentificador_profissional());
         System.out.println("Data da movimentação: " + movimentacao.getData_movimentacao());
 
-        return new ModelAndView("redirect:/administrativo/movimentacoes/listar");
+        return new ModelAndView("redirect:/administrativo/movimentacoes/listarData");
     }
     
     @Transactional
@@ -447,7 +543,7 @@ public class MovimentacaoControle {
                 if (garanhao == null) {
                     redirectAttributes.addFlashAttribute("mensagemErro", "Garanhão associado à movimentação não encontrado.");
                     System.out.println("Garanhão associado à movimentação não encontrado.");
-                    return "redirect:/administrativo/movimentacoes/listar";
+                    return "redirect:/administrativo/movimentacoes/listarData";
                 }
 
                 // Calcular a diferença entre a quantidade antiga e a nova
@@ -461,7 +557,7 @@ public class MovimentacaoControle {
                     // Se o saldo for insuficiente
                     redirectAttributes.addFlashAttribute("mensagemErro", "Saldo insuficiente para ajustar a movimentação.");
                     System.out.println("Saldo insuficiente para ajustar a movimentação.");
-                    return "redirect:/administrativo/movimentacoes/listar";
+                    return "redirect:/administrativo/movimentacoes/listarData";
                 }
 
                 garanhao.setSaldo_atual_palhetas(novoSaldo);
@@ -504,18 +600,18 @@ public class MovimentacaoControle {
                 // Mensagem de sucesso
                 redirectAttributes.addFlashAttribute("mensagemSucesso", "Movimentação atualizada com sucesso.");
                 System.out.println("Movimentação atualizada com sucesso.");
-                return "redirect:/administrativo/movimentacoes/listar"; // Redireciona para a lista de movimentações
+                return "redirect:/administrativo/movimentacoes/listarData"; // Redireciona para a lista de movimentações
             } else {
                 // Caso a movimentação não seja encontrada
                 redirectAttributes.addFlashAttribute("mensagemErro", "Movimentação não encontrada.");
                 System.out.println("Movimentação não encontrada.");
-                return "redirect:/administrativo/movimentacoes/listar";
+                return "redirect:/administrativo/movimentacoes/listarData";
             }
         } catch (Exception e) {
             System.out.println("Erro ao salvar movimentação: " + e.getMessage());
             redirectAttributes.addFlashAttribute("mensagemErro", "Erro ao salvar movimentação.");
             System.out.println("Erro ao salvar movimentação.");
-            return "redirect:/administrativo/movimentacoes/listar";
+            return "redirect:/administrativo/movimentacoes/listarData";
         }
     }
  

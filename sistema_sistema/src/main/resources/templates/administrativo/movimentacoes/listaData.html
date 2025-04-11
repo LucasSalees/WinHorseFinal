@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJ6uNf8K2Z5v55hfjdiwji4Q5g03/ygS5X0wAYOXxA4fFv7+9zj44+/01m+9g" crossorigin="anonymous">
+    <!-- DataTables CSS: Estilização para tabelas interativas com o plugin DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
 
     <!-- Google Fonts: Fonte "Asar" para personalização tipográfica -->
     <link href="https://fonts.googleapis.com/css2?family=Asar&display=swap" rel="stylesheet">
@@ -20,7 +21,7 @@
     <!-- Font Awesome: Biblioteca de ícones para utilização em botões e elementos visuais -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <title>Lista de Garanhões</title>
+    <title>Lista de Movimentações</title>
 
     <!--icone rosamystica-->
     <link rel="icon"
@@ -687,7 +688,7 @@
 		    background-color: #cf8311;
 		    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 		}
-
+       
     </style>
 
 </head>
@@ -741,7 +742,7 @@
                             style="display: flex; align-items: center; justify-content: space-between;">
                             <span style="border: 2px solid #ccc; padding: 5px 10px; border-radius: 5px; 
 	                         cursor: pointer; transition: all 0.3s ease;">
-                                Lista de Uusários
+                                Lista de Usuários
                             </span>
 
                             <i class="fa-solid fa-circle"
@@ -763,12 +764,12 @@
 			        <i class="fa-solid fa-circle-left"></i>
 			    </a>
 			    <h1 class="m-0 text-center shadow-text flex-grow-1 fw-bold" style="color: #333;">
-			        <i class="fa-solid fa-horse-head me-2" style="color: #cf8311;"></i> Estoque
+			        <i class="fa-solid fa-horse-head me-2" style="color: #cf8311;"></i> Lista de Movimentações por datas
 			    </h1>
 			    <div style="width: 34px;"></div> <!-- Espaço equivalente ao ícone -->
 			</div>
-
-    <div class="form-main-container d-flex justify-content-center align-items-center">
+			
+			<div class="form-main-container d-flex justify-content-center align-items-center">
     	<div class="form-container">
 
             <div class="custom-button-container-header">
@@ -801,9 +802,16 @@
 					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoNomeGaranhao" checked><span>Garanhão</span></label></div>
 					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoBotijao" checked><span>Botijão</span></label></div>
 					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoCaneca" checked><span>Caneca</span></label></div>
-					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoCor" checked><span>Cor</span></label></div>
-					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoData" checked><span>Data da Contagem Inicial</span></label></div>
-					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoSaldo" checked><span>Saldo Atual</span></label></div>
+					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoCor" checked><span>Palheta</span></label></div>
+					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoData" checked><span>Data da Movimentação</span></label></div>
+					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoQuantidade" checked><span>Quantidade</span></label></div>
+					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoTipoUso" checked><span>Tipo de uso</span></label></div>
+					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoDestino" checked><span>Destino</span></label></div>
+					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoProfissional" checked><span>Profissional</span></label></div>
+					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoDocumento" checked><span>Documento</span></label></div>
+					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoResponsavel" checked><span>Responsável</span></label></div>
+					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoEmbriao" checked><span>Embrião</span></label></div>
+					        <div><label class="dropdown-item checkbox-item-campo"><input type="checkbox" class="campoCheckbox" id="campoQuantidadeEmbriao" checked><span>Quantidade de embrião</span></label></div>
 					    </div>
 					</div>
 
@@ -812,88 +820,129 @@
 			    </div>
 			</div>
 
+           
+
             <div class="table-container">
-				 <table class="table table-striped" id="tabela">
+                <table class="table table-striped" id="tabela">
                     <thead>
                         <tr>
-                            <th class="text-left" id="ordenarID" style="cursor: pointer; justify-content: center; align-items: center; gap: 5px; max-width: 50px; min-width: 50px;">
-							   ID
+                            <th class="text-left" style="cursor: pointer; gap: 5px; max-width: 45px; min-width: 45px;">
+							    ID
 							</th>
-                            <th class="text-left" id="ordenarGaranhao" style="cursor: pointer; justify-content: center; align-items: center; gap: 5px; max-width: 200px; min-width: 200px;">
-							   Garanhão
-							    <span id="iconeOrdenacao" style="position: absolute; right: 5px; color: #cf8311; padding: 5px; margin-top: -5px;">
-							        <i class="fa-solid fa-down-long"></i>
-							    </span>
-							</th>
-                            <th class="text-left" id="ordenarBotijao" style="cursor: pointer; justify-content: center; align-items: center; gap: 5px; max-width: 110px; min-width: 110px;">
-							   Botijão
-							    <span id="iconeOrdenacao" style="position: absolute; right: 5px; color: #cf8311; padding: 5px; margin-top: -5px;">
-							        <i class="fa-solid fa-down-long"></i>
-							    </span>
-							</th>
-                            <th class="text-left" id="ordenarCaneca" style="cursor: pointer; justify-content: center; align-items: center; gap: 5px; max-width: 110px; min-width: 110px;">
-							   Caneca
-							    <span id="iconeOrdenacao" style="position: absolute; right: 5px; color: #cf8311; padding: 5px; margin-top: -5px;">
-							        <i class="fa-solid fa-down-long"></i>
-							    </span>
-							</th>
-                            <th class="text-left" id="ordenarCor" style="cursor: pointer; justify-content: center; align-items: center; gap: 5px; max-width: 150px; min-width: 150px;">
-							   Cor
-							    <span id="iconeOrdenacao" style="position: absolute; right: 5px; color: #cf8311; padding: 5px; margin-top: -5px;">
-							        <i class="fa-solid fa-down-long"></i>
-							    </span>
-							</th>
-							
-                            <th class="text-left" style="cursor: pointer; justify-content: center; align-items: center; gap: 5px; max-width: 180px; min-width: 180px;">
-                            Data da Contagem Inicial
+                            <th class="text-left" style="cursor: pointer; gap: 5px; max-width: 140px; min-width: 140px;">
+                            	Garanhão
                             </th>
-                            
-                            <th class="text-left" id="ordenarSaldo" style="cursor: pointer; justify-content: center; align-items: center; gap: 5px; max-width: 150px; min-width: 150px;">
-							   Saldo Inicial
+                            <th class="text-left" style="cursor: pointer; gap: 5px; max-width: 70px; min-width: 70px;">
+                            	Botijão
+                            </th>
+                            <th class="text-left" style="cursor: pointer; gap: 5px; max-width: 70px; min-width: 70px;">
+                            	Caneca
+                            </th>
+                            <th class="text-left" style="cursor: pointer; gap: 5px; max-width: 115px; min-width: 115px;">
+                            	Palheta
+                            </th>
+                            <th class="text-left" style="cursor: pointer; gap: 5px; max-width: 70px; min-width: 70px;">
+                            	Qtd P.
+                            </th>
+							<th class="text-left" id="ordenarData" style="cursor: pointer; gap: 5px; max-width: 115px; min-width: 115px;">
+							    Data
 							    <span id="iconeOrdenacao" style="position: absolute; right: 5px; color: #cf8311; padding: 5px; margin-top: -5px;">
 							        <i class="fa-solid fa-down-long"></i>
 							    </span>
 							</th>
+                            <th class="text-left" style="cursor: pointer; gap: 5px; max-width: 114px; min-width: 114px;">
+                            	Tipo de uso
+                            </th>
+                            <th class="text-left" style="cursor: pointer; gap: 5px; max-width: 114px; min-width: 114px;">
+                            	Destino
+                            </th>
+                            <th class="text-left" style="cursor: pointer; gap: 5px; max-width: 100px; min-width: 100px;">
+                            	Profissional
+                            </th>
+                            <th class="text-left" style="cursor: pointer; gap: 5px; max-width: 150px; min-width: 150px;">
+                            	Documento
+                            </th>
+                            <th class="text-left" style="cursor: pointer; gap: 5px; max-width: 100px; min-width: 100px;">
+                            	Responsável
+                            </th>
+                            <th class="text-left" style="cursor: pointer; gap: 5px; max-width: 100px; min-width: 100px;">
+                            	Embrião
+                            </th>
+                            <th class="text-left"  style="cursor: pointer; gap: 5px; max-width: 61px; min-width: 61px;">
+                            	Qtd E.
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="garanhao : ${listaGaranhoes}">
+                        <tr th:each="movimentacao : ${listaMovimentacoes}">
 
                             <td class="text-left">
-                                <a th:href="@{/administrativo/garanhoes/eventoGaranhao/editarGaranhao/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
-                                    th:text="${garanhao.id_garanhao}" class="row-link"></a>
+                                <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                                    th:text="${movimentacao.id_movimentacao}"></a>
                             </td>
 
                             <td class="text-left">
-                                <a th:href="@{/administrativo/garanhoes/eventoGaranhao/editarGaranhao/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
-                                    th:text="${garanhao.nome_garanhao}" class="row-link"></a>
+                                <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                                    th:text="${movimentacao.garanhao.nome_garanhao}"></a>
+                            </td>
+
+                            <td class="text-left">
+                                <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                                    th:text="${movimentacao.garanhao.botijao}"></a>
+                            </td>
+
+                            <td class="text-left">
+                                <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                                    th:text="${movimentacao.garanhao.caneca}"></a>
+                            </td>
+
+                            <td class="text-left">
+                                <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                                    th:text="${movimentacao.garanhao.cor_palheta}"></a>
+                            </td>
+
+                            <td class="text-left">
+                                <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                                    th:text="${movimentacao.quantidade}"></a>
+                            </td>
+
+                            <td class="text-left">
+                                <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                                    th:text="${#temporals.format(movimentacao.data_movimentacao, 'dd/MM/yyyy')}"></a>
+                            </td>
+
+                            <td class="text-left">
+                                <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                                    th:text="${movimentacao.destino}"></a>
+                            </td>
+
+                            <td class="text-left">
+                                <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                                    th:text="${movimentacao.endereco}"></a>
                             </td>
                             <td class="text-left">
-                                <a th:href="@{/administrativo/garanhoes/eventoGaranhao/editarGaranhao/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
-                                    th:text="${garanhao.botijao}" class="row-link"></a>
+                                <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                                    th:text="${movimentacao.nome_profissional}"></a>
                             </td>
                             <td class="text-left">
-                                <a th:href="@{/administrativo/garanhoes/eventoGaranhao/editarGaranhao/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
-                                    th:text="${garanhao.caneca}" class="row-link"></a>
+                                <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                                    th:text="${movimentacao.identificador_profissional}"></a>
                             </td>
                             <td class="text-left">
-                                <a th:href="@{/administrativo/garanhoes/eventoGaranhao/editarGaranhao/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
-                                    th:text="${garanhao.cor_palheta}" class="row-link"></a>
+                                <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                                    th:text="${movimentacao.nome_usuario}"></a>
                             </td>
                             <td class="text-left">
-                                <a th:href="@{/administrativo/garanhoes/eventoGaranhao/editarGaranhao/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
-                                    th:text="${#temporals.format(garanhao.data_contagem_inicial, 'dd/MM/yyyy')}"
-                                    class="row-link"></a>
+                                <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                                    th:text="${movimentacao.embriao}"></a>
                             </td>
                             <td class="text-left">
-                                <a th:href="@{/administrativo/garanhoes/eventoGaranhao/editarGaranhao/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
-                                    th:text="${garanhao.saldo_atual_palhetas}" class="row-link"></a>
+                                <a th:href="@{/administrativo/movimentacoes/eventoMovimentacao/editarMovimentacao/{id_movimentacao}(id_movimentacao=${movimentacao.id_movimentacao})}"
+                                    th:text="${movimentacao.quantidade_embriao}"></a>
                             </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
-            
             
             
             <div class="custom-button-container">
@@ -904,13 +953,13 @@
                 	</div>
                 	
                 	<div class="col text-center">
-                    <a th:if="${usuario.tipo == 'ADMIN'}"  href="/administrativo/garanhoes/listaValor" class="btn btn-light btn-sm text-white">
-                        <i class="fa-solid fa-dollar-sign"></i> Lista de valores
+                    <a th:if="${usuario.tipo == 'ADMIN'}" href="/administrativo/movimentacoes/lixeira" class="btn btn-light btn-sm text-white">
+                        <i class="fa-solid fa-trash-can-arrow-up"></i> Movimentações estornadas
                     </a>
                 </div>
                 
                 <div class="col text-right">
-                    <a th:if="${usuario.tipo == 'ADMIN'}" href="/administrativo/garanhoes/cadastro">
+                    <a th:if="${usuario.tipo == 'ADMIN'}" href="/administrativo/movimentacoes/cadastro">
                         <button type="button" class="btn btn-light btn-sm text-white">
                             <i class="fa-solid fa-plus"></i> <i class="fa-solid fa-horse-head"></i> Cadastrar
                         </button>
@@ -925,13 +974,11 @@
                     </a>
                 </div>
                 </div>
-                
-            
             
         </div>
     </div>
 
-    <!-- Modal de aviso 10 minutos -->
+	     <!-- Modal de aviso 10 minutos -->
 		<div id="modal10Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
 		    <div class="modal-content" style="background: rgba(255, 255, 255, 0.95); margin: 1.75rem auto; padding: 20px; border-radius: 10px; width: 30%; text-align: center;">
 		        <p>Faltam 10 minutos para o fim da sua sessão!</p>
@@ -967,7 +1014,7 @@
 		    </div>
 		</div>
 
-        	<!-- Início do Footer -->
+       	<!-- Início do Footer -->
 	<footer class="footer">
 	    <div class="container" style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
 	        <!-- Texto da empresa centralizado -->
@@ -977,7 +1024,7 @@
 				  onmouseover="this.style.transform='scale(1.02)';" 
 				  onmouseout="this.style.transform='scale(1)';">
 				</a> </p>
-	           
+	            
 	        </div>
 
 	        <!-- Relógio e campo oculto que armazena a horaFim do usuário -->
@@ -987,23 +1034,18 @@
 	</footer>
     <!-- Fim do Footer -->
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <!-- Adicionando Bootstrap via CDN -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0v8wWZmfGSRKzRf6qCkeDa4AERL1RjqO59kS2eXXWcp26Lkz" crossorigin="anonymous"></script>
-
-    <script>
-    
-    document.getElementById("dropdownMenuButton").addEventListener("click", function() {
-        // Seleciona o dropdown menu
-        var dropdownMenu = document.querySelector(".dropdown-menu-campo");
+        <script>
         
-        // Alterna a visibilidade do dropdown (exibe ou esconde)
-        dropdownMenu.style.display = (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") ? "block" : "none";
-    });
-    
-    document.addEventListener("DOMContentLoaded", function() {
-        // Função para selecionar ou desmarcar todos os checkboxes
+        document.getElementById("dropdownMenuButton").addEventListener("click", function() {
+            // Seleciona o dropdown menu
+            var dropdownMenu = document.querySelector(".dropdown-menu-campo");
+            
+            // Alterna a visibilidade do dropdown (exibe ou esconde)
+            dropdownMenu.style.display = (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") ? "block" : "none";
+        });
+        
         document.getElementById("selecionarTodos").addEventListener("change", function() {
             let checkboxes = document.querySelectorAll(".campoCheckbox");
             checkboxes.forEach(checkbox => checkbox.checked = this.checked);
@@ -1017,290 +1059,222 @@
                 selecionarTodos.checked = [...checkboxes].every(cb => cb.checked);
             });
         });
-    });
-
-    // Recarregar a página para remover os filtros
-    document.getElementById("btnRemoverFiltros").addEventListener("click", function () {
-        location.reload(); // Recarrega a página para limpar os filtros
-    });
-    
-    document.getElementById('btnFiltrarDatas').addEventListener('click', function() {
-        var filtroDatas = document.getElementById('filtroDatas');
-        filtroDatas.classList.toggle('d-none');
-    });
-    
-    document.addEventListener("DOMContentLoaded", function () {
-        const tabela = document.getElementById("tabela").getElementsByTagName("tbody")[0];
-        const linhas = Array.from(tabela.getElementsByTagName("tr"));
-
-        let ordemBotijaoAsc = true;
-        let ordemCanecaAsc = true;
-        let ordemGaranhaoAsc = true;
-        let ordemCorAsc = true;
-        let ordemDataAsc = true;
-        let ordemSaldoAsc = true;
-
-        // Definindo os cabeçalhos
-        const thBotijao = document.getElementById("ordenarBotijao");
-        const thCaneca = document.getElementById("ordenarCaneca");
-        const thGaranhao = document.getElementById("ordenarGaranhao");
-        const thCor = document.getElementById("ordenarCor");
-        const thData = document.getElementById("ordenarData");
-        const thSaldo = document.getElementById("ordenarSaldo");
-
-        // Adicionando eventos de clique para ordenar as colunas
-        thBotijao.addEventListener("click", function () {
-            ordenarPorBotijao(ordemBotijaoAsc);
-            atualizarIcone(thBotijao, ordemBotijaoAsc);
-            ordemBotijaoAsc = !ordemBotijaoAsc;
+   
+     	// Recarregar a página para remover os filtros
+        document.getElementById("btnRemoverFiltros").addEventListener("click", function () {
+            location.reload(); // Recarrega a página para limpar os filtros
+        });
+        
+        document.getElementById('btnFiltrarDatas').addEventListener('click', function() {
+            var filtroDatas = document.getElementById('filtroDatas');
+            filtroDatas.classList.toggle('d-none');
         });
 
-        thCaneca.addEventListener("click", function () {
-            ordenarTabela(3, 'numero', ordemCanecaAsc);
-            atualizarIcone(thCaneca, ordemCanecaAsc);
-            ordemCanecaAsc = !ordemCanecaAsc;
-        });
+        document.addEventListener("DOMContentLoaded", function () {
+            let tabela = document.getElementById("tabela").getElementsByTagName("tbody")[0];
+            let cabecalhoData = document.getElementById("ordenarData");
+            let iconeOrdenacao = document.getElementById("iconeOrdenacao");
+            let ordemDecrescente = true; // Começa da data mais recente para a mais antiga
 
-        thGaranhao.addEventListener("click", function () {
-            ordenarTabela(1, 'texto', ordemGaranhaoAsc);
-            atualizarIcone(thGaranhao, ordemGaranhaoAsc);
-            ordemGaranhaoAsc = !ordemGaranhaoAsc;
-        });
+            // Função para ordenar a tabela por data
+            cabecalhoData.addEventListener("click", function () {
+                let linhas = Array.from(tabela.querySelectorAll("tr"));
 
-        thCor.addEventListener("click", function () {
-            ordenarTabela(4, 'texto', ordemCorAsc);
-            atualizarIcone(thCor, ordemCorAsc);
-            ordemCorAsc = !ordemCorAsc;
-        });
+                linhas.sort((a, b) => {
+                    let dataA = a.cells[6].innerText.trim();
+                    let dataB = b.cells[6].innerText.trim();
 
-        thSaldo.addEventListener("click", function () {
-            ordenarTabela(6, 'numero', ordemSaldoAsc);
-            atualizarIcone(thSaldo, ordemSaldoAsc);
-            ordemSaldoAsc = !ordemSaldoAsc;
-        });
+                    let dataFormatadaA = dataA.split("/").reverse().join("-");
+                    let dataFormatadaB = dataB.split("/").reverse().join("-");
 
-        function getCellText(tr, index) {
-            return tr.getElementsByTagName("td")[index].textContent.trim();
-        }
-
-        function ordenarTabela(colunaIndex, tipo, crescente) {
-            const novasLinhas = Array.from(linhas);
-
-            novasLinhas.sort((a, b) => {
-                let valA = getCellText(a, colunaIndex);
-                let valB = getCellText(b, colunaIndex);
-
-                if (tipo === 'numero') {
-                    valA = parseInt(valA);
-                    valB = parseInt(valB);
-                } else if (tipo === 'data') {
-                    valA = new Date(valA.split('/').reverse().join('/'));
-                    valB = new Date(valB.split('/').reverse().join('/'));
-                } else {
-                    valA = valA.toUpperCase();
-                    valB = valB.toUpperCase();
-                }
-
-                if (valA < valB) return crescente ? -1 : 1;
-                if (valA > valB) return crescente ? 1 : -1;
-                return 0;
-            });
-
-            novasLinhas.forEach(tr => tabela.appendChild(tr));
-        }
-
-        function ordenarPorBotijao(crescente) {
-            const novasLinhas = Array.from(linhas);
-
-            novasLinhas.sort((a, b) => {
-                const botijaoA = getCellText(a, 2).toUpperCase();
-                const botijaoB = getCellText(b, 2).toUpperCase();
-
-                if (botijaoA < botijaoB) return crescente ? -1 : 1;
-                if (botijaoA > botijaoB) return crescente ? 1 : -1;
-
-                // Se botijões forem iguais, ordenar por Caneca crescente
-                const canecaA = parseInt(getCellText(a, 3));
-                const canecaB = parseInt(getCellText(b, 3));
-                return canecaA - canecaB;
-            });
-
-            novasLinhas.forEach(tr => tabela.appendChild(tr));
-        }
-
-        function atualizarIcone(th, crescente) {
-            const iconeSpan = th.querySelector("span i");
-            if (iconeSpan) {
-                iconeSpan.className = "";
-                iconeSpan.classList.add("fa-solid", crescente ? "fa-down-long" : "fa-up-long");
-            }
-        }
-    });
-    
-    document.addEventListener("DOMContentLoaded", function () {
-        const tabela = document.getElementById("tabela").getElementsByTagName("tbody")[0];
-        const linhas = Array.from(tabela.getElementsByTagName("tr"));
-
-        // Função para pegar o texto da célula de uma linha
-        function getCellText(tr, index) {
-            return tr.getElementsByTagName("td")[index].textContent.trim();
-        }
-
-        // Índices das colunas
-        const indiceBotijao = 2;
-        const indiceCaneca = 3;
-
-        // Ordenar as linhas
-        linhas.sort((a, b) => {
-            const botijaoA = getCellText(a, indiceBotijao).toUpperCase();
-            const botijaoB = getCellText(b, indiceBotijao).toUpperCase();
-
-            if (botijaoA < botijaoB) return -1;
-            if (botijaoA > botijaoB) return 1;
-
-            // Se botijões forem iguais, ordenar pela caneca em ordem crescente
-            const canecaA = parseInt(getCellText(a, indiceCaneca));
-            const canecaB = parseInt(getCellText(b, indiceCaneca));
-            return canecaA - canecaB;
-        });
-
-        // Atualiza o tbody com as linhas ordenadas
-        linhas.forEach(tr => tabela.appendChild(tr));
-    });
-
-    document.getElementById("dataInicio").addEventListener("input", filtrarTabela);
-    document.getElementById("dataFinal").addEventListener("input", filtrarTabela);
-    document.getElementById("filtro").addEventListener("input", filtrarTabela);
-
-    function filtrarTabela() {
-        let filtro = document.getElementById("filtro").value.toLowerCase();
-        let dataInicio = document.getElementById("dataInicio").value;
-        let dataFinal = document.getElementById("dataFinal").value;
-
-        // Converte as datas para objetos Date usando o formato ISO
-        let inicio = dataInicio ? new Date(dataInicio + 'T00:00:00') : null;
-        let fim = dataFinal ? new Date(dataFinal + 'T23:59:59.999') : null;
-
-        // Pega todas as linhas da tabela
-        let linhas = document.querySelectorAll("#tabela tbody tr");
-
-        linhas.forEach(linha => {
-            let mostrarLinha = true;
-
-            // Verifica o filtro de texto
-            if (filtro) {
-                let passaFiltroTexto = false;
-
-                // Pega o conteúdo das colunas
-                let colunaId = linha.querySelector("td:nth-child(1) a").textContent.toLowerCase();
-                let colunaNomeGaranhao = linha.querySelector("td:nth-child(2) a").textContent.toLowerCase();
-                let colunaBotijao = linha.querySelector("td:nth-child(3) a").textContent.toLowerCase();
-                let colunaCaneca = linha.querySelector("td:nth-child(4) a").textContent.toLowerCase();
-                let colunaCor = linha.querySelector("td:nth-child(5) a").textContent.toLowerCase();
-                let colunaData = linha.querySelector("td:nth-child(6) a").textContent.trim().toLowerCase();
-                let colunaSaldo = linha.querySelector("td:nth-child(7) a").textContent.trim().toLowerCase();
-
-                // Verifica se algum campo marcado nos checkboxes corresponde ao filtro
-                if (document.getElementById("campoId").checked && colunaId.includes(filtro)) passaFiltroTexto = true;
-                if (document.getElementById("campoNomeGaranhao").checked && colunaNomeGaranhao.includes(filtro)) passaFiltroTexto = true;
-                if (document.getElementById("campoBotijao").checked && colunaBotijao.includes(filtro)) passaFiltroTexto = true;
-                if (document.getElementById("campoCaneca").checked && colunaCaneca.includes(filtro)) passaFiltroTexto = true;
-                if (document.getElementById("campoCor").checked && colunaCor.includes(filtro)) passaFiltroTexto = true;
-                if (document.getElementById("campoData").checked && colunaData.includes(filtro)) passaFiltroTexto = true;
-                if (document.getElementById("campoSaldo").checked && colunaSaldo.includes(filtro)) passaFiltroTexto = true;
-
-                if (!passaFiltroTexto) {
-                    mostrarLinha = false;
-                }
-            }
-
-            // Filtra por data
-            if (mostrarLinha && (inicio || fim)) {
-                let colunaDataText = linha.querySelector("td:nth-child(6) a").textContent.trim();
-                let partes = colunaDataText.split("/"); // Supondo que a data esteja no formato DD/MM/YYYY
-                
-                // Cria a data no formato YYYY-MM-DD para evitar problemas de fuso horário
-                let dataStr = `${partes[2]}-${partes[1].padStart(2, '0')}-${partes[0].padStart(2, '0')}`;
-                let dataConvertida = new Date(dataStr + 'T12:00:00'); // Define para meio-dia
-
-                // Compara as datas com o intervalo de datas
-                if (inicio && dataConvertida < inicio) {
-                    mostrarLinha = false;
-                }
-                if (fim && dataConvertida > fim) {
-                    mostrarLinha = false;
-                }
-            }
-
-            // Mostrar ou esconder a linha com base nos filtros aplicados
-            linha.style.display = mostrarLinha ? "" : "none";
-        });
-    }
-
-
- // Configura o botão "Imprimir"
-    document.getElementById('btnImprimir').addEventListener('click', function (e) {
-        e.preventDefault(); // Evita o comportamento padrão do link
-
-        // Obtém a tabela original e apenas as linhas visíveis
-        const tabela = document.getElementById('tabela');
-        const linhasVisiveis = Array.from(tabela.querySelectorAll('tbody tr')).filter(tr => 
-            tr.style.display !== 'none'
-        );
-
-        // Configuração de itens por página
-        const maxItensPorPagina = 42;
-        const paginas = [];
-
-        // Verifica se precisa de paginação ou se cabe tudo em uma página
-        if (linhasVisiveis.length <= maxItensPorPagina) {
-            // Cria apenas uma página com todas as linhas visíveis
-            const novaTabela = document.createElement('table');
-            novaTabela.innerHTML = `
-                <thead>${tabela.querySelector('thead').innerHTML}</thead>
-                <tbody></tbody>
-            `;
-            const tbody = novaTabela.querySelector('tbody');
-
-            linhasVisiveis.forEach(linha => {
-                const linhaClonada = linha.cloneNode(true);
-                const links = linhaClonada.querySelectorAll('a');
-                links.forEach(link => {
-                    const texto = document.createTextNode(link.textContent);
-                    link.parentNode.replaceChild(texto, link);
+                    return ordemDecrescente 
+                        ? new Date(dataFormatadaB) - new Date(dataFormatadaA)  // Ordem decrescente
+                        : new Date(dataFormatadaA) - new Date(dataFormatadaB); // Ordem crescente
                 });
-                tbody.appendChild(linhaClonada);
+
+                // Reinsere as linhas ordenadas
+                linhas.forEach(linha => tabela.appendChild(linha));
+
+                // Troca o ícone corretamente
+                iconeOrdenacao.innerHTML = ordemDecrescente 
+                    ? '<i class="fa-solid fa-down-long" style="color:#cf8311;"></i>' // Seta para cima (decrescente)
+                    : '<i class="fa-solid fa-up-long" style="color:#cf8311;"></i>'; // Seta para baixo (crescente)
+
+                ordemDecrescente = !ordemDecrescente;
             });
 
-            paginas.push(novaTabela);
-        } else {
-            // Divide em páginas com até maxItensPorPagina itens cada
-            for (let i = 0; i < linhasVisiveis.length; i += maxItensPorPagina) {
-                const novaTabela = document.createElement('table');
-                novaTabela.innerHTML = `
-                    <thead>${tabela.querySelector('thead').innerHTML}</thead>
-                    <tbody></tbody>
-                `;
-                const tbody = novaTabela.querySelector('tbody');
+            // Função para filtrar a tabela
+            function filtrarTabela() {
+                let filtro = document.getElementById("filtro").value.toLowerCase();
+                let dataInicio = document.getElementById("dataInicio").value;
+                let dataFinal = document.getElementById("dataFinal").value;
 
-                linhasVisiveis.slice(i, i + maxItensPorPagina).forEach(linha => {
+                let inicio = dataInicio ? new Date(dataInicio + 'T00:00:00') : null;
+                let fim = dataFinal ? new Date(dataFinal + 'T23:59:59.999') : null;
+
+                let linhas = document.querySelectorAll("#tabela tbody tr");
+
+                linhas.forEach(linha => {
+                    let mostrarLinha = true;
+                    
+                    // Verificação de filtro de texto
+                    if (filtro) {
+                        let passaFiltroTexto = false;
+
+                        let colunas = [
+                            "campoId", "campoNomeGaranhao", "campoBotijao", "campoCaneca",
+                            "campoCor", "campoQuantidade", "campoData", "campoTipoUso",
+                            "campoDestino", "campoProfissional", "campoDocumento",
+                            "campoResponsavel", "campoEmbriao", "campoQuantidadeEmbriao"
+                        ];
+
+                        colunas.forEach((campo, index) => {
+                            let colunaTexto = linha.querySelector(`td:nth-child(${index + 1}) a`)?.textContent.toLowerCase();
+                            if (document.getElementById(campo)?.checked && colunaTexto?.includes(filtro)) {
+                                passaFiltroTexto = true;
+                            }
+                        });
+
+                        if (!passaFiltroTexto) {
+                            mostrarLinha = false;
+                        }
+                    }
+
+                    // Verificação de filtro de data
+                    if (mostrarLinha && (inicio || fim)) {
+                        let colunaDataText = linha.querySelector("td:nth-child(7) a").textContent.trim();
+                        let partes = colunaDataText.split("/");
+                        let dataStr = `${partes[2]}-${partes[1].padStart(2, '0')}-${partes[0].padStart(2, '0')}`;
+                        let dataConvertida = new Date(dataStr + 'T12:00:00');
+
+                        if (inicio && dataConvertida < inicio) {
+                            mostrarLinha = false;
+                        }
+                        if (fim && dataConvertida > fim) {
+                            mostrarLinha = false;
+                        }
+                    }
+
+                    linha.style.display = mostrarLinha ? "" : "none";
+                });
+            }
+
+            // Adicionar eventos para filtrar ao digitar ou alterar datas
+            document.getElementById("dataInicio").addEventListener("input", filtrarTabela);
+            document.getElementById("dataFinal").addEventListener("input", filtrarTabela);
+            document.getElementById("filtro").addEventListener("input", filtrarTabela);
+
+            // Adicionar evento para remover filtros
+            document.getElementById('btnRemoverFiltros').addEventListener('click', function() {
+                document.getElementById("filtro").value = "";
+                document.getElementById("dataInicio").value = "";
+                document.getElementById("dataFinal").value = "";
+                
+                let linhas = document.querySelectorAll("#tabela tbody tr");
+                linhas.forEach(linha => {
+                    linha.style.display = "";
+                });
+
+                document.getElementById("filtroDatas").classList.add("d-none");
+            });
+
+            // Ordenação automática ao carregar a página
+            let linhas = Array.from(tabela.getElementsByTagName("tr"));
+
+            linhas.sort((a, b) => {
+                let dataA = a.cells[6].textContent.trim().split("/").reverse().join("-");
+                let dataB = b.cells[6].textContent.trim().split("/").reverse().join("-");
+                return new Date(dataB) - new Date(dataA);
+            });
+
+            linhas.forEach(linha => tabela.appendChild(linha));
+        });
+
+        document.getElementById('btnImprimir').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const tabela = document.getElementById('tabela');
+            const linhasVisiveis = Array.from(tabela.querySelectorAll('tbody tr')).filter(tr => 
+                tr.style.display !== 'none'
+            );
+
+            // Função para contar Positivo, Negativo e Indefinido para todos os itens
+            function contarEmbrioesTotal(linhas) {
+                const contagem = { positivo: 0, negativo: 0, indefinido: 0 };
+                
+                linhas.forEach(linha => {
+                    const statusEmbriao = linha.querySelector('td:nth-child(13) a')?.textContent.trim().toLowerCase() || '';
+                    
+                    if (statusEmbriao.includes('positivo')) contagem.positivo++;
+                    else if (statusEmbriao.includes('negativo')) contagem.negativo++;
+                    else contagem.indefinido++;
+                });
+                
+                return contagem;
+            }
+
+            const maxItensPorPagina = 26;
+            const paginas = [];
+
+            // Contagem total de Positivo, Negativo e Indefinido
+            const contagemTotal = contarEmbrioesTotal(linhasVisiveis);
+
+            // Divide as linhas visíveis em páginas
+            for (let i = 0; i < linhasVisiveis.length; i += maxItensPorPagina) {
+                const linhasPagina = linhasVisiveis.slice(i, i + maxItensPorPagina);
+                
+                const novaTabela = tabela.cloneNode(true);
+                novaTabela.querySelector('tbody').innerHTML = '';
+                
+                linhasPagina.forEach(linha => {
                     const linhaClonada = linha.cloneNode(true);
-                    const links = linhaClonada.querySelectorAll('a');
-                    links.forEach(link => {
-                        const texto = document.createTextNode(link.textContent);
-                        link.parentNode.replaceChild(texto, link);
+                    linhaClonada.querySelectorAll('a').forEach(link => {
+                        link.replaceWith(link.textContent);
                     });
-                    tbody.appendChild(linhaClonada);
+                    novaTabela.querySelector('tbody').appendChild(linhaClonada);
                 });
 
                 paginas.push(novaTabela);
             }
-        }
 
-        // Cria a janela para impressão
-        const janelaImpressao = window.open('', '', 'width=800,height=600');
-        janelaImpressao.document.write(`
-            <html>
+            // Verifica se a última página tem mais de 20 itens
+            const ultimaPagina = paginas[paginas.length - 1];
+            const ultimaPaginaItens = ultimaPagina.querySelectorAll('tbody tr').length;
+
+            // Se a última página tiver mais de 20 itens, cria uma nova página para a contagem
+            if (ultimaPaginaItens > 22) {
+                const novaPaginaContagem = tabela.cloneNode(true);
+                novaPaginaContagem.querySelector('tbody').innerHTML = '';
+
+                // Cria o resumo de contagem
+                const tfoot = document.createElement('tfoot');
+                tfoot.innerHTML = `
+                    <tr><td colspan="14" style="text-align: right; padding-top: 10px;"><strong>Resumo de Embriões:</strong></td></tr>
+                    <tr><td colspan="13" style="text-align: right;">Positivo:</td><td><strong>${contagemTotal.positivo}</strong></td></tr>
+                    <tr><td colspan="13" style="text-align: right;">Negativo:</td><td><strong>${contagemTotal.negativo}</strong></td></tr>
+                    <tr><td colspan="13" style="text-align: right;">Indefinido:</td><td><strong>${contagemTotal.indefinido}</strong></td></tr>
+                `;
+                novaPaginaContagem.appendChild(tfoot);
+
+                // Adiciona a nova página de contagem
+                paginas.push(novaPaginaContagem);
+            } else {
+                // Adiciona a contagem na última página
+                const tfoot = document.createElement('tfoot');
+                tfoot.innerHTML = `
+                    <tr><td colspan="14" style="text-align: right; padding-top: 10px;"><strong>Resumo de Embriões:</strong></td></tr>
+                    <tr><td colspan="13" style="text-align: right;">Positivo:</td><td><strong>${contagemTotal.positivo}</strong></td></tr>
+                    <tr><td colspan="13" style="text-align: right;">Negativo:</td><td><strong>${contagemTotal.negativo}</strong></td></tr>
+                    <tr><td colspan="13" style="text-align: right;">Indefinido:</td><td><strong>${contagemTotal.indefinido}</strong></td></tr>
+                `;
+                ultimaPagina.appendChild(tfoot);
+            }
+
+            
+            // Janela de impressão
+            const janelaImpressao = window.open('', '', 'width=800,height=600');
+            janelaImpressao.document.write(`
+                <html>
                 <head>
                     <title>Impressão - Haras Rosa Mystica</title>
                     <style>
@@ -1337,7 +1311,7 @@
                     }
 
                     table {
-                        width: 100%;
+                        width: 500px;
                         border-collapse: collapse;
                         margin: 20px auto;
                         font-size: 14px;
@@ -1353,19 +1327,6 @@
                     th {
                         font-weight: bold;
                         text-transform: uppercase;
-                    }
-                    
-                    table {
-                        width: 100% !important;
-                        table-layout: fixed;
-                        border-collapse: collapse;
-                    }
-
-                    th, td {
-                        border: 1px solid #000;
-                        padding: 4px;
-                        word-wrap: break-word;
-                        font-size: 10px;
                     }
 
                     .signature {
@@ -1392,11 +1353,23 @@
                         border-top: 1px solid #000;
                         position: relative;
                     }
+                    
+                    table {
+                        width: 100% !important;
+                        table-layout: fixed;
+                        border-collapse: collapse;
+                    }
 
-                    /* Força a impressão no formato retrato */
+                    th, td {
+                        border: 1px solid #000;
+                        padding: 4px;
+                        word-wrap: break-word;
+                        font-size: 10px;
+                    }
+
                     @media print {
                         @page {
-                            size: A4 portrait; /* Define o formato da página como retrato */
+                            size: landscape;
                         }
 
                         .footer {
@@ -1410,107 +1383,98 @@
                             page-break-inside: avoid;
                         }
                     }
+                    
                 </style>
-
                 </head>
                 <body>
-        `);
-
-        // Adiciona cada página à janela
-        paginas.forEach((tabela, index) => {
-            janelaImpressao.document.write(`
-                <div class="header">
-                    <div class="header-img">
-                        <img src="https://www.harasrosamystica.com.br/wp-content/uploads/2024/07/logo-header-novo.webp" alt="Logo Haras Rosa Mystica">
-                    </div>
-                    <h2 class="header-title">Lista de Sêmens Disponíveis ${paginas.length > 1 ? `- Página ${index + 1}` : ''}</h2>
-                </div>
-                <div class="content">${tabela.outerHTML}</div>
-                <div class="footer">
-                    <div class="signature"></div>
-                    <div class="footer-text">
-                        © 2025 Haras Rosa Mystica - Todos os direitos reservados.
-                    </div>
-                </div>
+                    ${paginas.map((tabela, index) => `
+                        <div class="header">
+                            <div class="header-img">
+                                <img src="https://www.harasrosamystica.com.br/wp-content/uploads/2024/07/logo-header-novo.webp" alt="Logo Haras Rosa Mystica">
+                            </div>
+                            <h2 class="header-title">Lista de Movimentações por Datas ${paginas.length > 1 ? `- Página ${index + 1}` : ''}</h2>
+                        </div>
+                        <div class="content">
+                            ${tabela.outerHTML}
+                        </div>
+                        <div class="footer">
+                            <div class="footer-text">
+                                © 2025 Haras Rosa Mystica - Todos os direitos reservados.
+                            </div>
+                        </div>
+                        ${index < paginas.length - 1 ? '<div style="page-break-after: always;"></div>' : ''}
+                    `).join('')}
+                </body>
+                </html>
             `);
-            
-            // Adiciona quebra de página, exceto na última página
-            if (index < paginas.length - 1) {
-                janelaImpressao.document.write('<div style="page-break-after: always;"></div>');
-            }
+            janelaImpressao.document.close();
+            janelaImpressao.focus();
+            janelaImpressao.print();
+            janelaImpressao.close();
         });
 
-        // Finaliza o documento e abre a impressão
-        janelaImpressao.document.write(`
-                </body>
-            </html>
-        `);
-        janelaImpressao.document.close();
-        janelaImpressao.focus();
-        janelaImpressao.print();
-        janelaImpressao.close();
-    });
 
-        function atualizarRelogio() {
-            const agora = new Date();
-            const horas = agora.getHours().toString().padStart(2, '0');
-            const minutos = agora.getMinutes().toString().padStart(2, '0');
-            const horarioAtual = `${horas}:${minutos}`;
+            function atualizarRelogio() {
+                const agora = new Date();
+                const horas = agora.getHours().toString().padStart(2, '0');
+                const minutos = agora.getMinutes().toString().padStart(2, '0');
+                const horarioAtual = `${horas}:${minutos}`;
 
-            document.getElementById("relogio").innerText = horarioAtual;
+                document.getElementById("relogio").innerText = horarioAtual;
 
-            const horaFim = document.getElementById("horaFim")?.value?.trim();
+                const horaFim = document.getElementById("horaFim")?.value?.trim();
 
-            console.log("Hora Atual:", horarioAtual);
-            console.log("Hora Fim do Usuário:", horaFim);
+                console.log("Hora Atual:", horarioAtual);
+                console.log("Hora Fim do Usuário:", horaFim);
 
-            if (horaFim && horarioAtual >= horaFim) {
-                console.log("Hora atingida! Fazendo logout...");
-                window.location.href = "/sair"; // Faz o logout
-            }
-        }
-
-        setInterval(atualizarRelogio, 1000);
-        
-     	// Função para fechar o modal
-        function fecharModal(modalId) {
-            document.getElementById(modalId).style.display = "none";
-        }
-
-     // Função para verificar o tempo restante e mostrar os avisos
-        function verificarTempoRestante() {
-            const horaFim = document.getElementById("horaFim").value;  // Hora fim do usuário
-            const horaAtual = new Date();
-            const fim = new Date();
-            const [hora, minutos] = horaFim.split(':');
-            fim.setHours(hora, minutos, 0);  // Define a hora fim a partir do valor do servidor
-
-            const tempoRestante = fim - horaAtual;  // Tempo restante em milissegundos
-
-            const minutosRestantes = Math.floor(tempoRestante / 60000);  // Converte para minutos
-
-            // Exibe o modal de 10 minutos quando minutosRestantes for igual a 10
-            if (minutosRestantes == 10) {
-                document.getElementById("modal10Min").style.display = "block";  // Exibe o modal de 10 minutos
-            } 
-            // Exibe o modal de 5 minutos quando minutosRestantes for igual a 5
-            else if (minutosRestantes == 5) {
-                document.getElementById("modal5Min").style.display = "block";  // Exibe o modal de 5 minutos
-            }
-            // Exibe o modal de 1 minuto quando minutosRestantes for igual a 1
-            else if (minutosRestantes == 1) {
-                document.getElementById("modal1Min").style.display = "block";  // Exibe o modal de 1 minuto
+                if (horaFim && horarioAtual >= horaFim) {
+                    console.log("Hora atingida! Fazendo logout...");
+                    window.location.href = "/sair"; // Faz o logout
+                }
             }
 
-            // Se o tempo acabou, desloga o usuário
-            if (minutosRestantes <= 0) {
-                window.location.href = "/sair";  // Redireciona para a página de logout
+            setInterval(atualizarRelogio, 1000);
+            
+         	// Função para fechar o modal
+            function fecharModal(modalId) {
+                document.getElementById(modalId).style.display = "none";
             }
-        }
 
-        // Chama a função a cada 60 segundos para atualizar o tempo
- 
-    </script>
+         // Função para verificar o tempo restante e mostrar os avisos
+            function verificarTempoRestante() {
+                const horaFim = document.getElementById("horaFim").value;  // Hora fim do usuário
+                const horaAtual = new Date();
+                const fim = new Date();
+                const [hora, minutos] = horaFim.split(':');
+                fim.setHours(hora, minutos, 0);  // Define a hora fim a partir do valor do servidor
+
+                const tempoRestante = fim - horaAtual;  // Tempo restante em milissegundos
+
+                const minutosRestantes = Math.floor(tempoRestante / 60000);  // Converte para minutos
+
+                // Exibe o modal de 10 minutos quando minutosRestantes for igual a 10
+                if (minutosRestantes == 10) {
+                    document.getElementById("modal10Min").style.display = "block";  // Exibe o modal de 10 minutos
+                } 
+                // Exibe o modal de 5 minutos quando minutosRestantes for igual a 5
+                else if (minutosRestantes == 5) {
+                    document.getElementById("modal5Min").style.display = "block";  // Exibe o modal de 5 minutos
+                }
+                // Exibe o modal de 1 minuto quando minutosRestantes for igual a 1
+                else if (minutosRestantes == 1) {
+                    document.getElementById("modal1Min").style.display = "block";  // Exibe o modal de 1 minuto
+                }
+
+                // Se o tempo acabou, desloga o usuário
+                if (minutosRestantes <= 0) {
+                    window.location.href = "/sair";  // Redireciona para a página de logout
+                }
+            }
+
+            // Chama a função a cada 60 segundos para atualizar o tempo
+            setInterval(verificarTempoRestante, 60000);
+
+        </script>
 
 </body>
 

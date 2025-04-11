@@ -15,6 +15,8 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Asar&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
     <title>Editar sêmen</title>
 
@@ -24,9 +26,12 @@
         type="image/x-icon">
 
     <style>
-        body {
+ 	body {
             font-family: "Asar", Sans-serif;
-            background-color: #C0C0C0;
+            background-color: #ffffff;
+            height: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         /*marca d'agua*/
@@ -38,40 +43,6 @@
             color: rgba(0, 0, 0, 0.5);
             pointer-events: none;
             font-family: 'Arial, sans-serif';
-        }
-
-        /* Container principal do form (não afeta o navbar) */
-		.form-main-container {
-		    max-width: 1600px; /* ou o tamanho desejado */
-		    width: 100%;
-		    padding: 0 15px;
-		    margin: 0 auto; /* centraliza */
-		}
-		
-		.form-container {
-		    background: #fff;
-		    padding: 30px;
-		    border-radius: 8px;
-		    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-		    margin: 10px auto;
-		    max-width: 1100px;  /* Mantém a largura atual */
-		    width: 100%;
-		    border-top: 4px solid #808080;
-		    border-bottom: 4px solid #808080;
-		    min-height: 620px;  /* Altura mínima (ajuste conforme necessidade) */
-		    height: auto;       /* Cresce conforme o conteúdo */
-		}
-
-        .form-control {
-            border-radius: 8px;
-        }
-
-        .form-row {
-            margin-bottom: 20px;
-        }
-
-        .form-control {
-            border-radius: 8px;
         }
 
         .custom-divider {
@@ -98,7 +69,7 @@
 
         /*botões*/
         .btn {
-            border-radius: 50px;
+            border-radius: 2px;
         }
 
         /*botão preto*/
@@ -419,23 +390,36 @@
             /* Garante que o conteúdo ocupe a altura total da tela */
         }
 
-        .footer {
-            font-size: 1rem;
+        .mb-4,
+        .my-4 {
+            margin-bottom: 1.5rem !important;
+            margin-top: 30px;
+        }
+
+
+        /* Container principal do form (não afeta o navbar) */
+        .form-main-container {
+            max-width: 1600px;
+            /* ou o tamanho desejado */
             width: 100%;
-            background-color: #000000C4;
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-            font-family: 'Roboto', sans-serif;
-            box-shadow: 0 -6px 15px rgba(0, 0, 0, 0.3);
-            position: relative;
-            /* Deixe a posição como 'relative' para que o footer fique abaixo do conteúdo */
-            margin-top: auto;
-            /* Isso vai empurrar o footer para o final da página */
-            transition: background-color 0.5s ease, box-shadow 0.5s ease;
-            border-style: solid;
-            border-width: 4px 0 0 0;
-            border-color: #fc0;
+            padding: 0 15px;
+            margin: 0 auto;
+            /* centraliza */
+            flex: 1;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+
+        .form-container {
+            padding: 10px;
+            /* margin-top: 10px; */
+            /* margin-bottom: 10px; */
+            max-width: 100%;
+            width: 1550px;
+            height: auto;
         }
 
         /* Animação de transição para o fundo do footer */
@@ -458,86 +442,227 @@
             background-size: 400% 400%;
             animation: gradientFooterAnimation 8s ease infinite;
         }
-        
-                /* Animação para o modal descer de cima */
-		@keyframes slideDown {
-		    0% {
-		        transform: translateY(-100%);
-		        opacity: 0;
-		    }
-		    100% {
-		        transform: translateY(0);
-		        opacity: 1;
-		    }
-		}
-		
-		/* Animação para o modal fechar com slide up */
-		@keyframes slideUp {
-		    0% {
-		        transform: translateY(0);
-		        opacity: 1;
-		    }
-		    100% {
-		        transform: translateY(-100%);
-		        opacity: 0;
-		    }
-		}
-		
-		/* Estilos para o botão de fechar */
-		.fechar-modal {
-		    background: none;
-		    border: none;
-		    box-shadow: none;
-		    padding: 0;
-		    cursor: pointer;
-		}
-		
-		.fechar-modal i {
-		    font-size: 2rem;
-		    color: #ff0000; /* Cor vermelha */
-		    transition: 0.3s;
-		}
-		
-		/* Efeito ao passar o mouse no botão de fechar */
-		.fechar-modal i:hover {
-		    color: #B22222; /* Vermelho mais escuro */
-		    transform: scale(1.2);
-		}
-		
-		/* Corpo do modal estilizado */
-		.modal-content {
-		    background: rgba(255, 255, 255, 0.95);
-		    border-radius: 10px;
-		    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-		    animation: slideDown 0.5s ease; /* Aplica a animação de entrada */
-		}
-		
-		/* Estilização do título */
-		.modal-title {
-		    font-weight: bold;
-		    color: #ff0000; /* Vermelho */
-		}
-		
-		/* Corpo do modal */
-		.modal-body {
-		    text-align: center;
-		    font-size: 1.2rem;
-		    font-weight: 500;
-		}
-		
-		.form-row {
+
+        /* Animação para o modal descer de cima */
+        @keyframes slideDown {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Animação para o modal fechar com slide up */
+        @keyframes slideUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+        }
+
+        /* Estilos para o botão de fechar */
+        .fechar-modal {
+            background: none;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .fechar-modal i {
+            font-size: 2rem;
+            color: #ff0000;
+            /* Cor vermelha */
+            transition: 0.3s;
+        }
+
+        /* Efeito ao passar o mouse no botão de fechar */
+        .fechar-modal i:hover {
+            color: #B22222;
+            /* Vermelho mais escuro */
+            transform: scale(1.2);
+        }
+
+        /* Corpo do modal estilizado */
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            animation: slideDown 0.5s ease;
+            /* Aplica a animação de entrada */
+        }
+
+        /* Estilização do título */
+        .modal-title {
+            font-weight: bold;
+            color: #ff0000;
+            /* Vermelho */
+        }
+
+        /* Corpo do modal */
+        .modal-body {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+
+
+        .row {
 		    display: -ms-flexbox;
 		    display: flex;
 		    -ms-flex-wrap: wrap;
 		    flex-wrap: wrap;
-		    margin-top: 20px;
-		    
+		    margin-right: 215px;
+		    margin-left: 215px;
 		}
-		
-		.mb-3, .my-3 {
-		    margin-bottom: 1rem !important;
+
+        .mb-3,
+        .my-3 {
+            margin-bottom: 1rem !important;
+        }
+
+        .footer {
+            font-size: 1rem;
+            width: 100%;
+            background-color: #000000C4;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            font-family: 'Roboto', sans-serif;
+            box-shadow: 0 -6px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: background-color 0.5s ease, box-shadow 0.5s ease;
+            border-style: solid;
+            border-width: 4px 0 0 0;
+            border-color: #fc0;
+            /* Garante que o footer vai para o fundo */
+        }
+
+        .shadow-cantos {
+            box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.15);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .shadow-text {
+            text-shadow: 6px 6px 12px rgba(0, 0, 0, 0.25);
+            transition: text-shadow 0.3s ease;
+        }
+
+        /* Definindo o tamanho do select2 */
+        .select2-container--default .select2-selection--single {
+            width: 100%;
+            /* Largura de 397px */
+            height: 38px;
+            /* Altura de 38px */
+            border: 1px solid #ced4da;
+            box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.15);
+            transition: box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Estilo do texto dentro do select2 */
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #444;
+            line-height: 28px;
+            /* Pode ajustar a altura da linha conforme necessário */
+            display: block;
+            padding-left: 8px;
+            padding-right: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .custom-header {
+		    background-color: #f4f4f4;
+		    padding: 10px 20px;
+		    border-radius: 5px;
+		    width: 100%;              /* Ocupa 100% do espaço disponível */
+		    max-width: 1555px;        /* Mas não ultrapassa 1555px */
+		    margin: 20px auto;        /* Centraliza horizontalmente */
+		    box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.15);
+		    transition: box-shadow 0.3s ease;
 		}
-        
+
+
+        .custom-link {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 3px 3px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin-left: 0px;
+        }
+
+        .custom-link:hover {
+            color: #cf8311;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Customizando o título */
+        .custom-header h1 {
+            font-size: 24px;
+            /* Tamanho da fonte */
+            font-weight: bold;
+        }
+
+        /* Ajuste no ícone */
+        .custom-header i.fa-circle-left {
+            margin-right: 5px;
+            /* Espaço à direita do ícone */
+            margin-left: 5px;
+            /* Espaço à direita do ícone */
+            margin-top: 5px;
+            /* Espaço à direita do ícone */
+            margin-bottom: 5px;
+            /* Espaço à direita do ícone */
+        }
+
+        .custom-header i.fa-horse-head {
+            color: #cf8311;
+            /* Cor do ícone */
+        }
+
+        .custom-button-container {
+		    background-color: #f4f4f4;
+		    padding: 10px 20px;
+		    box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.15);
+		    transition: box-shadow 0.3s ease;
+		    border-radius: 5px;
+		    width: 100%;               /* Responsivo */
+		    max-width: 1555px;         /* Largura máxima */
+		    margin: 20px auto;         /* Centraliza */
+		    display: flex;             /* Flexbox */
+		    justify-content: flex-end; /* Alinha conteúdo à direita */
+		}
+
+        .custom-button-container .btn {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .custom-button-container .btn:hover {
+            background-color: #cf8311;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        } 
     </style>
 
 </head>
@@ -615,233 +740,108 @@
             </div>
         </div>
     </nav>
+    
+    <div class="custom-header d-flex align-items-center justify-content-between mb-4">
+        <a href="javascript:history.back()" class="custom-link ">
+            <i class="fa-solid fa-circle-left"></i>
+        </a>
+        <h1 class="m-0 text-center shadow-text flex-grow-1 fw-bold" style="color: #333;">
+            <i class="fa-solid fa-horse-head me-2" style="color: #cf8311;"></i> Garanhão - [[${garanhao.nome_garanhao}]]
+        </h1>
+        <div style="width: 34px;"></div> <!-- Espaço equivalente ao ícone -->
+    </div>
 
     <div class="form-main-container d-flex justify-content-center align-items-center">
-    	<div class="form-container">
-            <form action="/administrativo/garanhoes/editarGaranhao" th:object="${garanhao}" method="POST"
-                id="garanhaoForm">
+    <div class="form-container">
+        <form action="/administrativo/garanhoes/editarGaranhao" th:object="${garanhao}" method="POST" id="garanhaoForm">
+            <div class="custom-divider mb-4" style="height: 2px; background-color: #f0f0f0;"></div>
 
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <a href="/administrativo/garanhoes/listar" class="custom-link">
-                        <i class="fa-solid fa-circle-left"></i>
-                    </a>
-                    </a>
-                    <h1 class="m-0 text-center flex-grow-1">
-                        Garanhão - [[${garanhao.nome_garanhao}]]
-                    </h1>
-
-                    <div style="width: 100px;"></div>
+            <!-- Seção de Campos -->
+            <div class="row g-3">
+                <!-- Linha 1 -->
+                <div class="col-md-6 mb-3">
+                    <label for="nome_garanhao" class="label-info shadow-text">Nome do Garanhão</label>
+                    <input type="text" required id="nome_garanhao" th:field="*{nome_garanhao}" class="form-control shadow-cantos"
+                        th:readonly="${usuario.tipo != 'ADMIN'}" maxlength="40" />
                 </div>
 
-                <div class="custom-divider"></div>
-
-                <div class="form-row">
-                    <div class="col-12 col-md-6">
-                        <label for="nome_garanhao" class="label-info">Nome do Garanhão</label>
-                        <input type="text" required id="nome_garanhao" th:field="*{nome_garanhao}" class="form-control"
-                            th:readonly="${usuario.tipo != 'ADMIN'}" maxlength="40" />
-                    </div>
-
-                    <div class="col-12 col-md-6">
-                        <label for="CorPalhetaSelect">Cor da Palheta</label>
-                        <select id="CorPalhetaSelect" th:data-cor-garanhao="${garanhao.cor_palheta}" required
-                            th:field="*{cor_palheta}" class="form-control select2" onchange="gerenciarCores(this)"
-                            th:attr="disabled=${usuario.tipo != 'ADMIN'}">
-                            <option value="">Escolha uma cor</option>
-                            <option value="adicionar">+ Adicionar nova cor</option>
-                            <option value="excluir">🗑️ Excluir uma cor</option>
-                        </select>
-                    </div>
-
+                <div class="col-md-6 mb-3">
+                    <label class="form-label shadow-text fw-semibold">Palheta</label>
+                    <select id="CorPalhetaSelect" th:data-cor-garanhao="${garanhao.cor_palheta}" required
+                        th:field="*{cor_palheta}" class="form-select select2 shadow-cantos" onchange="gerenciarCores(this)"
+                        th:attr="disabled=${usuario.tipo != 'ADMIN'}">
+                        <option value="">Escolha uma cor</option>
+                        <option value="adicionar">+ Adicionar nova cor</option>
+                        <option value="excluir">🗑️ Excluir uma cor</option>
+                    </select>
                 </div>
 
-                <!-- Modal para Adicionar Cor -->
-                <div class="modal fade" id="modalAdicionarCor" tabindex="-1" aria-labelledby="modalAdicionarCorLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalAdicionarCorLabel">Adicionar Nova Cor</h5>
-                                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
-                                    <i class="fa-solid fa-circle-xmark"></i>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <input type="text" id="inputNovaCor" class="form-control"
-                                    placeholder="Digite o nome da nova cor">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-primary"
-                                    onclick="confirmarAdicionarCor()">Adicionar</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-6 mb-3">
+                    <label for="botijaoSelect" class="label-info shadow-text">Botijão</label>
+                    <select id="botijaoSelect" required th:field="*{botijao}" class="form-control select2"
+                        th:disabled="${usuario.tipo != 'ADMIN'}">
+                        <option value="">Escolha uma letra</option>
+                        <option value="A" th:selected="${botijao == 'A'}">A</option>
+                        <option value="B" th:selected="${botijao == 'B'}">B</option>
+                        <option value="C" th:selected="${botijao == 'C'}">C</option>
+                        <option value="D" th:selected="${botijao == 'D'}">D</option>
+                        <option value="E" th:selected="${botijao == 'E'}">E</option>
+                        <option value="F" th:selected="${botijao == 'F'}">F</option>
+                        <option value="G" th:selected="${botijao == 'G'}">G</option>
+                        <option value="H" th:selected="${botijao == 'H'}">H</option>
+                        <option value="I" th:selected="${botijao == 'I'}">I</option>
+                        <option value="J" th:selected="${botijao == 'J'}">J</option>
+                        <option value="K" th:selected="${botijao == 'K'}">K</option>
+                        <option value="L" th:selected="${botijao == 'L'}">L</option>
+                        <option value="M" th:selected="${botijao == 'M'}">M</option>
+                        <option value="N" th:selected="${botijao == 'N'}">N</option>
+                        <option value="O" th:selected="${botijao == 'O'}">O</option>
+                        <option value="P" th:selected="${botijao == 'P'}">P</option>
+                        <option value="Q" th:selected="${botijao == 'Q'}">Q</option>
+                        <option value="R" th:selected="${botijao == 'R'}">R</option>
+                        <option value="S" th:selected="${botijao == 'S'}">S</option>
+                        <option value="T" th:selected="${botijao == 'T'}">T</option>
+                        <option value="U" th:selected="${botijao == 'U'}">U</option>
+                        <option value="V" th:selected="${botijao == 'V'}">V</option>
+                        <option value="W" th:selected="${botijao == 'W'}">W</option>
+                        <option value="X" th:selected="${botijao == 'X'}">X</option>
+                        <option value="Y" th:selected="${botijao == 'Y'}">Y</option>
+                        <option value="Z" th:selected="${botijao == 'Z'}">Z</option>
+                    </select>
                 </div>
 
-                <!-- Modal para Excluir Cor -->
-                <div class="modal fade" id="modalExcluirCor" tabindex="-1" aria-labelledby="modalExcluirCorLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalExcluirCorLabel">Excluir Cor</h5>
-                                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
-                                    <i class="fa-solid fa-circle-xmark"></i>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <select id="selectExcluirCor" class="form-control">
-                                    <option value="">Selecione uma cor para excluir</option>
-                                </select>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-danger"
-                                    onclick="confirmarExcluirCor()">Excluir</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-6 mb-3">
+                    <label for="caneca" class="label-info shadow-text">Número da Caneca</label>
+                    <input type="number" required id="caneca" th:field="*{caneca}" class="form-control shadow-cantos"
+                        th:readonly="${usuario.tipo != 'ADMIN'}" min="1" />
                 </div>
 
-                <!-- Modal Dinâmico -->
-                <div class="modal fade" id="modalMensagem" tabindex="-1" aria-labelledby="modalMensagemLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalMensagemLabel">Aviso</h5>
-                                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
-                                    <i class="fa-solid fa-circle-xmark"></i>
-                                </button>
-                            </div>
-                            <div class="modal-body" id="modalMensagemTexto">
-                                <!-- Mensagem será inserida via JavaScript -->
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" id="btnFecharModalMensagem">OK</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-6 mb-3">
+                    <label for="data_contagem_inicial" class="label-info shadow-text">Data contagem inicial</label>
+                    <input type="date" th:field="*{data_contagem_inicial}" class="form-control shadow-cantos"
+                        th:disabled="${usuario.tipo != 'ADMIN'}">
                 </div>
 
-                <div class="form-row">
-                    <div class="col-12 col-md-6">
-                        <label for="botijaoSelect">Botijão</label>
-                        <select id="botijaoSelect" required th:field="*{botijao}" class="form-control select2"
-                            th:disabled="${usuario.tipo != 'ADMIN'}">
-                            <option value="">Escolha uma letra</option>
-                            <option value="A" th:selected="${botijao == 'A'}">A</option>
-                            <option value="B" th:selected="${botijao == 'B'}">B</option>
-                            <option value="C" th:selected="${botijao == 'C'}">C</option>
-                            <option value="D" th:selected="${botijao == 'D'}">D</option>
-                            <option value="E" th:selected="${botijao == 'E'}">E</option>
-                            <option value="F" th:selected="${botijao == 'F'}">F</option>
-                            <option value="G" th:selected="${botijao == 'G'}">G</option>
-                            <option value="H" th:selected="${botijao == 'H'}">H</option>
-                            <option value="I" th:selected="${botijao == 'I'}">I</option>
-                            <option value="J" th:selected="${botijao == 'J'}">J</option>
-                            <option value="K" th:selected="${botijao == 'K'}">K</option>
-                            <option value="L" th:selected="${botijao == 'L'}">L</option>
-                            <option value="M" th:selected="${botijao == 'M'}">M</option>
-                            <option value="N" th:selected="${botijao == 'N'}">N</option>
-                            <option value="O" th:selected="${botijao == 'O'}">O</option>
-                            <option value="P" th:selected="${botijao == 'P'}">P</option>
-                            <option value="Q" th:selected="${botijao == 'Q'}">Q</option>
-                            <option value="R" th:selected="${botijao == 'R'}">R</option>
-                            <option value="S" th:selected="${botijao == 'S'}">S</option>
-                            <option value="T" th:selected="${botijao == 'T'}">T</option>
-                            <option value="U" th:selected="${botijao == 'U'}">U</option>
-                            <option value="V" th:selected="${botijao == 'V'}">V</option>
-                            <option value="W" th:selected="${botijao == 'W'}">W</option>
-                            <option value="X" th:selected="${botijao == 'X'}">X</option>
-                            <option value="Y" th:selected="${botijao == 'Y'}">Y</option>
-                            <option value="Z" th:selected="${botijao == 'Z'}">Z</option>
-                        </select>
-
-                    </div>
-
-                    <div class="col-12 col-md-6">
-                        <label for="data_contagem_inicial" class="label-info">Data contagem inicial</label>
-                        <input type="date" th:field="*{data_contagem_inicial}" class="form-control"
-                            th:disabled="${usuario.tipo != 'ADMIN'}">
-                    </div>
+                <div class="col-md-6 mb-3">
+                    <label for="saldo_atual_palhetas" class="label-info shadow-text">Saldo atual de Palhetas</label>
+                    <input type="number" id="saldo_atual_palhetas" th:field="*{saldo_atual_palhetas}"
+                        class="form-control shadow-cantos" th:readonly="${usuario.tipo != 'ADMIN'}"
+                        onchange="atualizarSaldo();">
                 </div>
 
-                <!-- Modal de Aviso -->
-                <div class="modal fade" id="canecaModal" tabindex="-1" aria-labelledby="canecaModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="canecaModalLabel">Aviso</h5>
-                                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
-                                    <i class="fa-solid fa-circle-xmark"></i>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Números negativos não são permitidos.</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-12 mb-3 text-center">
+                    <label for="data_cadastro" class="label-info shadow-text">Data do cadastro</label>
+                    <input type="text" th:field="*{data_cadastro}"
+                        th:value="${#dates.format(data_cadastro, 'dd/MM/yyyy HH:mm:ss')}" 
+                        class="form-control shadow-cantos" 
+                        readonly 
+                        style="text-align: center;" />
                 </div>
 
-                <div class="form-row">
-                    <div class="col-12 col-md-6">
-                        <label for="caneca" class="label-info">Número da Caneca</label>
-                        <input type="number" required id="caneca" th:field="*{caneca}" class="form-control"
-                            th:readonly="${usuario.tipo != 'ADMIN'}" min="1" />
-                    </div>
-
-                    <div class="col-12 col-md-6">
-                        <label for="saldo_atual_palhetas" class="label-info">Saldo atual de Palhetas</label>
-							<input type="number" id="saldo_atual_palhetas" th:field="*{saldo_atual_palhetas}"
-							       class="form-control" th:readonly="${usuario.tipo != 'ADMIN'}"
-							       onchange="atualizarSaldo();">
-                    </div>
-                </div>
-
-                <!-- Modal de Aviso -->
-                <div class="modal fade" id="saldoAtualModal" tabindex="-1" aria-labelledby="saldoAtualModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="saldoAtualModalLabel">Aviso</h5>
-                                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
-                                    <i class="fa-solid fa-circle-xmark"></i>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Números negativos não são permitidos.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row justify-content-center">
-			    <div class="col-12 col-md-6 text-center">
-                        
-                    
-                    
-                    <label for="data_cadastro" class="label-info">Data do cadastro</label>
-                        <input type="text" th:field="*{data_cadastro}"
-					       th:value="${#dates.format(data_cadastro, 'dd/MM/yyyy HH:mm:ss')}" 
-					       class="form-control" 
-					       readonly 
-					       style="text-align: center;" />
-
-                    </div>
-                </div>
-
-                <div class="form-row">
-                
                 <!-- Modalidade -->
-                <div class="col-12 col-md-6" th:if="${usuario.tipo == 'ADMIN'}">
-                    <label for="modalidadeSelect">Modalidade</label>
-                    <select id="modalidadeSelect" required th:field="*{modalidade}" class="form-control select2"
+                <div class="col-md-6 mb-3" th:if="${usuario.tipo == 'ADMIN'}">
+                   <label for="modalidadeSelect"  class="shadow-text">Modalidade</label>
+                    <select id="modalidadeSelect" required th:field="*{modalidade}" class="form-control shadow-cantos select2"
                         th:disabled="${usuario.tipo != 'ADMIN'}">
                         <option value="">Escolha uma letra</option>
                         <option value="palheta" th:selected="${modalidade == 'palheta'}">Palheta</option>
@@ -849,86 +849,195 @@
                         <option value="outros" th:selected="${modalidade == 'outros'}">Outros</option>
                     </select>
                 </div>
-                    
-                 <!-- Exibir os campos apenas para ADMIN -->
-                 <div class="col-12 col-md-6" th:if="${usuario.tipo == 'ADMIN'}">
-                     <label for="valor" class="label-info">Valor</label>
-                     <div class="input-group">
-                         <input type="number" id="valor" th:field="*{valor}" class="form-control" min="1"
-                             step="0.01" />
-                         <select id="moeda" th:field="*{moeda}" class="form-control">
-                             <option value="BRL">R$ Real</option>
-                             <option value="USD">$ Dólar</option>
-                             <option value="EUR">€ Euro</option>
-                         </select>
-                     </div>
-                 </div>
-                 
-                </div>
-
-                <div class="custom-divider"></div>
-
-                <div class="d-flex justify-content-between mt-3">
-
-                    <!-- Modal de Confirmação de Exclusão -->
-                    <div class="modal fade" id="exclusaoModal" tabindex="-1" aria-labelledby="exclusaoModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exclusaoModalLabel">Confirmação</h5>
-                                    <button type="button" class="fechar-modal" data-bs-dismiss="modal"
-                                        aria-label="Fechar">
-                                        <i class="fa-solid fa-circle-xmark"></i>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Tem certeza que deseja excluir este garanhão?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cancelar</button>
-                                    <a id="confirmarExclusaoBtn" class="btn btn-danger">Excluir</a>
-                                </div>
-                            </div>
-                        </div>
+                
+                <!-- Valor -->
+                <div class="col-md-6 mb-3" th:if="${usuario.tipo == 'ADMIN'}">
+                    <label for="valor" class="label-info shadow-text">Valor</label>
+                    <div class="input-group">
+                        <input type="number" id="valor" th:field="*{valor}" class="form-control shadow-cantos" min="1"
+                            step="0.01" />
+                        <select id="moeda" th:field="*{moeda}" class="form-control shadow-cantos">
+                            <option value="BRL">R$ Real</option>
+                            <option value="USD">$ Dólar</option>
+                            <option value="EUR">€ Euro</option>
+                        </select>
                     </div>
-
-
-
-                    <a th:if="${usuario.tipo == 'ADMIN'}"
-                        th:href="@{/removerGaranhao/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
-                        class="btn btn-danger btn-sm" onclick="openExclusaoModal(this); return false;">
-                        <i class="fa-solid fa-trash" style="color: #ffffff;"></i> Excluir
-                    </a>
-
-
-                    <a th:if="${usuario.tipo != 'ADMIN'}" class="btn btn-danger btn-sm"
-                        style="pointer-events: none; color: #ffffff; cursor: not-allowed; background-color: #C0C0C0;">
-                        <i class="fa-solid fa-trash" style="color: #ffffff;"></i> Excluir
-                    </a>
-
-                    <a href="#" id="btnImprimir" class="btn btn-dark btn-sm" onclick="imprimirFormulario()">
-                        <i class="fa-solid fa-print"></i> Imprimir
-                    </a>
-
-                    <!-- Botão clicável para ADMIN -->
-                    <button th:if="${usuario.tipo == 'ADMIN'}" type="submit" class="btn btn-light btn-sm"
-                        id="btnEditarGaranhao">
-                        <i class="fa-solid fa-floppy-disk"></i> Salvar edição
-                    </button>
-
-                    <!-- Botão desativado para não ADMIN -->
-                    <button th:if="${usuario.tipo != 'ADMIN'}" type="button" class="btn btn-light btn-sm"
-                        style="pointer-events: none; color: #ffffff; cursor: not-allowed; background-color: #C0C0C0;">
-                        <i class="fa-solid fa-floppy-disk" style="color: #ffffff;"></i> Salvar edição
-                    </button>
-
-                    <input type="hidden" th:field="*{id_garanhao}" />
                 </div>
-            </form>
+            </div>
+
+            <div class="custom-divider"></div>
+            
+            <div class="custom-button-container d-flex justify-content-between mt-3">
+                    <a th:if="${usuario.tipo == 'ADMIN'}"
+                    th:href="@{/removerGaranhao/{id_garanhao}(id_garanhao=${garanhao.id_garanhao})}"
+                    class="btn btn-danger btn-sm" onclick="openExclusaoModal(this); return false;">
+                    <i class="fa-solid fa-trash" style="color: #ffffff;"></i> Excluir
+                </a>
+
+                <a th:if="${usuario.tipo != 'ADMIN'}" class="btn btn-danger btn-sm"
+                    style="pointer-events: none; color: #ffffff; cursor: not-allowed; background-color: #C0C0C0;">
+                    <i class="fa-solid fa-trash" style="color: #ffffff;"></i> Excluir
+                </a>
+
+                <a href="#" id="btnImprimir" class="btn btn-dark btn-sm" onclick="imprimirFormulario()">
+                    <i class="fa-solid fa-print"></i> Imprimir
+                </a>
+
+                <!-- Botão clicável para ADMIN -->
+                <button th:if="${usuario.tipo == 'ADMIN'}" type="submit" class="btn btn-light btn-sm"
+                    id="btnEditarGaranhao">
+                    <i class="fa-solid fa-floppy-disk"></i> Salvar edição
+                </button>
+
+                <!-- Botão desativado para não ADMIN -->
+                <button th:if="${usuario.tipo != 'ADMIN'}" type="button" class="btn btn-light btn-sm"
+                    style="pointer-events: none; color: #ffffff; cursor: not-allowed; background-color: #C0C0C0;">
+                    <i class="fa-solid fa-floppy-disk" style="color: #ffffff;"></i> Salvar edição
+                </button>
+
+                <input type="hidden" th:field="*{id_garanhao}" />
+                </div>
+
+            <div class="">
+                
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modais posicionados fora do formulário -->
+
+<!-- Modal para Adicionar Cor -->
+<div class="modal fade" id="modalAdicionarCor" tabindex="-1" aria-labelledby="modalAdicionarCorLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAdicionarCorLabel">Adicionar Nova Cor</h5>
+                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="inputNovaCor" class="form-control"
+                    placeholder="Digite o nome da nova cor">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary"
+                    onclick="confirmarAdicionarCor()">Adicionar</button>
+            </div>
         </div>
     </div>
+</div>
+
+<!-- Modal para Excluir Cor -->
+<div class="modal fade" id="modalExcluirCor" tabindex="-1" aria-labelledby="modalExcluirCorLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalExcluirCorLabel">Excluir Cor</h5>
+                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select id="selectExcluirCor" class="form-control">
+                    <option value="">Selecione uma cor para excluir</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger"
+                    onclick="confirmarExcluirCor()">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Dinâmico -->
+<div class="modal fade" id="modalMensagem" tabindex="-1" aria-labelledby="modalMensagemLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalMensagemLabel">Aviso</h5>
+                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalMensagemTexto">
+                <!-- Mensagem será inserida via JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnFecharModalMensagem">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Aviso Caneca -->
+<div class="modal fade" id="canecaModal" tabindex="-1" aria-labelledby="canecaModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="canecaModalLabel">Aviso</h5>
+                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Números negativos não são permitidos.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Aviso Saldo Atual -->
+<div class="modal fade" id="saldoAtualModal" tabindex="-1" aria-labelledby="saldoAtualModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="saldoAtualModalLabel">Aviso</h5>
+                <button type="button" class="fechar-modal" data-bs-dismiss="modal" aria-label="Fechar">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Números negativos não são permitidos.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Confirmação de Exclusão -->
+<div class="modal fade" id="exclusaoModal" tabindex="-1" aria-labelledby="exclusaoModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exclusaoModalLabel">Confirmação</h5>
+                <button type="button" class="fechar-modal" data-bs-dismiss="modal"
+                    aria-label="Fechar">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir este garanhão?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Cancelar</button>
+                <a id="confirmarExclusaoBtn" class="btn btn-danger">Excluir</a>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- Modal de aviso 10 minutos -->
 		<div id="modal10Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
@@ -976,7 +1085,7 @@
 				  onmouseover="this.style.transform='scale(1.02)';" 
 				  onmouseout="this.style.transform='scale(1)';">
 				</a> </p>
-	            <p>Todos os direitos reservados.</p>
+	           
 	        </div>
 
 	        <!-- Relógio e campo oculto que armazena a horaFim do usuário -->
@@ -986,8 +1095,7 @@
 	</footer>
     <!-- Fim do Footer -->
 
-    <!-- Importando Select2 -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <!-- Bootstrap JS (Necessário para o modal funcionar) -->

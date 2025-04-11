@@ -26,7 +26,10 @@
     <style>
         body {
             font-family: "Asar", Sans-serif;
-            background-color: #C0C0C0;
+            background-color: #ffffff;
+            height: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         /*marca d'agua*/
@@ -38,40 +41,6 @@
             color: rgba(0, 0, 0, 0.5);
             pointer-events: none;
             font-family: 'Arial, sans-serif';
-        }
-
-        /* Container principal do form (não afeta o navbar) */
-		.form-main-container {
-		    max-width: 1600px; /* ou o tamanho desejado */
-		    width: 100%;
-		    padding: 0 15px;
-		    margin: 0 auto; /* centraliza */
-		}
-		
-		.form-container {
-		    background: #fff;
-		    padding: 30px;
-		    border-radius: 8px;
-		    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-		    margin: 10px auto;
-		    max-width: 1100px;  /* Mantém a largura atual */
-		    width: 100%;
-		    border-top: 4px solid #808080;
-		    border-bottom: 4px solid #808080;
-		    min-height: 620px;  /* Altura mínima (ajuste conforme necessidade) */
-		    height: 641px;       /* Cresce conforme o conteúdo */
-		}
-
-        .form-control {
-            border-radius: 8px;
-        }
-
-        .form-row {
-            margin-bottom: 20px;
-        }
-
-        .form-control {
-            border-radius: 8px;
         }
 
         .custom-divider {
@@ -98,7 +67,7 @@
 
         /*botões*/
         .btn {
-            border-radius: 50px;
+            border-radius: 2px;
         }
 
         /*botão preto*/
@@ -419,26 +388,39 @@
             /* Garante que o conteúdo ocupe a altura total da tela */
         }
 
-        .footer {
-            font-size: 1rem;
-            width: 100%;
-            background-color: #000000C4;
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-            font-family: 'Roboto', sans-serif;
-            box-shadow: 0 -6px 15px rgba(0, 0, 0, 0.3);
-            position: relative;
-            /* Deixe a posição como 'relative' para que o footer fique abaixo do conteúdo */
-            margin-top: auto;
-            /* Isso vai empurrar o footer para o final da página */
-            transition: background-color 0.5s ease, box-shadow 0.5s ease;
-            border-style: solid;
-            border-width: 4px 0 0 0;
-            border-color: #fc0;
+        .mb-4,
+        .my-4 {
+            margin-bottom: 1.5rem !important;
+            margin-top: 30px;
         }
 
-                /* Animação de transição para o fundo do footer */
+
+        /* Container principal do form (não afeta o navbar) */
+        .form-main-container {
+            max-width: 1600px;
+            /* ou o tamanho desejado */
+            width: 100%;
+            padding: 0 15px;
+            margin: 0 auto;
+            /* centraliza */
+            flex: 1;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+
+        .form-container {
+            padding: 10px;
+            /* margin-top: 10px; */
+            /* margin-bottom: 10px; */
+            max-width: 100%;
+            width: 1550px;
+            height: auto;
+        }
+
+        /* Animação de transição para o fundo do footer */
         @keyframes gradientFooterAnimation {
             0% {
                 background-position: 0% 50%;
@@ -458,21 +440,227 @@
             background-size: 400% 400%;
             animation: gradientFooterAnimation 8s ease infinite;
         }
-        
-        .form-row {
+
+        /* Animação para o modal descer de cima */
+        @keyframes slideDown {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Animação para o modal fechar com slide up */
+        @keyframes slideUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+        }
+
+        /* Estilos para o botão de fechar */
+        .fechar-modal {
+            background: none;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .fechar-modal i {
+            font-size: 2rem;
+            color: #ff0000;
+            /* Cor vermelha */
+            transition: 0.3s;
+        }
+
+        /* Efeito ao passar o mouse no botão de fechar */
+        .fechar-modal i:hover {
+            color: #B22222;
+            /* Vermelho mais escuro */
+            transform: scale(1.2);
+        }
+
+        /* Corpo do modal estilizado */
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            animation: slideDown 0.5s ease;
+            /* Aplica a animação de entrada */
+        }
+
+        /* Estilização do título */
+        .modal-title {
+            font-weight: bold;
+            color: #ff0000;
+            /* Vermelho */
+        }
+
+        /* Corpo do modal */
+        .modal-body {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+
+
+        .row {
 		    display: -ms-flexbox;
 		    display: flex;
 		    -ms-flex-wrap: wrap;
 		    flex-wrap: wrap;
-		    margin-top: 42px;
-		    margin-bottom: 42px;
-		    
+		    margin-right: 215px;
+		    margin-left: 215px;
 		}
-		
-		.mt-2, .my-2 {
-		    margin-top: 6rem !important;
+
+        .mb-3,
+        .my-3 {
+            margin-bottom: 1rem !important;
+        }
+
+        .footer {
+            font-size: 1rem;
+            width: 100%;
+            background-color: #000000C4;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            font-family: 'Roboto', sans-serif;
+            box-shadow: 0 -6px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: background-color 0.5s ease, box-shadow 0.5s ease;
+            border-style: solid;
+            border-width: 4px 0 0 0;
+            border-color: #fc0;
+            /* Garante que o footer vai para o fundo */
+        }
+
+        .shadow-cantos {
+            box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.15);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .shadow-text {
+            text-shadow: 6px 6px 12px rgba(0, 0, 0, 0.25);
+            transition: text-shadow 0.3s ease;
+        }
+
+        /* Definindo o tamanho do select2 */
+        .select2-container--default .select2-selection--single {
+            width: 100%;
+            /* Largura de 397px */
+            height: 38px;
+            /* Altura de 38px */
+            border: 1px solid #ced4da;
+            box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.15);
+            transition: box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Estilo do texto dentro do select2 */
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #444;
+            line-height: 28px;
+            /* Pode ajustar a altura da linha conforme necessário */
+            display: block;
+            padding-left: 8px;
+            padding-right: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .custom-header {
+		    background-color: #f4f4f4;
+		    padding: 10px 20px;
+		    border-radius: 5px;
+		    width: 100%;              /* Ocupa 100% do espaço disponível */
+		    max-width: 1555px;        /* Mas não ultrapassa 1555px */
+		    margin: 20px auto;        /* Centraliza horizontalmente */
+		    box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.15);
+		    transition: box-shadow 0.3s ease;
 		}
-        
+
+
+        .custom-link {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 3px 3px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin-left: 0px;
+        }
+
+        .custom-link:hover {
+            color: #cf8311;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Customizando o título */
+        .custom-header h1 {
+            font-size: 24px;
+            /* Tamanho da fonte */
+            font-weight: bold;
+        }
+
+        /* Ajuste no ícone */
+        .custom-header i.fa-circle-left {
+            margin-right: 5px;
+            /* Espaço à direita do ícone */
+            margin-left: 5px;
+            /* Espaço à direita do ícone */
+            margin-top: 5px;
+            /* Espaço à direita do ícone */
+            margin-bottom: 5px;
+            /* Espaço à direita do ícone */
+        }
+
+        .custom-header i.fa-horse-head {
+            color: #cf8311;
+            /* Cor do ícone */
+        }
+
+        .custom-button-container {
+		    background-color: #f4f4f4;
+		    padding: 10px 20px;
+		    box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.15);
+		    transition: box-shadow 0.3s ease;
+		    border-radius: 5px;
+		    width: 100%;               /* Responsivo */
+		    max-width: 1555px;         /* Largura máxima */
+		    margin: 20px auto;         /* Centraliza */
+		    display: flex;             /* Flexbox */
+		    justify-content: flex-end; /* Alinha conteúdo à direita */
+		}
+
+        .custom-button-container .btn {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .custom-button-container .btn:hover {
+            background-color: #cf8311;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        } 
     </style>
 
 </head>
@@ -542,127 +730,104 @@
             </div>
         </div>
     </nav>
+    
+    <div class="custom-header d-flex align-items-center justify-content-between mb-4">
+        <a href="javascript:history.back()" class="custom-link ">
+            <i class="fa-solid fa-circle-left"></i>
+        </a>
+        <h1 class="m-0 text-center shadow-text flex-grow-1 fw-bold" style="color: #333;">
+            <i class="fa-solid fa-horse-head me-2" style="color: #cf8311;"></i> Garanhão - [[${garanhao.nome_garanhao}]]
+        </h1>
+        <div style="width: 34px;"></div> <!-- Espaço equivalente ao ícone -->
+    </div>
 
     <div class="form-main-container d-flex justify-content-center align-items-center">
-    	<div class="form-container">
-            <form th:action="@{/administrativo/garanhoes/editarValor}" th:object="${garanhao}" method="POST"
-                id="garanhaoForm">
+    <div class="form-container">
+        <form th:action="@{/administrativo/garanhoes/editarValor}" th:object="${garanhao}" method="POST" id="garanhaoForm">
 
+            <div class="custom-divider mb-4" style="height: 2px; background-color: #f0f0f0;"></div>
 
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <a href="/administrativo/garanhoes/listaValor" class="custom-link">
-                        <i class="fa-solid fa-circle-left"></i>
-                    </a>
-                    </a>
-                    <h1 class="m-0 text-center flex-grow-1">
-                        Garanhão - [[${garanhao.nome_garanhao}]]
-                    </h1>
-
-                    <div style="width: 100px;"></div>
+            <div class="row g-3">
+                <!-- Linha 1 -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label shadow-text fw-semibold">Nome do Garanhão</label>
+                    <span id="nome_garanhao" th:text="*{nome_garanhao}" class="form-control-plaintext shadow-cantos"></span>
                 </div>
 
-                <div class="custom-divider"></div>
-
-                <div class="form-row">
-                    <div class="col-12 col-md-6">
-                        <label for="nome_garanhao" class="label-info">Nome do Garanhão</label>
-                        <span id="nome_garanhao" th:text="*{nome_garanhao}" class="form-control-plaintext"></span>
-                    </div>
-
-                    <div class="col-12 col-md-6">
-                        <label for="CorPalheta" class="label-info">Cor da Palheta</label>
-                        <span id="CorPalheta" th:text="*{cor_palheta}" class="form-control-plaintext"></span>
-                    </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label shadow-text fw-semibold">Cor da Palheta</label>
+                    <span id="CorPalheta" th:text="*{cor_palheta}" class="form-control-plaintext shadow-cantos"></span>
                 </div>
 
-                <div class="form-row">
-                    <div class="col-12 col-md-6">
-                        <label for="botijao" class="label-info">Botijão</label>
-                        <span id="botijao" th:text="*{botijao}" class="form-control-plaintext"></span>
-                    </div>
-
-                    <div class="col-12 col-md-6">
-                        <label for="caneca" class="label-info">Número da Caneca</label>
-                        <span id="caneca" th:text="*{caneca}" class="form-control-plaintext"></span>
-                    </div>
+                <!-- Linha 2 -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label shadow-text fw-semibold">Botijão</label>
+                    <span id="botijao" th:text="*{botijao}" class="form-control-plaintext shadow-cantos"></span>
                 </div>
 
-                <div class="form-row">
-                    <!-- Exibir os campos apenas para ADMIN -->
-                    <div class="col-12 col-md-6" th:if="${usuario.tipo == 'ADMIN'}">
-                        <label for="valor" class="label-info">Valor</label>
-                        <div class="input-group">
-                            <input type="number" id="valor" th:field="*{valor}" class="form-control" min="1"
-                                step="0.01" />
-                            <select id="moeda" th:field="*{moeda}" class="form-control">
-                                <option value="BRL">R$ Real</option>
-                                <option value="USD">$ Dólar</option>
-                                <option value="EUR">€ Euro</option>
-                            </select>
-                        </div>
-                    </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label shadow-text fw-semibold">Número da Caneca</label>
+                    <span id="caneca" th:text="*{caneca}" class="form-control-plaintext shadow-cantos"></span>
+                </div>
 
-                    <!-- Exibir apenas os pontos para usuários que NÃO são ADMIN -->
-                    <div class="col-12 col-md-6" th:if="${usuario.tipo != 'ADMIN'}">
-                        <label class="label-info">Valor</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" value="●●●●●" readonly />
-                        </div>
-                    </div>
 
-                    <!-- Modalidade -->
-                    <div class="col-12 col-md-6" th:if="${usuario.tipo == 'ADMIN'}">
-                        <label for="modalidadeSelect">Modalidade</label>
-                        <select id="modalidadeSelect" required th:field="*{modalidade}" class="form-control select2"
-                            th:disabled="${usuario.tipo != 'ADMIN'}">
-                            <option value="">Escolha uma opção</option>
-                            <option value="palheta" th:selected="${modalidade == 'palheta'}">Palheta</option>
-                            <option value="prenhes" th:selected="${modalidade == 'prenhes'}">Prenhes</option>
-                            <option value="outros" th:selected="${modalidade == 'outros'}">Outros</option>
+				<div class="col-md-6 mb-3" th:if="${usuario.tipo == 'ADMIN'}">
+                   <label for="modalidadeSelect"  class="shadow-text">Modalidade</label>
+                    <select id="modalidadeSelect" required th:field="*{modalidade}" class="form-control shadow-cantos select2"
+                        th:disabled="${usuario.tipo != 'ADMIN'}">
+                        <option value="">Escolha uma letra</option>
+                        <option value="palheta" th:selected="${modalidade == 'palheta'}">Palheta</option>
+                        <option value="prenhes" th:selected="${modalidade == 'prenhes'}">Prenhes</option>
+                        <option value="outros" th:selected="${modalidade == 'outros'}">Outros</option>
+                    </select>
+                </div>
+                
+                
+                <!-- Linha 3 - Valor -->
+                <div class="col-md-6 mb-3" th:if="${usuario.tipo == 'ADMIN'}">
+                    <label for="valor" class="label-info shadow-text">Valor</label>
+                    <div class="input-group">
+                        <input type="number" id="valor" th:field="*{valor}" class="form-control shadow-cantos" min="1"
+                            step="0.01" />
+                        <select id="moeda" th:field="*{moeda}" class="form-control shadow-cantos">
+                            <option value="BRL">R$ Real</option>
+                            <option value="USD">$ Dólar</option>
+                            <option value="EUR">€ Euro</option>
                         </select>
                     </div>
+                </div>
+                
+                
 
-                    <div class="col-12 col-md-6" th:if="${usuario.tipo != 'ADMIN'}">
-                        <label for="modalidade" class="label-info">Modalidade</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" value="●●●●●" readonly />
-                        </div>
+                <div class="col-md-6 mb-3" th:if="${usuario.tipo != 'ADMIN'}">
+                    <label class="form-label shadow-text fw-semibold">Valor</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control shadow-cantos" value="●●●●●" readonly />
                     </div>
                 </div>
 
-                <div class="custom-divider"></div>
 
-                <div class="d-flex justify-content-between mt-2">
 
-                    <a href="#" id="btnImprimir" class="btn btn-dark btn-sm" onclick="imprimirFormulario()">
-                        <i class="fa-solid fa-print"></i> Imprimir
-                    </a>
+                
+            </div>
 
-                    <!-- Botão clicável para ADMIN -->
-                    <button th:if="${usuario.tipo == 'ADMIN'}" type="submit" class="btn btn-light btn-sm"
-                        id="btnEditarGaranhao">
-                        <i class="fa-solid fa-plus"></i> Editar Garanhão
-                    </button>
+            <div class="custom-divider mt-3 mb-4" style="height: 2px; background-color: #f0f0f0;"></div>
 
-                    <!-- Botão desativado para não ADMIN -->
-                    <button th:if="${usuario.tipo != 'ADMIN'}" type="button" class="btn btn-light btn-sm"
-                        style="pointer-events: none; color: #ffffff; cursor: not-allowed; background-color: #C0C0C0;">
-                        <i class="fa-solid fa-plus" style="color: #ffffff;"></i> Editar Garanhão
-                    </button>
+           <div class="custom-button-container d-flex justify-content-between mt-3">
+            
+            	<a href="#" id="btnImprimir" class="btn btn-dark btn-sm" onclick="imprimirFormulario()">
+                    <i class="fa-solid fa-print"></i> Imprimir
+                </a>
+                <button type="submit" class="btn btn-dark btn-sm shadow-cantos" id="btnSalvarGaranhao">
+                    <i class="fa-solid fa-floppy-disk me-1" style="color: #ffffff;"></i>
+                    Salvar Alterações
+                </button>
+            </div>
 
-                    <input type="hidden" th:field="*{id_garanhao}" />
-                    <input type="hidden" th:field="*{nome_garanhao}" />
-                    <input type="hidden" th:field="*{cor_palheta}" />
-                    <input type="hidden" th:field="*{caneca}" />
-                    <input type="hidden" th:field="*{botijao}" />
-                    <input type="hidden" th:field="*{data_contagem_inicial}" />
-                    <input type="hidden" th:field="*{data_cadastro}" />
-                    <input type="hidden" th:field="*{saldo_atual_palhetas}" />
-
-                </div>
-            </form>
-        </div>
+            <input type="hidden" th:field="*{id_garanhao}" />
+        </form>
     </div>
+</div>
 
     <!-- Modal de aviso 10 minutos -->
 		<div id="modal10Min" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);">
@@ -710,7 +875,7 @@
 				  onmouseover="this.style.transform='scale(1.02)';" 
 				  onmouseout="this.style.transform='scale(1)';">
 				</a> </p>
-	            <p>Todos os direitos reservados.</p>
+	            
 	        </div>
 
 	        <!-- Relógio e campo oculto que armazena a horaFim do usuário -->
